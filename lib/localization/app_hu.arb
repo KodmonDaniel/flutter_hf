@@ -1,0 +1,11 @@
+{
+    "app_name": "WeatherHW",
+
+    "login": "Bejelentkezés",
+    "login_email": "E-mail",
+    "login_pwd": "Jelszó",
+    "logout": "Kijelentkezés",
+
+    "tab_weather": "Időjárás",
+    "tab_profile": "Profil"
+}

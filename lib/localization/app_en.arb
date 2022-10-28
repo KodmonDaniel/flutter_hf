@@ -1,0 +1,11 @@
+{
+    "app_name": "WeatherHW",
+
+    "login": "Login",
+    "login_email": "E-mail",
+    "login_pwd": "Password",
+    "logout": "Logout",
+
+    "tab_weather": "Weather",
+    "tab_profile": "Profile"
+}
