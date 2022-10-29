@@ -13,6 +13,15 @@ CityResponse _$CityResponseFromJson(Map<String, dynamic> json) => CityResponse(
       weather: (json['weather'] as List<dynamic>?)
           ?.map((e) => CityWeather.fromJson(e as Map<String, dynamic>))
           .toList(),
+      main: json['main'] == null
+          ? null
+          : CityMain.fromJson(json['main'] as Map<String, dynamic>),
+      wind: json['wind'] == null
+          ? null
+          : CityWind.fromJson(json['wind'] as Map<String, dynamic>),
+      clouds: json['clouds'] == null
+          ? null
+          : CityClouds.fromJson(json['clouds'] as Map<String, dynamic>),
       name: json['name'] as String?,
     );
 
@@ -20,5 +29,8 @@ Map<String, dynamic> _$CityResponseToJson(CityResponse instance) =>
     <String, dynamic>{
       'coord': instance.coord,
       'weather': instance.weather,
+      'main': instance.main,
+      'wind': instance.wind,
+      'clouds': instance.clouds,
       'name': instance.name,
     };

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../extensions/extension_textstyle.dart';
 import '../dashboard_page.dart';
 import 'weather_state.dart';
 import 'weather_bloc.dart';
@@ -85,13 +86,15 @@ class _WeatherState extends State<Weather> {
             for (var i = 0; i < 2; i++)
             Marker(
               point: LatLng(state.citiesWeatherList?[i].coord?.lat ?? 0, state.citiesWeatherList?[i].coord?.lon ?? 0),
-              width: 40,
+              width: 60,
               height: 40,
               builder: (context) => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                 // Expanded(child: IconButton(icon: Image.asset("assets/images/icons/${state.citiesWeatherList?[i].weather?[0].icon ?? "unknown_icon"}.png") , onPressed: () {  },)),
                   FlutterLogo(), //todo weather icon
-                  Expanded(child: Text(state.citiesWeatherList?[i].weather?[0].main ?? "123", /*style: AppTextStyle.mapTemp*/))
+                  Expanded(child: Text(double.parse(((state.citiesWeatherList?[i].main?.temp! ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).toStringAsFixed(1)).toString() +
+                      (state.isCelsius ? " °C" : " °F"), /*style: AppTextStyle.mapTemp*/))
                 ],
               ),
             ),

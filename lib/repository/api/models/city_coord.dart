@@ -14,6 +14,4 @@ class CityCoord extends Equatable {
 
   @override
   List<Object?> get props => [lon, lat];
-
-
 }

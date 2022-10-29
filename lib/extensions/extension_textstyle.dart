@@ -20,9 +20,9 @@ extension AppTextStyle on ThemeData {
 
   static TextStyle mapTemp = TextStyle(
       fontFamily: 'Poppins',
-      fontSize: 24,
+      fontSize: 6,
       color: AppColors.textBlack,
-      fontWeight: FontWeight.w700
+      fontWeight: FontWeight.w600
   );
 
 
