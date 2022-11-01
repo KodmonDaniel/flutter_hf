@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/features/profile/profile_widget.dart';
 import 'package:flutter_hf/features/splash.dart';
 import 'package:flutter_hf/features/weather/weather_bloc.dart';
@@ -36,7 +37,7 @@ class _DashboardState extends State<Dashboard> {
   late Weather weather;
   late Profile profile;
 
-  int numOfTabs = 2;
+  int numOfTabs = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,10 @@ class _DashboardState extends State<Dashboard> {
     Tab getTabFromIndex(int index){
       switch (index) {
         case 1:
+          return Tab(const Profile(),
+              AppLocalizations.of(context)!.tab_history,
+              const Icon(Icons.history));
+        case 2:
           return Tab(const Profile(),
               AppLocalizations.of(context)!.tab_profile,
               const Icon(Icons.supervised_user_circle));
@@ -65,16 +70,19 @@ class _DashboardState extends State<Dashboard> {
     getDashboard(int currentTab, BuildContext context) {
       return CustomScaffold(
         scaffold: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-         currentIndex: currentTab,
-         backgroundColor: Colors.white, //TODO
-         items: [
-           for (var i = 0; i < numOfTabs ; i++) BottomNavigationBarItem(
-             icon: getTabFromIndex(i).icon,
-             label: getTabFromIndex(i).name
-           )
-         ],
-        ),
+          bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: AppColors.textPrimary,  //TODO EXTENSION
+            unselectedItemColor: AppColors.textSecondary,
+            elevation: 3,
+            currentIndex: currentTab,
+            backgroundColor: AppColors.backgroundDark,
+            items: [
+              for (var i = 0; i < numOfTabs ; i++) BottomNavigationBarItem(
+                  icon: getTabFromIndex(i).icon,
+                  label: getTabFromIndex(i).name
+              )
+            ],
+          ),
         ),
           children: [
             for (var i = 0; i < numOfTabs ; i++) getTabFromIndex(i).widget

@@ -16,17 +16,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
               isLoading: false
       ))
       ).catchError((error) {});
-
-/*
-      List<CityResponse> wasd;
-      wasd.add(CityResponse(name"tata"));
-      emit(state.copyWith(
-          citiesWeatherList: wasd,
-          isLoading: false
-      ));
-*/
-      print("ITT--------------");
-
     });
 
 
