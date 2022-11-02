@@ -69,35 +69,22 @@ class ApiRepository {
     }
 
     var jsonString = json.decode(response.body);
-   // print(jsonString['list'][0]['name']);
-   // print(jsonString['cnt']-1);
     dynamic completer;
     dynamic parsed;
 
-    print(jsonString['cnt']);
-    if(/*jsonString['list'] is List*/ true){    //List response
+    if(jsonString['list'] is List){    //List response
       completer = Completer<List<T>>();
       var tmpList = <T>[];
-      for (var i = 0; i < 2; i++){
-
-        print("itten:::::::::::::::::::::::"+ i.toString());
-      /*  print(jsonString['list'][i]['weather'][i]['main']);
-        print(jsonString['list'][i]['coord']['lat']);
-        print("----------->"+ jsonString['list'][i]['name']);*/
-
+      for (var i = 0; i < jsonString['cnt']; i++){
         tmpList.add(parser(jsonString['list'][i]));
-
-        print("55555555555555555555--------------");
       }
       parsed = tmpList;
     } else {  // single object response
       completer = Completer<T>();
       parsed = parser(jsonString);
     }
-    print("005--------------");
     completer.complete(parsed);
     return completer.future;
-
   }
 
   /// Makes query from map
@@ -115,45 +102,12 @@ class ApiRepository {
 
   /// Get the weather of the cities
   Future<List<CityResponse>?> getWeather(String idList) async {
-    //print("object");
-    //var wasd = json.decode(dummydata);
-   // print(wasd['list'][0]['coord']['lon']);
-
     var completer = Completer<List<CityResponse>?>();
-   // dynamic completer;
-   // completer = Completer<List<CityResponse>>();
     try {
      var cityWeathers = await baseRequest<CityResponse>(ApiEndpoint.getCitiesWeather, {
         "id" : idList,
         "appid" : ApiEndpoint.getCitiesWeather.apiKey
       }, CityResponse.fromJson);
-
-
-      //!!!!!!!!!!!!!!
-  /*   var cityWeathers = dummydata;
-
-
-
-                  var tmpList = <CityResponse>[];
-                  for (var i = 0; i < /*jsonString['list'].length*/1; i++){
-
-
-                    //print(cityWeathers['list'][i]['weather'][i]['main']);
-
-                    tmpList.add(CityResponse.fromJson(cityWeathers[2][i]));
-
-                    print("55555555555555555555--------------");
-                  }
-*/
-
-
-
-
-
-
-
-
-//stream??
       citiesResponseController.sink.add(cityWeathers);
       completer.complete(cityWeathers);
       return completer.future;
@@ -162,92 +116,5 @@ class ApiRepository {
       return completer.future;
     }
   }
-
-  String dummydata = """
-  {
-	"cnt": 2,
-	"list": [
-		{
-			"coord": {
-				"lon": 21.1,
-				"lat": 46.6833
-			},
-			"sys": {
-				"country": "HU",
-				"timezone": 7200,
-				"sunrise": 1666760899,
-				"sunset": 1666798236
-			},
-			"weather": [
-				{
-					"id": 802,
-					"main": "Clouds",
-					"description": "scattered clouds",
-					"icon": "03d"
-				}
-			],
-			"main": {
-				"temp": 289.79,
-				"feels_like": 289.42,
-				"temp_min": 289.79,
-				"temp_max": 289.79,
-				"pressure": 1024,
-				"humidity": 73
-			},
-			"visibility": 10000,
-			"wind": {
-				"speed": 1.79,
-				"deg": 102
-			},
-			"clouds": {
-				"all": 37
-			},
-			"dt": 1666782546,
-			"id": 722437,
-			"name": "Bekescsaba"
-		},
-		{
-			"coord": {
-				"lon": 19.0399,
-				"lat": 47.498
-			},
-			"sys": {
-				"country": "HU",
-				"timezone": 7200,
-				"sunrise": 1666761484,
-				"sunset": 1666798640
-			},
-			"weather": [
-				{
-					"id": 803,
-					"main": "Clouds",
-					"description": "broken clouds",
-					"icon": "04d"
-				}
-			],
-			"main": {
-				"temp": 290.4,
-				"feels_like": 290.19,
-				"temp_min": 287.44,
-				"temp_max": 290.41,
-				"pressure": 1022,
-				"humidity": 77
-			},
-			"visibility": 6000,
-			"wind": {
-				"speed": 2.06,
-				"deg": 170
-			},
-			"clouds": {
-				"all": 75
-			},
-			"dt": 1666782557,
-			"id": 3054643,
-			"name": "Budapest"
-		}
-	]
-}
-  """;
-
 }
 

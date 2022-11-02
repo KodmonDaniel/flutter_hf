@@ -22,7 +22,28 @@ extension AppTextStyle on ThemeData {
       fontFamily: 'Poppins',
       fontSize: 24,
       color: AppColors.textBlack,
-      fontWeight: FontWeight.w700
+      fontWeight: FontWeight.w600
+  );
+
+  static TextStyle planeText = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 16,
+      color: AppColors.textBlack,
+      fontWeight: FontWeight.w400
+  );
+
+  static TextStyle cityText = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 18,
+      color: AppColors.textBlack,
+      fontWeight: FontWeight.w600
+  );
+
+  static TextStyle descText = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 18,
+      color: AppColors.textBlack,
+      fontWeight: FontWeight.w400
   );
 
 

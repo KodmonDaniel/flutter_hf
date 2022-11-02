@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'profile_state.dart';
 import 'profile_bloc.dart';
 import 'dart:io' show Platform;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Profile extends DashboardPage {
   const Profile ({Key? key});
@@ -101,7 +102,7 @@ class _ProfileState extends State<Profile> {
   _logoutButton() {
     return ElevatedButton.icon(
         icon: const Icon(Icons.logout, size: 20,),
-        label: Text("appLoca"),
+        label: Text(AppLocalizations.of(context)!.logout),
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.fromLTRB(15, 7.5, 15, 7.5)
         ),

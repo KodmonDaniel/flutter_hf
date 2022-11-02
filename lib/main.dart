@@ -34,6 +34,7 @@ class _AppState extends State<MyApp> {
     return MultiProvider(
         providers: Injector.providers,
         child: MaterialApp(
+          debugShowCheckedModeBanner: true,
           title: "Weather HW",
           theme: AppTheme.primary,
           home: Dashboard(),
