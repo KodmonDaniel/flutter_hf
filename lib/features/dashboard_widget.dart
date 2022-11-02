@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
+import 'package:flutter_hf/features/history/history_widget.dart';
 import 'package:flutter_hf/features/profile/profile_widget.dart';
 import 'package:flutter_hf/features/splash.dart';
 import 'package:flutter_hf/features/weather/weather_bloc.dart';
@@ -35,9 +37,29 @@ class _DashboardState extends State<Dashboard> {
 
   /// Tabs
   late Weather weather;
+  late History history;
   late Profile profile;
 
   int numOfTabs = 3;
+
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
+      Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherRefreshEvent());    //todo role
+        if (false) {
+          Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherSaveEvent());
+        }
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +69,12 @@ class _DashboardState extends State<Dashboard> {
       switch (index) {
         case 1:
           return Tab(const Profile(),
-              AppLocalizations.of(context)!.tab_history,
-              const Icon(Icons.history));
-        case 2:
-          return Tab(const Profile(),
               AppLocalizations.of(context)!.tab_profile,
               const Icon(Icons.supervised_user_circle));
+        case 2:
+          return Tab(const History(),
+              AppLocalizations.of(context)!.tab_history,
+              const Icon(Icons.history));
         default:
           return Tab(const Weather(),
               AppLocalizations.of(context)!.tab_weather,
@@ -63,11 +85,14 @@ class _DashboardState extends State<Dashboard> {
     onUserChanged() {
       Provider.of<DashboardBloc>(context).add(DashboardTabChangeEvent(0));
       Provider.of<WeatherBloc>(context).add(CitiesWeatherRefreshEvent());
-
-
     }
 
-    getDashboard(int currentTab, BuildContext context) {
+    getDashboard(int currentTab, BuildContext context) {//todo roles
+      if (true) {
+        numOfTabs = 3;
+      } else {
+        numOfTabs = 2;
+      }
       return CustomScaffold(
         scaffold: Scaffold(
           bottomNavigationBar: BottomNavigationBar(

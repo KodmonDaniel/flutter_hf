@@ -18,6 +18,16 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       ).catchError((error) {});
     });
 
+    /// Loads weather data from repository
+    on<CitiesWeatherSaveEvent>((event, emit) async {
+      await apiRepository.getWeather(state.cityIdList).then((value) =>
+          emit(state.copyWith(
+              citiesWeatherList: value,
+              isLoading: false
+          ))
+      ).catchError((error) {});
+    });
+
 
   }
 

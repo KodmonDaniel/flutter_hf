@@ -49,7 +49,7 @@ class _WeatherState extends State<Weather> {
                   parallaxEnabled: true,
                   parallaxOffset: .5,
                   body: _map(state),
-                  panelBuilder: (scrollController) => /*_list(state, scrollController)*/_panel(state,context, scrollController),
+                  panelBuilder: (scrollController) => _panel(state,context, scrollController),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(18.0),
                       topRight: Radius.circular(18.0)
@@ -122,8 +122,15 @@ class _WeatherState extends State<Weather> {
           //crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: IconButton(icon: Image.asset("assets/images/icons/${state.citiesWeatherList?[i].weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitHeight), onPressed: () {  },)),
-            // FlutterLogo(), //todo weather icon
+            Expanded(child: IconButton(icon: Image.asset("assets/images/icons/${state.citiesWeatherList?[i].weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitHeight), onPressed: () {
+                  var weatherDetailsBloc = WeatherDetailsBloc(
+                      cityResponse: state.citiesWeatherList![i],
+                      isCelsius: state.isCelsius);
+                  var weatherDetails = WeatherDetails(weatherDetailsBloc);
+                  var route = AppRoute.createRoute(weatherDetails);
+                  Navigator.of(context).push(route);
+              },
+            )),
             Expanded(child: Text("${((state.citiesWeatherList?[i].main?.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).round()}°",/* style: TextStyle(fontWeight: FontWeight.w500)*/style: AppTextStyle.mapTemp))
           ],
         ),
@@ -131,7 +138,7 @@ class _WeatherState extends State<Weather> {
     );
   }
 
-  /// Returns the list of the cities
+
  /* _list(WeatherState state, ScrollController scrollController){
     return  MediaQuery.removePadding(
       context: context,
@@ -175,44 +182,45 @@ class _WeatherState extends State<Weather> {
       );
 
   }*/
-
+  /// Returns the list of the cities
   _actualList(WeatherState state, BuildContext context, ScrollController scrollController) {
-    return Padding(
-        padding:  EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: Expanded(
-              child: RefreshIndicator(
-                  onRefresh: refresh,
-                  child: ListView.builder(
-                    controller: scrollController,
-                    padding: const EdgeInsets.all(16),
-                    itemBuilder: (BuildContext context, int index) {
-                      var length = state.citiesWeatherList?.length ?? 0;
-                      if (length == 0) {
-                        return  Padding(padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+    return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Container(
+            decoration: BoxDecoration(
+                color: AppColors.cardLight,
+                borderRadius: const BorderRadius.only(topRight: Radius.circular(12), topLeft: Radius.circular(12))),
+            child: RefreshIndicator(
+              onRefresh: refresh,
+              child: ListView.builder(
+                controller: scrollController,
+                dragStartBehavior: DragStartBehavior.start,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: const EdgeInsets.fromLTRB(30, 20, 30, 16),
+                itemBuilder: (BuildContext context, int index) {
+                  var length = state.citiesWeatherList?.length ?? 0;
+                  if (length == 0) {
+                    return  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),  //todo
                         child: Center(
                           child: Text(AppLocalizations.of(context)!.list_no_element, style: AppTextStyle.planeText),
                         ));
-                      }
-                      //return _row(state, context, state.citiesWeatherList![index]);
-                      return Container(color: Colors.red, child: Text("WASD!!!! todo skeli\n\n\n"));
-
-                    },
-                    itemCount: () {
-                      var length = state.citiesWeatherList?.length ?? 0;
-                      if (length == 0) {
-                        length = 1;
-                      }
-                      return length;
-                    }(),
-                    dragStartBehavior: DragStartBehavior.start,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                  ),
-              )
+                  }
+                  return _row(state, context, state.citiesWeatherList![index]);
+                },
+                itemCount: () {
+                  var length = state.citiesWeatherList?.length ?? 0;
+                  if (length == 0) {
+                    length = 1;
+                  }
+                  return length;
+                }(),
+              ),
+            ),
           ),
-
-
+        )
     );
   }
 
@@ -314,53 +322,111 @@ class _WeatherState extends State<Weather> {
               ],
             ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: AppColors.cardLight,
-                      borderRadius: const BorderRadius.only(topRight: Radius.circular(12), topLeft: Radius.circular(12))),
-                  child: RefreshIndicator(
-                    onRefresh: refresh,
-                    child: ListView.builder(
-                      controller: scrollController,
-                      dragStartBehavior: DragStartBehavior.start,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                      padding: const EdgeInsets.fromLTRB(30, 20, 30, 16),
-                      itemBuilder: (BuildContext context, int index) {
-                        var length = state.citiesWeatherList?.length ?? 0;
-                        if (length == 0) {
-                          return  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),  //todo
-                              child: Center(
-                                child: Text(AppLocalizations.of(context)!.list_no_element, style: AppTextStyle.planeText),
-                              ));
-                        }
-                        return _row(state, context, state.citiesWeatherList![index]);
-                        },
-                      itemCount: () {
-                        var length = state.citiesWeatherList?.length ?? 0;
-                        if (length == 0) {
-                          length = 1;
-                        }
-                        return length;
-                      }(),
-                    ),
-                  ),
-                ),
-              )
-            ),
+            state.isLoading ? _skeletonList(state) : _actualList(state, context, scrollController)
           ],
         )
     );
   }
 
-  _skeletonList() {
+  _skeletonList(WeatherState state) {
+   return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Container(
+            decoration: BoxDecoration(
+                color: AppColors.cardLight,
+                borderRadius: const BorderRadius.only(topRight: Radius.circular(12), topLeft: Radius.circular(12))),
 
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(30, 20, 30, 16),
+                itemCount: 19,
+                itemBuilder: (context, index) {
+                  return _skeletonRow();
+                },
+              ),
+            ),
+          ),
+    );
+  }
+
+  _skeletonRow() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+      child: Card(
+        elevation: 3,
+        color: AppColors.textWhite,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _skeletonListRowMain(),
+                _skeletonListRowDetails()
+                ],
+              )
+            ],
+          ),
+      ),
+    );
+  }
+
+  _skeletonListRowMain() {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SkeletonAvatar(
+              style: SkeletonAvatarStyle(
+                shape: BoxShape.circle, width: 35, height: 35),
+            ),
+            const SizedBox(width: 15),
+            SkeletonLine(
+              style: SkeletonLineStyle(
+                height: 20,
+                width: 50,
+                alignment: Alignment.centerLeft,
+                borderRadius: BorderRadius.circular(10)
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _skeletonListRowDetails() {
+    return Expanded(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SkeletonLine(
+                  style: SkeletonLineStyle(
+                      height: 20,
+                      width: 100,
+                      alignment: Alignment.center,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SkeletonLine(
+                  style: SkeletonLineStyle(
+                      height: 15,
+                      width: 90,
+                      alignment: Alignment.center,
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                ),              ],
+            ),
+        ),
+    );
   }
 
 
