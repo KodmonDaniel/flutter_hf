@@ -1,26 +1,24 @@
 import 'package:equatable/equatable.dart';
-import '../../repository/api/models/city_response.dart';
+import 'package:flutter_hf/repository/firestore/models/stored_weather.dart';
 
 class HistoryState extends Equatable {
-  final List<CityResponse>? citiesWeatherList;
-  final String cityIdList;
-  final bool isLoading;
+  final List<StoredWeather>? storedWeathers;
   final bool isCelsius;
+  final bool isLoading;
 
   const HistoryState({
-    this.citiesWeatherList,
-    this.cityIdList = "722437,3054643,721472,721239,3052009,3050616,3050434,717582,716935,3046526,3045643,715429,3044760,3044774,715126,3044310,3044082,3042929,3042638",
-    this.isLoading = true,
-    this.isCelsius = true   //todo save secur. storage
+    this.storedWeathers,
+    this.isCelsius = true,   //todo save secur. storage
+    this.isLoading = true
   });
 
   @override
-  List<Object?> get props => [citiesWeatherList, isLoading];
+  List<Object?> get props => [storedWeathers, isLoading];
 
-  HistoryState copyWith({List<CityResponse>? citiesWeatherList, bool? isLoading, bool? isCelsius})
+  HistoryState copyWith({List<StoredWeather>? storedWeathers, bool? isLoading, bool? isCelsius})
   => HistoryState(
-    citiesWeatherList: citiesWeatherList,
-    isLoading: isLoading ?? this.isLoading,
-    isCelsius: isCelsius ?? this.isCelsius
+      storedWeathers: storedWeathers,
+      isLoading: isLoading ?? this.isLoading,
+      isCelsius: isCelsius ?? this.isCelsius
   );
 }

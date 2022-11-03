@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
+import 'package:flutter_hf/features/history/history_bloc.dart';
 import 'package:flutter_hf/features/history/history_widget.dart';
 import 'package:flutter_hf/features/profile/profile_widget.dart';
 import 'package:flutter_hf/features/splash.dart';
@@ -18,6 +19,7 @@ import 'dashboard_bloc.dart';
 import 'package:custom_top_navigator/custom_scaffold.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'history/history_event.dart';
 import 'login/login_widget.dart';
 
 class Dashboard extends StatefulWidget {
@@ -85,6 +87,7 @@ class _DashboardState extends State<Dashboard> {
     onUserChanged() {
       Provider.of<DashboardBloc>(context).add(DashboardTabChangeEvent(0));
       Provider.of<WeatherBloc>(context).add(CitiesWeatherRefreshEvent());
+      Provider.of<HistoryBloc>(context).add(HistoryRefreshEvent());
     }
 
     getDashboard(int currentTab, BuildContext context) {//todo roles

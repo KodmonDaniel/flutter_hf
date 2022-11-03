@@ -418,8 +418,8 @@ class _WeatherState extends State<Weather> {
                 const SizedBox(height: 10),
                 SkeletonLine(
                   style: SkeletonLineStyle(
-                      height: 15,
-                      width: 90,
+                      height: 20,
+                      width: 100,
                       alignment: Alignment.center,
                       borderRadius: BorderRadius.circular(10)
                   ),
@@ -428,8 +428,6 @@ class _WeatherState extends State<Weather> {
         ),
     );
   }
-
-
 }
 
 

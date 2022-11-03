@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_hf/repository/firestore/firestore_repository.dart';
 import '../../repository/api/api_repository.dart';
 import 'weather_state.dart';
 import 'weather_event.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final ApiRepository apiRepository;
+  final FirestoreRepository firestoreRepository;
 
-  WeatherBloc(this.apiRepository) : super(const WeatherState()) {
+  WeatherBloc(this.apiRepository, this.firestoreRepository) : super(const WeatherState()) {
 
     /// Loads weather data from repository
     on<CitiesWeatherRefreshEvent>((event, emit) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
+import 'package:flutter_hf/repository/firestore/models/stored_weather.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +11,12 @@ import 'package:skeletons/skeletons.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../extensions/extension_route.dart';
 import '../../extensions/extension_textstyle.dart';
+import '../../repository/firestore/firestore_repository.dart';
 import '../dashboard_page.dart';
 import 'history_state.dart';
 import 'history_bloc.dart';
 import 'dart:io' show Platform;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_hf/repository/api/models/city_response.dart' as city_model;
 
 class History extends DashboardPage {
   const History ({Key? key}) : super(key: key);
@@ -38,24 +39,35 @@ class _HistoryState extends State<History> {
       child: BlocBuilder<HistoryBloc, HistoryState>(
         builder: (context, state) {
           return Scaffold(
-            body: Stack(
-              alignment: Alignment.topCenter,
-              children: [
+            /*body: StreamBuilder<List<StoredWeather>>(
+              stream:
+            );*/
+
+
+
+
+
+
+
+
+
+
                 ///STACK ELEMENT
-                Padding(
-                  padding: const EdgeInsets.only( top: 145),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/background/rain_bg.png"),
-                            fit: BoxFit.cover
-                        )
-                    ),
-                  ),
-                ),
+               body: Column(
+                 children: [
+               Text("wwwww"),
+          Text(state.storedWeathers?[0].temp.toString() ?? ""),
+          Text(state.storedWeathers?[0].city.toString() ?? ""),
+                   Text("waaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+                   Text(state.storedWeathers?[0].city.toString() ?? ""),
+                   Text(state.storedWeathers?[1].city.toString() ?? ""),
+                   Text(state.storedWeathers?[2].city.toString() ?? ""),
+            Text("wasd"),
+                 ],
+               )
 
                 ///------------
-                Positioned(
+                /*Positioned(
                   top: 0,
                   child: Container(
                     height: 190,
@@ -67,16 +79,59 @@ class _HistoryState extends State<History> {
                         )
                     ),
                   ),
-                ),
-              ],
-            )
+                ),*/
+
+
           );
         }
       )
     );
   }
 
+  _actualList(HistoryState state, BuildContext context/*, ScrollController scrollController*/) {
+    return Expanded(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          child: Container(
+            decoration: BoxDecoration(
+                color: AppColors.cardLight,
+                borderRadius: const BorderRadius.only(topRight: Radius.circular(12), topLeft: Radius.circular(12))),
+            child: RefreshIndicator(
+              onRefresh: refresh,
+              child: ListView.builder(
+                //controller: scrollController,
+                dragStartBehavior: DragStartBehavior.start,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: const EdgeInsets.fromLTRB(30, 20, 30, 16),
+                itemBuilder: (BuildContext context, int index) {
+                  var length = state.storedWeathers?.length ?? 0;
+                  if (length == 0) {
+                    return  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),  //todo
+                        child: Center(
+                          child: Text(AppLocalizations.of(context)!.list_no_element, style: AppTextStyle.planeText),
+                        ));
+                  }
+                  return Text(state.storedWeathers?[1].temp.toString() ?? "");
+                },
+                itemCount: () {
+                  var length = state.storedWeathers?.length ?? 0;
+                  if (length == 0) {
+                    length = 1;
+                  }
+                  return length;
+                }(),
+              ),
+            ),
+          ),
+        )
+    );
+  }
 
+  Future<void> refresh() async {//todo
+    //widget._bloc.add
+  }
 
 
 

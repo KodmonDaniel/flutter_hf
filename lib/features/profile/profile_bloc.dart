@@ -5,5 +5,5 @@ import 'profile_event.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
-  ProfileBloc() : super(const ProfileState(currentTab: 0));
+  ProfileBloc() : super(const ProfileState());
 }
