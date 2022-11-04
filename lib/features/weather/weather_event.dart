@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_hf/repository/api/models/city_response.dart';
+import '../../repository/api/models/city_response.dart';
 
 abstract class WeatherEvent extends Equatable {}
 

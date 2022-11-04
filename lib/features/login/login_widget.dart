@@ -81,7 +81,8 @@ class _LoginState extends State<Login> {
 
 
     final user = FirebaseAuth.instance.currentUser!;
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: " + user.runtimeType!.toString());
+    //print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: " + user.runtimeType!.toString());
+    //todo move to bloc/repo
   }
 
 

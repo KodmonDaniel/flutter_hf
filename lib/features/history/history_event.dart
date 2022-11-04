@@ -8,3 +8,19 @@ class HistoryRefreshEvent extends HistoryEvent {
   @override
   List<Object?> get props => [];
 }
+
+class HistoryChangeSortCategoryEvent extends HistoryEvent {
+  final bool sortByTime;
+  HistoryChangeSortCategoryEvent(this.sortByTime);
+
+  @override
+  List<Object?> get props => [sortByTime];
+}
+
+class HistoryChangeOrderCategoryEvent extends HistoryEvent {
+  final bool sortASC;
+  HistoryChangeOrderCategoryEvent(this.sortASC);
+
+  @override
+  List<Object?> get props => [];
+}

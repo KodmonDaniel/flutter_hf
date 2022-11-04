@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../api/models/city_response.dart';
 
 @JsonSerializable(ignoreUnannotated: true)
 class StoredWeather extends Equatable {
@@ -10,16 +11,14 @@ class StoredWeather extends Equatable {
 
   const StoredWeather({this.city, this.temp, this.icon, this.time});
 
-  //factory CityClouds.fromJson(Map<String, dynamic> json) => _$CityCloudsFromJson(json);
-
-   Map<String, dynamic> toJson() => {
-    'city': city,
-    'temp': temp,
-    'icon': icon,
-    'time': time
+  static Map<String, dynamic> toJson(CityResponse cityResponse) => {
+    'city': cityResponse.name,
+    'temp': cityResponse.main?.temp,
+    'icon': cityResponse.weather?[0].icon,
+    'time': DateTime.now()  //time of device
   };
 
-  static StoredWeather fromJson(Map<String, dynamic> json) => StoredWeather(
+  factory StoredWeather.fromJson(Map<String, dynamic> json) => StoredWeather(
     city: json['city'],
     temp: double.parse(json['temp'].toString()),
     icon: json['icon'],

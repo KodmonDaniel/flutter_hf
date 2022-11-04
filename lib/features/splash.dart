@@ -6,7 +6,7 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     //return SizedBox(width: 10,);
     return Expanded(
-      child: Container(color: Colors.amberAccent,));
+      child: Container(color: Colors.amberAccent,child: Text("wadiuzaggglizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizgizg"),));
   }
 
 }

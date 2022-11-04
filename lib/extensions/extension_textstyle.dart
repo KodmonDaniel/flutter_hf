@@ -46,5 +46,19 @@ extension AppTextStyle on ThemeData {
       fontWeight: FontWeight.w400
   );
 
+  static TextStyle separator = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 20,
+      color: AppColors.textPrimary,
+      fontWeight: FontWeight.w500
+  );
+
+  static TextStyle tabTitle = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 22,
+      color: AppColors.textPrimary,
+      fontWeight: FontWeight.w500
+  );
+
 
 }

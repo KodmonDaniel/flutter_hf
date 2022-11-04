@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/features/weather/weather_details/weather_details_bloc.dart';
 import 'package:flutter_hf/features/weather/weather_details/weather_details_widget.dart';
+import 'package:flutter_hf/features/weather/weather_event.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +61,7 @@ class _WeatherState extends State<Weather> {
                 Positioned(
                   top: 0,
                   child: Container(
-                    height: 190,
+                    height: 200,
                     width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(
                         image: DecorationImage(
@@ -191,9 +192,7 @@ class _WeatherState extends State<Weather> {
             decoration: BoxDecoration(
                 color: AppColors.cardLight,
                 borderRadius: const BorderRadius.only(topRight: Radius.circular(12), topLeft: Radius.circular(12))),
-            child: RefreshIndicator(
-              onRefresh: refresh,
-              child: ListView.builder(
+              child: ListView.builder(     //no refresh indicator, manual refresh not allowed, auto refresh every 1min
                 controller: scrollController,
                 dragStartBehavior: DragStartBehavior.start,
                 scrollDirection: Axis.vertical,
@@ -218,14 +217,9 @@ class _WeatherState extends State<Weather> {
                   return length;
                 }(),
               ),
-            ),
           ),
         )
     );
-  }
-
-  Future<void> refresh() async {//todo
-    //widget._bloc.add
   }
 
   _row(WeatherState state, BuildContext context, city_model.CityResponse cityResponse) {
@@ -236,10 +230,13 @@ class _WeatherState extends State<Weather> {
         color: AppColors.textWhite,
         child: InkWell(
           onTap: () {
+
+            Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherSaveEvent());/* delete dis
+
              var weatherDetailsBloc = WeatherDetailsBloc(cityResponse: cityResponse, isCelsius: state.isCelsius);
              var weatherDetails = WeatherDetails(weatherDetailsBloc);
              var route = AppRoute.createRoute(weatherDetails);
-             Navigator.of(context).push(route);
+             Navigator.of(context).push(route);*/
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

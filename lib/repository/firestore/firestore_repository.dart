@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter_hf/repository/firestore/models/stored_weather.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../api/models/city_response.dart';
 
 class FirestoreRepository {
   FirestoreRepository();
@@ -48,39 +48,22 @@ class FirestoreRepository {
     }
   }
 
+  ///EZJÓ
+  /*Future<List<CartItem>> _getCartList() async {
+    final querySnapshot = await FirebaseFirestore.instance.
+    collection('OrderID').get();
+    List<QueryDocumentSnapshot> docs = querySnapshot.docs;
+    final cartList = docs.map((doc) =>
+        CartItem.fromJson(doc.data())).toList();
+    return cartList;
+  }*/
 
- wasd() {
-   late List<StoredWeather> list = [];
 
-   FirebaseFirestore.instance
-       .collection('weather')
-       .orderBy("time", descending: true)
-       .get()
-       .then((QuerySnapshot querySnapshot) {
-     querySnapshot.docs.forEach((doc) {
-       StoredWeather element = StoredWeather.fromJson(doc.data() as Map<String, dynamic>);
-       list.add(element);
-       print(element.city);
-     });
-   });
+  Future saveWeather(List<CityResponse> listToSave) async {
+     for(CityResponse element in listToSave) {
+      await FirebaseFirestore.instance.collection('weather').doc()
+          .set(StoredWeather.toJson(element));
+    }
  }
-
-
-
-
-
 }
 
-/*
-Stream<List<StoredWeather>> getWeatherList() =>
-    FirebaseFirestore.instance
-        .collection('weather')
-        .orderBy('timestamp', descending: false)
-        .snapshots()
-        .map((snapshot) =>
-        snapshot.docs.map((doc) => StoredWeather.fromJson(doc.data())).toList());
-
-
-*/
-
-//}

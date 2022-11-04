@@ -31,9 +31,9 @@ class _WeatherDetailsState extends State<WeatherDetails> {
               return Scaffold(
                 appBar: AppBar(
                   iconTheme: IconThemeData(
-                    color: AppColors.textPrimary
+                    color: AppColors.textWhite
                   ),
-                  title:  Text(state.cityResponse?.name ?? ""),
+                  title:  Text(state.cityResponse?.name ?? "", style: AppTextStyle.tabTitle,),
                  backgroundColor: AppColors.backgroundDark,
                  /* actions: [
                     IconButton(

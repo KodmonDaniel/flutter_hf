@@ -10,15 +10,25 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
 
     /// Loads weather data from firestore repository
     on<HistoryRefreshEvent>((event, emit) async {
-
-     //firestoreRepository.wasd();
-
       await firestoreRepository.getWeatherList().then((value) =>
           emit(state.copyWith(
             storedWeathers: value,
             isLoading: false
           ))
       ).catchError((error) {});
+    });
+
+    on<HistoryChangeSortCategoryEvent>((event, emit) async {
+      emit(state.copyWith(
+        sortByTime: event.sortByTime,
+      ));
+      print("SORTTIME:" + state.sortByTime.toString());
+    });
+
+    on<HistoryChangeOrderCategoryEvent>((event, emit) async {
+      emit(state.copyWith(
+          sortASC: event.sortASC,
+      ));
     });
   }
 }
