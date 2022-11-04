@@ -10,5 +10,13 @@
     "tab_profile": "Profile",
     "tab_history": "History",
 
-    "list_no_element" : "No available elements"
+    "list_no_element" : "No available elements",
+
+    "history": "History",
+    "history_sort": "Sort by",
+    "history_order": "Order",
+    "sort_city": "City",
+    "sort_time": "Date",
+    "sort_asc": "ASC",
+    "sort_desc": "DESC"
 }
