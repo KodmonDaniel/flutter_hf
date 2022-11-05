@@ -20,14 +20,13 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
 
     on<HistoryChangeSortCategoryEvent>((event, emit) async {
       emit(state.copyWith(
-        sortByTime: event.sortByTime,
+        sortByTime: !state.sortByTime,
       ));
-      print("SORTTIME:" + state.sortByTime.toString());
     });
 
     on<HistoryChangeOrderCategoryEvent>((event, emit) async {
       emit(state.copyWith(
-          sortASC: event.sortASC,
+          sortASC: !state.sortASC,
       ));
     });
   }

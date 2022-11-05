@@ -18,6 +18,10 @@
     "sort_city": "Város",
     "sort_time": "Dátum",
     "sort_asc": "Növ.",
-    "sort_desc": "Csökk."
+    "sort_desc": "Csökk.",
+
+    "profile_credit1": "Készítette",
+    "profile_credit2": "Ködmön Dániél",
+    "profile_credit3": "BME Flutter házi"
 
 }

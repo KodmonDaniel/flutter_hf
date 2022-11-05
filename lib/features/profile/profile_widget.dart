@@ -87,12 +87,13 @@ class _ProfileState extends State<Profile> {
       children: <Widget>[
         Text(user.email ?? "E-mail unknown",style: AppTextStyle.primatyText ),
         const SizedBox(height: 16),
-        Text("data", style: AppTextStyle.primatyText),
-        Text("us", style: AppTextStyle.primatyText),
+
+//todo celsius switch
+
         const SizedBox(height: 16),
-        Text("App by", style: AppTextStyle.primatyText),
-        Text("Ködmön Dániel", style: AppTextStyle.author),
-        Text("BME Flutter homework", style: AppTextStyle.primatyText),
+        Text(AppLocalizations.of(context)!.profile_credit1, style: AppTextStyle.primatyText),
+        Text(AppLocalizations.of(context)!.profile_credit2, style: AppTextStyle.author),
+        Text(AppLocalizations.of(context)!.profile_credit3, style: AppTextStyle.primatyText),
         const SizedBox(height: 24),
         _logoutButton()
       ],

@@ -42,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
   late History history;
   late Profile profile;
 
-  int numOfTabs = 3;
+  int numOfTabs = (true) ? 3 : 2;  //todo role
 
   Timer? timer;
 
@@ -90,16 +90,11 @@ class _DashboardState extends State<Dashboard> {
       Provider.of<HistoryBloc>(context).add(HistoryRefreshEvent());
     }
 
-    getDashboard(int currentTab, BuildContext context) {//todo roles
-      if (true) {
-        numOfTabs = 3;
-      } else {
-        numOfTabs = 2;
-      }
+    getDashboard(int currentTab, BuildContext context) {
       return CustomScaffold(
         scaffold: Scaffold(
           bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: AppColors.textPrimary,  //TODO EXTENSION
+            selectedItemColor: AppColors.textPrimary,
             unselectedItemColor: AppColors.textSecondary,
             elevation: 3,
             currentIndex: currentTab,
@@ -120,16 +115,9 @@ class _DashboardState extends State<Dashboard> {
       );
     }
 
-  /*  return BlocProvider.value(
-      value: Provider.of<DashboardBloc>(context),
-      child: BlocBuilder<DashboardBloc, DashboardState>(
-        builder: (context, state) {
 
-        },
-      ),
-    );*/
+    //todo showDialog az első indításra
 
-    //TODO PELDA: http://api.openweathermap.org/data/2.5/group?id=722437,3054643&appid=522e009a484c7953360917c5a4ec1428
 
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),

@@ -10,16 +10,14 @@ class HistoryRefreshEvent extends HistoryEvent {
 }
 
 class HistoryChangeSortCategoryEvent extends HistoryEvent {
-  final bool sortByTime;
-  HistoryChangeSortCategoryEvent(this.sortByTime);
+  HistoryChangeSortCategoryEvent();
 
   @override
-  List<Object?> get props => [sortByTime];
+  List<Object?> get props => [];
 }
 
 class HistoryChangeOrderCategoryEvent extends HistoryEvent {
-  final bool sortASC;
-  HistoryChangeOrderCategoryEvent(this.sortASC);
+  HistoryChangeOrderCategoryEvent();
 
   @override
   List<Object?> get props => [];

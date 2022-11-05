@@ -94,9 +94,8 @@ class _WeatherState extends State<Weather> {
           ),
           children: [
         TileLayer(
-         /* urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',*/
+          //urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           urlTemplate: "https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png",
-          //userAgentPackageName: 'com.example.app',
         ),
         MarkerLayer(
           markers: [
@@ -139,50 +138,6 @@ class _WeatherState extends State<Weather> {
     );
   }
 
-
- /* _list(WeatherState state, ScrollController scrollController){
-    return  MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: Column(
-       // controller: scrollController,
-        children: [
-          SizedBox(height: 20),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 100,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: AppColors.textSecondary,
-                  borderRadius: const BorderRadius.all(Radius.circular(12)
-                  )
-                ),
-              ),
-              SizedBox(height: 20),
-              //TODO LIST
-
-             // Container(color: Colors.red, child: Text("WASD!!!!!"),),
-           /*   Skeleton(
-                  isLoading: state.isLoading,
-                  skeleton: Container(color: Colors.red, child: Text("WASD!!!! todo skeli"),),
-                  child: _actualList(state, context))
-*/
-              state.isLoading ? Container(color: Colors.red, child: Text("WASD!!!! todo skeli")) : _actualList(state, context, scrollController),
-
-
-            ],
-          ),
-        ],
-      ),
-
-
-
-
-      );
-
-  }*/
   /// Returns the list of the cities
   _actualList(WeatherState state, BuildContext context, ScrollController scrollController) {
     return Expanded(
@@ -202,10 +157,9 @@ class _WeatherState extends State<Weather> {
                 itemBuilder: (BuildContext context, int index) {
                   var length = state.citiesWeatherList?.length ?? 0;
                   if (length == 0) {
-                    return  Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 0),  //todo
-                        child: Center(
-                          child: Text(AppLocalizations.of(context)!.list_no_element, style: AppTextStyle.planeText),
-                        ));
+                    return Center(
+                      child: Text(AppLocalizations.of(context)!.list_no_element, style: AppTextStyle.planeText),
+                    );
                   }
                   return _row(state, context, state.citiesWeatherList![index]);
                 },
@@ -230,13 +184,10 @@ class _WeatherState extends State<Weather> {
         color: AppColors.textWhite,
         child: InkWell(
           onTap: () {
-
-            Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherSaveEvent());/* delete dis
-
              var weatherDetailsBloc = WeatherDetailsBloc(cityResponse: cityResponse, isCelsius: state.isCelsius);
              var weatherDetails = WeatherDetails(weatherDetailsBloc);
              var route = AppRoute.createRoute(weatherDetails);
-             Navigator.of(context).push(route);*/
+             Navigator.of(context).push(route);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
