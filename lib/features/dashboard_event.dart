@@ -6,5 +6,14 @@ class DashboardTabChangeEvent extends DashboardEvent {
   final int currentTab;
   DashboardTabChangeEvent(this.currentTab);
 
-   List<Object?> get props => [currentTab];
+  @override
+  List<Object?> get props => [currentTab];
+}
+
+class DashboardRoleChangeEvent extends DashboardEvent {
+  final String email;
+  DashboardRoleChangeEvent(this.email);
+
+  @override
+  List<Object?> get props => [];
 }

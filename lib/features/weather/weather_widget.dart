@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/features/weather/weather_details/weather_details_bloc.dart';
@@ -89,8 +90,8 @@ class _WeatherState extends State<Weather> {
     return FlutterMap(
           options: MapOptions(
             center: LatLng(47.1, 19.5),
-          //  zoom: Platform.isAndroid ? 6.4 : 10,
-            zoom: 7.2,
+            zoom: kIsWeb ? 10 : 7.2,
+           //zoom: 7.2,
           ),
           children: [
         TileLayer(

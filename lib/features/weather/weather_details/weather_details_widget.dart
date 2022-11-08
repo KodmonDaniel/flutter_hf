@@ -62,7 +62,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 60, top: 32, right: 60, bottom: 32),
                                 child: Card(
-                                  color: AppColors.cardLight,
+                                  color: AppColors.cardDark,
                                   elevation: 3.0,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(4.0)

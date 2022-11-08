@@ -1,4 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_hf/features/dashboard_bloc.dart';
+import 'package:flutter_hf/features/dashboard_event.dart';
+import 'package:flutter_hf/repository/firestore/firestore_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +20,12 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-  final emailInputController = TextEditingController();
+  final nameInputController = TextEditingController();
   final passwordInputController = TextEditingController();
 
   @override
   void dispose() {
-    emailInputController.dispose();
+    nameInputController.dispose();
     passwordInputController.dispose();
 
     super.dispose();
@@ -31,10 +34,11 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
 
-    final _bloc = LoginBloc();
+    //final _bloc = LoginBloc(Provider.of<FirestoreRepository>(context));
 
-    return BlocProvider(
-      create: (_) => _bloc,
+    return BlocProvider.value(
+      value: Provider.of<LoginBloc>(context),
+     // create: (_) => _bloc,
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           return Scaffold(
@@ -45,7 +49,7 @@ class _LoginState extends State<Login> {
 
                   SizedBox(height: 50,),
                   TextField(
-                    controller: emailInputController,
+                    controller: nameInputController,
                     cursorColor: Colors.white,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(labelText: "E-mail"),
@@ -63,7 +67,12 @@ class _LoginState extends State<Login> {
                         minimumSize: Size.fromHeight(50)),
                     icon: const Icon(Icons.lock_clock_outlined),
                     label: Text("LOGIN"), //TODO STYLE
-                    onPressed: _signIn,
+                    onPressed: () async {
+                      //FirestoreRepository.signIn(email: emailInputController.text.trim(), );
+                      //await _bloc.add(LoginSubmitEvent(nameInputController.text.trim(), passwordInputController.text.trim()));
+                      Provider.of<LoginBloc>(context, listen: false).add(LoginSubmitEvent(nameInputController.text.trim(), passwordInputController.text.trim()));
+                      //Provider.of<DashboardBloc>(context, listen: false).add(DashboardRoleChangeEvent(state.userDetails?.admin ?? false));
+                    }
                   )
                 ],
               ),
@@ -73,19 +82,6 @@ class _LoginState extends State<Login> {
       )
     );
   }
-
-  Future _signIn() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailInputController.text.trim(),
-        password: passwordInputController.text.trim());
-
-
-    final user = FirebaseAuth.instance.currentUser!;
-    //print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: " + user.runtimeType!.toString());
-    //todo move to bloc/repo
-  }
-
-
 }
 
 

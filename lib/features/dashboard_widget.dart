@@ -8,6 +8,7 @@ import 'package:flutter_hf/features/splash.dart';
 import 'package:flutter_hf/features/weather/weather_bloc.dart';
 import 'package:flutter_hf/features/weather/weather_event.dart';
 import 'package:flutter_hf/features/weather/weather_widget.dart';
+import 'package:flutter_hf/repository/firestore/models/user_details.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,19 +43,24 @@ class _DashboardState extends State<Dashboard> {
   late History history;
   late Profile profile;
 
-  int numOfTabs = (true) ? 3 : 2;  //todo role
+  // int numOfTabs =  (true) ? 3 : 2;  //todo role nem jegyzi meg ujraindításkor
 
   Timer? timer;
 
   @override
   void initState() {
     super.initState();
+
+    //refresh userdetails
+
     timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
       Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherRefreshEvent());    //todo role
         if (false) {
-          Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherSaveEvent());
+          print("ADMIN WRITE");
+          //Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherSaveEvent());
         }
     });
+
   }
 
   @override
@@ -65,6 +71,8 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+   // print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + (Provider.of<LoginState>(context).userDetails?.admin ?? "").toString());
+    //numOfTabs = (Provider.of<LoginState>(context).userDetails?.admin == true) ? 3 : 2;
     screen = splash;
 
     Tab getTabFromIndex(int index){
@@ -86,11 +94,16 @@ class _DashboardState extends State<Dashboard> {
 
     onUserChanged() {
       Provider.of<DashboardBloc>(context).add(DashboardTabChangeEvent(0));
+      Provider.of<DashboardBloc>(context).add(DashboardRoleChangeEvent(FirebaseAuth.instance.currentUser?.email ?? ""));
       Provider.of<WeatherBloc>(context).add(CitiesWeatherRefreshEvent());
       Provider.of<HistoryBloc>(context).add(HistoryRefreshEvent());
     }
 
-    getDashboard(int currentTab, BuildContext context) {
+    getDashboard(int currentTab, BuildContext context, DashboardState state) {
+      //lekérdez
+      //var booole = Provider.of<LoginState>(context).userDetails?.admin;
+     // print("EZ E ------------------------------------------" + booole.toString());  //külön firestor fv
+      var numOfTabs = (state.isAdmin) ? 3 : 2;
       return CustomScaffold(
         scaffold: Scaffold(
           bottomNavigationBar: BottomNavigationBar(
@@ -100,7 +113,7 @@ class _DashboardState extends State<Dashboard> {
             currentIndex: currentTab,
             backgroundColor: AppColors.backgroundDark,
             items: [
-              for (var i = 0; i < numOfTabs ; i++) BottomNavigationBarItem(
+              for (var i = 0; i < numOfTabs; i++) BottomNavigationBarItem(
                   icon: getTabFromIndex(i).icon,
                   label: getTabFromIndex(i).name
               )
@@ -119,7 +132,7 @@ class _DashboardState extends State<Dashboard> {
     //todo showDialog az első indításra
 
 
-    return StreamBuilder<User?>(
+   return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -129,7 +142,7 @@ class _DashboardState extends State<Dashboard> {
             value: Provider.of<DashboardBloc>(context),
             child: BlocBuilder<DashboardBloc, DashboardState>(
               builder: (context, state) {
-                screen = getDashboard(state.currentTab, context);
+                screen = getDashboard(state.currentTab, context, state);
                 return screen;
               },
             ),

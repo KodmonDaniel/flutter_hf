@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hf/repository/firestore/models/stored_weather.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../api/models/city_response.dart';
+import 'models/user_details.dart';
 
 class FirestoreRepository {
   FirestoreRepository();
@@ -10,9 +12,17 @@ class FirestoreRepository {
   final citiesResponseController = StreamController<List<StoredWeather>?>.broadcast();
   Stream<List<StoredWeather>?> get cityResponse => citiesResponseController.stream;
 
+  final userDetailsController = StreamController<UserDetails?>.broadcast();
+  Stream<UserDetails?> get userDetails => userDetailsController.stream;
+
+  final userRoleController = StreamController<bool?>.broadcast();
+  Stream<bool?> get userRole => userRoleController.stream;
+
   /// Dispose
   void dispose(){
     citiesResponseController.close();
+    userDetailsController.close();
+    userRoleController.close();
   }
 
   /// Gets saved city weather data from firestore
@@ -48,5 +58,51 @@ class FirestoreRepository {
           .set(StoredWeather.toJson(element));
     }
  }
+
+
+
+ Future<UserDetails?> getUserDetails(String name) async {
+   var completer = Completer<UserDetails?>();
+   try {
+     FirebaseFirestore firestore = FirebaseFirestore.instance;
+     final querySnapshot = await firestore.collection('users').where('username', isEqualTo: name).get();
+     var details = UserDetails.fromJson(querySnapshot.docs.first.data());
+
+     print(details.username);
+     print(details.email);
+     print(details.admin);
+
+     userDetailsController.sink.add(details);
+     completer.complete(details);
+     return completer.future;
+   } catch (error) {
+     print(error.toString() + "    <---");
+     completer.complete(null);
+     return completer.future;
+   }
+ }
+
+  Future<bool?> getRole(String email) async {
+    var completer = Completer<bool?>();
+    try {
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final querySnapshot = await firestore.collection('users').where('email', isEqualTo: email).get();
+      var details = UserDetails.fromJson(querySnapshot.docs.first.data());
+       var role = details.admin;
+
+      userRoleController.sink.add(role);
+      completer.complete(role);
+      return completer.future;
+    } catch (error) {
+      print(error.toString() + "    <---");
+      completer.complete(null);
+      return completer.future;
+    }
+  }
+
+  Future signIn(String email, String pwd) async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email, password: pwd);
+  }
 }
 

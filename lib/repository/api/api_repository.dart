@@ -58,7 +58,7 @@ class ApiRepository {
     var headers = await _headers(endpoint);
 
     if(endpoint.method == HttpMethod.get){
-      http.Response resp = await http.get(Uri.parse(endpoint.url + "?" + makeQuery(params)), headers: headers);
+      http.Response resp = await http.get(Uri.parse("${endpoint.url}?${makeQuery(params)}"), headers: headers);
       response = resp;
     }
 

@@ -1,17 +1,21 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_hf/repository/firestore/models/user_details.dart';
 
 class LoginState extends Equatable {
-  final int currentTab;
+  final UserDetails? userDetails;
+  final bool isLoading;
 
   const LoginState({
-    this.currentTab = 0
+    this.userDetails,
+    this.isLoading = true
   });
 
   @override
-  List<Object?> get props => [currentTab];
+  List<Object?> get props => [userDetails, isLoading];
 
-  LoginState copyWith({int? currentTab})
+  LoginState copyWith({UserDetails? userDetails, bool? isLoading})
   => LoginState(
-      currentTab: currentTab ?? this.currentTab
+      userDetails: userDetails ?? this.userDetails,
+      isLoading: isLoading ?? this.isLoading
   );
 }
