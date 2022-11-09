@@ -41,6 +41,7 @@ class _LoginSignupState extends State<LoginSignup> {
         create: (_) => widget._bloc,
       child: BlocBuilder<LoginSignupBloc, LoginSignupState>(
         builder: (context, state) {
+          print(state.successSignup.toString());
           return Scaffold(
             body: Center(
               child: Padding(
@@ -82,7 +83,8 @@ class _LoginSignupState extends State<LoginSignup> {
                         autocorrect: false,
                         decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!.password,
-                          errorText: (state.isEmptyField) ? "" : null,
+                          errorText: (state.isEmptyField) ? "" : (state.isPwdShort)
+                              ? AppLocalizations.of(context)!.signup_pwd_short : null,
                           hintStyle: TextStyle(fontSize: 16),
                             border: AppTextField.normalBorder,
                             errorBorder: AppTextField.errorBorder,
@@ -129,7 +131,8 @@ class _LoginSignupState extends State<LoginSignup> {
                           hintStyle: TextStyle(fontSize: 16),
                           border: AppTextField.normalBorder,
                           errorBorder: AppTextField.errorBorder,
-                        ///  errorText: (state.isUsernameError) ? AppLocalizations.of(context)!.sa : null,
+                          errorText: (state.isEmptyField) ? "" : (state.isEmailSyntaxError)
+                              ? AppLocalizations.of(context)!.signup_wrong_email : null,
                           filled: true,
                           contentPadding: const EdgeInsets.all(16),
                         ),

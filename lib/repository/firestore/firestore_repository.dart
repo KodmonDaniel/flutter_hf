@@ -106,5 +106,22 @@ class FirestoreRepository {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email, password: pwd);
   }
+
+  Future<bool?> signUp(String name, String pwd, String email, bool isAdmin) async {
+    print("signup");
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: pwd);
+
+      await FirebaseFirestore.instance.collection('users').doc()
+          .set(<String, dynamic>{
+        'username': name,
+        'email': email,
+        'admin': isAdmin
+      });
+      return true;
+    } catch (error) {return false;}
+  }
 }
 

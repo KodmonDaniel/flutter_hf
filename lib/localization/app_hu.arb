@@ -16,6 +16,7 @@
     "signup_pwd_mismatch" : "Nem egyeznek a jelszavak",
     "signup_wrong_email" : "Érvénytelen e-mail",
     "signup_fill_all_fields" : "Minden mező kitöltése kötelező",
+    "signup_pwd_short" : "Legalább 6 karakter hoszúnak kell lennie",
 
     "signup_basic": "Sima",
     "signup_admin": "Admin",

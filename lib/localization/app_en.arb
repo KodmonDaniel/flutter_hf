@@ -16,6 +16,7 @@
     "signup_pwd_mismatch" : "Passwords do not match",
     "signup_wrong_email" : "Enter valid e-mail",
     "signup_fill_all_fields" : "Fill all fields",
+    "signup_pwd_short" : "Needs to be at least 6 characters long",
 
     "signup_basic": "Basic",
     "signup_admin": "Admin",

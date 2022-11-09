@@ -14,7 +14,8 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
 
       emit(state.copyWith(
           isLoading: true,
-          //isPwdVisible: false,
+          isEmailSyntaxError: false,
+          isPwdShort: false,
           isEmptyField: false,
           isPwdMismatch: false,
           isUsernameNotAvailable: false,
@@ -28,11 +29,29 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
           event.pwdAgain != "" &&
           event.email != "") {
         if (isUsernameFree) {                 // free username
-          if (event.pwd == event.pwdAgain) {  // PWD mismatch
-            //TODO ALL OK
-
-            print(event.isAdmin.toString()+"????????????????????");
-
+          if (event.pwd == event.pwdAgain) { // PWD mismatch
+            if (event.pwd.length > 5) {
+              if (_validEmail(event.email)) { // email syntax
+                await firestoreRepository.signUp(
+                    event.name, event.pwd, event.email, event.isAdmin).then((
+                    value) =>
+                    emit(state.copyWith(
+                        successSignup: value,
+                        isLoading: false
+                    ))
+                ).catchError((error) {});
+              } else {
+                emit(state.copyWith(
+                  isEmailSyntaxError: true,
+                  isLoading: false,
+                ));
+              }
+            } else {
+            emit(state.copyWith(
+              isPwdShort: true,
+              isLoading: false,
+            ));
+            }
           } else {
             emit(state.copyWith(
               isPwdMismatch: true,
@@ -64,5 +83,10 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
           isAdminSet: !(state.isAdminSet)
       ));
     });
+  }
+
+  bool _validEmail(String email) {
+    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
   }
 }
