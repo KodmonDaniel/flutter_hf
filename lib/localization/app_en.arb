@@ -2,9 +2,26 @@
     "app_name": "WeatherHW",
 
     "login": "Login",
-    "login_email": "E-mail",
-    "login_pwd": "Password",
+    "username": "Username",
+    "password": "Password",
+    "password_again": "Password again",
+    "signup": "Sign up",
+    "email": "E-mail",
+    "permission": "Permission",
+    "back": "Back",
+    "no_account": "No account yet?",
     "logout": "Logout",
+
+    "signup_username_not_available" : "Username is not available",
+    "signup_pwd_mismatch" : "Passwords do not match",
+    "signup_wrong_email" : "Enter valid e-mail",
+    "signup_fill_all_fields" : "Fill all fields",
+
+    "signup_basic": "Basic",
+    "signup_admin": "Admin",
+
+    "login_uname_error": "Username does not exist",
+    "login_pwd_error": "Wrong password",
 
     "tab_weather": "Weather",
     "tab_profile": "Profile",

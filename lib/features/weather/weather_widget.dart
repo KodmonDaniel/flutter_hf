@@ -230,7 +230,7 @@ class _WeatherState extends State<Weather> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(cityResponse.name ?? "", style: AppTextStyle.cityText),
+                Text(cityResponse.name ?? "", style: AppTextStyle.mainText),
                 Text(cityResponse.weather?[0].main ?? "", style: AppTextStyle.descText),
               ],
             )

@@ -32,7 +32,7 @@ extension AppTextStyle on ThemeData {
       fontWeight: FontWeight.w400
   );
 
-  static TextStyle cityText = TextStyle(
+  static TextStyle mainText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 18,
       color: AppColors.textBlack,
@@ -58,6 +58,27 @@ extension AppTextStyle on ThemeData {
       fontSize: 22,
       color: AppColors.textPrimary,
       fontWeight: FontWeight.w500
+  );
+
+  static TextStyle btnText = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 18,
+      color: AppColors.textWhite,
+      fontWeight: FontWeight.w500
+  );
+
+  static TextStyle signUp = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 16,
+      color: AppColors.textPrimaryDarker,
+      fontWeight: FontWeight.w600
+  );
+
+  static TextStyle bigTitle = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 48,
+      color: AppColors.textBlack,
+      fontWeight: FontWeight.w600
   );
 
 

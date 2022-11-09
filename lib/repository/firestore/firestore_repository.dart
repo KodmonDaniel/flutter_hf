@@ -59,29 +59,31 @@ class FirestoreRepository {
     }
  }
 
+  /// Get the user details from a usernape or an email
+   Future<UserDetails?> getUserDetails(String? name, String? email) async {
+     var completer = Completer<UserDetails?>();
+     try {
+       FirebaseFirestore firestore = FirebaseFirestore.instance;
+      late dynamic querySnapshot;
+      if (name != null) { querySnapshot = await firestore.collection('users').where('username', isEqualTo: name).get();}
+      else if (email != null) { querySnapshot = await firestore.collection('users').where('email', isEqualTo: email).get();}
 
+       //final querySnapshot = await firestore.collection('users').where('username', isEqualTo: name).get();
+       var details = UserDetails.fromJson(querySnapshot.docs.first.data());
 
- Future<UserDetails?> getUserDetails(String name) async {
-   var completer = Completer<UserDetails?>();
-   try {
-     FirebaseFirestore firestore = FirebaseFirestore.instance;
-     final querySnapshot = await firestore.collection('users').where('username', isEqualTo: name).get();
-     var details = UserDetails.fromJson(querySnapshot.docs.first.data());
+       print(details.username);
+       print(details.email);
+       print(details.admin);
 
-     print(details.username);
-     print(details.email);
-     print(details.admin);
-
-     userDetailsController.sink.add(details);
-     completer.complete(details);
-     return completer.future;
-   } catch (error) {
-     print(error.toString() + "    <---");
-     completer.complete(null);
-     return completer.future;
+       userDetailsController.sink.add(details);
+       completer.complete(details);
+       return completer.future;
+     } catch (error) {
+       completer.complete(null);
+       return completer.future;
+     }
    }
- }
-
+/*
   Future<bool?> getRole(String email) async {
     var completer = Completer<bool?>();
     try {
@@ -98,7 +100,7 @@ class FirestoreRepository {
       completer.complete(null);
       return completer.future;
     }
-  }
+  }*/
 
   Future signIn(String email, String pwd) async{
     await FirebaseAuth.instance.signInWithEmailAndPassword(

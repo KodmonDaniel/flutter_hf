@@ -2,9 +2,26 @@
     "app_name": "WeatherHW",
 
     "login": "Bejelentkezés",
-    "login_email": "E-mail",
-    "login_pwd": "Jelszó",
+    "username": "Felhasználónév",
+    "password": "Jelszó",
+    "password_again": "Jelszó újra",
+    "signup": "Regisztráció",
+    "email": "E-mail",
+    "permission": "Jogosultság",
+    "back": "Vissza",
+    "no_account": "Még nincs fiókja?",
     "logout": "Kijelentkezés",
+
+    "signup_username_not_available" : "Felhasználónév foglalt",
+    "signup_pwd_mismatch" : "Nem egyeznek a jelszavak",
+    "signup_wrong_email" : "Érvénytelen e-mail",
+    "signup_fill_all_fields" : "Minden mező kitöltése kötelező",
+
+    "signup_basic": "Sima",
+    "signup_admin": "Admin",
+
+    "login_uname_error": "Felhasználónév nem létezik",
+    "login_pwd_error": "Hibás jelszó",
 
     "tab_weather": "Időjárás",
     "tab_profile": "Profil",

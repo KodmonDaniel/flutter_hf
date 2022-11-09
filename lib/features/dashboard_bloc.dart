@@ -1,14 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../repository/api/api_repository.dart';
 import '../repository/firestore/firestore_repository.dart';
 import 'dashboard_state.dart';
 import 'dashboard_event.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final FirestoreRepository firestoreRepository;
+ // final UserDetails userDetails;
 
-  DashboardBloc(this.firestoreRepository) : super(const DashboardState(currentTab: 0)) {
+  DashboardBloc(this.firestoreRepository/*, this.userDetails*/) : super(const DashboardState(currentTab: 0)) {
 
     on<DashboardTabChangeEvent>((event, emit) {
       emit(state.copyWith(
@@ -16,14 +16,19 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       ));
     });
 
-    on<DashboardRoleChangeEvent>((event, emit) async {
-      await firestoreRepository.getRole(event.email).then((value) =>
+    on<DashboardUserDetailsChangeEvent>((event, emit) async {
           emit(state.copyWith(
-              isAdmin: value
+              userDetails: event.userDetails
+          ));
+    });
 
+    on<DashboardUserDetailsReloadEvent>((event, emit) async {
+      await firestoreRepository.getUserDetails(null, event.email).then((value) =>
+          emit(state.copyWith(
+              userDetails: value
           ))
       ).catchError((error) {
       });
     });
-  }
-}
+
+}}

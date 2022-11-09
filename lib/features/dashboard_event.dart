@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_hf/repository/firestore/models/user_details.dart';
 
 abstract class DashboardEvent extends Equatable {}
 
@@ -10,9 +11,17 @@ class DashboardTabChangeEvent extends DashboardEvent {
   List<Object?> get props => [currentTab];
 }
 
-class DashboardRoleChangeEvent extends DashboardEvent {
+class DashboardUserDetailsChangeEvent extends DashboardEvent {
+  final UserDetails userDetails;
+  DashboardUserDetailsChangeEvent(this.userDetails);
+
+  @override
+  List<Object?> get props => [];
+}
+
+class DashboardUserDetailsReloadEvent extends DashboardEvent {
   final String email;
-  DashboardRoleChangeEvent(this.email);
+  DashboardUserDetailsReloadEvent(this.email);
 
   @override
   List<Object?> get props => [];

@@ -10,3 +10,11 @@ class LoginSubmitEvent extends LoginEvent {
   @override
   List<Object?> get props => [];
 }
+
+class LoginPwdHiddenEvent extends LoginEvent {
+  LoginPwdHiddenEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+

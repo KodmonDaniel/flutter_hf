@@ -10,9 +10,12 @@ extension AppColors on ThemeData {
   static Color backgroundDark2 = const Color(0xFF58585A);
 
   static Color textPrimary = const Color(0xFF69CCAE);
+  static Color textPrimaryDarker = const Color(0xFF227964);
   static Color textSecondary = const Color(0xFFA0A0A3);
   static Color textBlack = const Color(0xFF101010);
   static Color textWhite = const Color(0xFFFFFFFF);
+
+  static Color errorRed = const Color(0xFFF65858);
 
   static Color cardDark = const Color(0xBF323232);
   static Color cardGrey = const Color(0xBF4C4C4C);

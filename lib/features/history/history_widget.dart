@@ -233,7 +233,7 @@ class _HistoryState extends State<History> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(element.city ?? "", style: AppTextStyle.cityText),
+                Text(element.city ?? "", style: AppTextStyle.mainText),
                 Text(DateFormat('yyyy-MMM-dd').format(element.time!).toString(), style: AppTextStyle.descText),
                 Text(DateFormat('kk:mm').format(element.time!).toString(), style: AppTextStyle.descText.copyWith(fontSize: 16)),
               ],
