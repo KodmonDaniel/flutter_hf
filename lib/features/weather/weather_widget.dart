@@ -30,7 +30,7 @@ class Weather extends DashboardPage {
 class _WeatherState extends State<Weather> {
 
   double panelOpenedHeight = 0;
-  double panelClosedHeight = 95.5;
+  double panelClosedHeight = 45;
 
   @override
   Widget build(BuildContext context) {

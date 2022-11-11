@@ -33,8 +33,8 @@ class ApiRepository {
 
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-      model = "${androidDeviceInfo.manufacturer ?? "unknown manufacturer"} ${androidDeviceInfo.model ?? "unknown model"}";
-      os = (androidDeviceInfo.version.codename ?? "unknown sdk");
+      model = "${androidDeviceInfo.manufacturer} ${androidDeviceInfo.model}";
+      os = (androidDeviceInfo.version.codename);
     }
     if(kIsWeb){
       WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
@@ -43,12 +43,12 @@ class ApiRepository {
     }
 
     return {
-      //Authorization: accessToken  //for future use if needed
+      //Authorization: accessToken  // for future use if needed OpenWeatherAPI doesn't need it
       "platform": Platform.operatingSystem,
       "app": "$appName $version",
       "model": model,
       "os": os,
-      if (endpoint.method == HttpMethod.put) "Content-Type": "application/json"  //for future use, not yet needed
+      if (endpoint.method == HttpMethod.put) "Content-Type": "application/json"  // for future use, not yet needed
     };
   }
 
@@ -65,21 +65,21 @@ class ApiRepository {
     // POST, PUT here for future use, not yet needed
 
     if(response.statusCode == 401){
-      return baseRequest<T>(endpoint, params, parser);
+      return baseRequest<T>(endpoint, params, parser);  // retry
     }
 
     var jsonString = json.decode(response.body);
     dynamic completer;
     dynamic parsed;
 
-    if(jsonString['list'] is List){    //List response
+    if(jsonString['list'] is List){    // List response
       completer = Completer<List<T>>();
       var tmpList = <T>[];
       for (var i = 0; i < jsonString['cnt']; i++){
         tmpList.add(parser(jsonString['list'][i]));
       }
       parsed = tmpList;
-    } else {  // single object response
+    } else {  // single object response, later use
       completer = Completer<T>();
       parsed = parser(jsonString);
     }

@@ -67,11 +67,18 @@ extension AppTextStyle on ThemeData {
       fontWeight: FontWeight.w500
   );
 
-  static TextStyle signUp = TextStyle(
+  static TextStyle miniBtnText = TextStyle(
       fontFamily: 'Poppins',
-      fontSize: 16,
+      fontSize: 18,
       color: AppColors.textPrimaryDarker,
       fontWeight: FontWeight.w600
+  );
+
+  static TextStyle miniText = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 16,
+      color: AppColors.textBlack,
+      fontWeight: FontWeight.w400
   );
 
   static TextStyle bigTitle = TextStyle(
@@ -79,6 +86,14 @@ extension AppTextStyle on ThemeData {
       fontSize: 48,
       color: AppColors.textBlack,
       fontWeight: FontWeight.w600
+  );
+
+
+  static TextStyle signupAlertText = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 28,
+      color: AppColors.textWhite,
+      fontWeight: FontWeight.w500
   );
 
 

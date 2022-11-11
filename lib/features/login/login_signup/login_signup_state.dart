@@ -9,7 +9,7 @@ class LoginSignupState extends Equatable {
   final bool isPwdShort;
   final bool isPwdHidden;
   final bool isAdminSet;
-  final bool? successSignup;
+  final bool? successSignup;  // 0 = no state, 1 = failed, 2 = success  todo nem kell ez medoldva
 
 
   const LoginSignupState({

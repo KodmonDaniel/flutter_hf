@@ -413,6 +413,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.5.4"
+  jumping_dot:
+    dependency: "direct main"
+    description:
+      name: jumping_dot
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   latlong2:
     dependency: "direct main"
     description:
@@ -567,6 +574,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  rounded_loading_button:
+    dependency: "direct main"
+    description:
+      name: rounded_loading_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.27.5"
   shelf:
     dependency: transitive
     description:

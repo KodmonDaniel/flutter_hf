@@ -15,8 +15,17 @@ extension AppTextField on TextField {
 
   static OutlineInputBorder normalBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(30),
-    borderSide: const BorderSide(
-      width: 5,
+    borderSide: BorderSide(
+      width: 2,
+      color: AppColors.textBlack
+    ),
+  );
+
+  static OutlineInputBorder disabledBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(30),
+    borderSide: BorderSide(
+      width: 2,
+      color: AppColors.lightGrey
     ),
   );
 
