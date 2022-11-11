@@ -4,14 +4,21 @@ import 'package:flutter_hf/extensions/extension_colors.dart';
 extension AppTextStyle on ThemeData {
 
   /// Text style extension
-  static TextStyle primatyText = TextStyle(
+  static TextStyle primaryText = TextStyle(
     fontFamily: 'Poppins',
-    fontSize: 16,
+    fontSize: 18,
     color: AppColors.textSecondary,
     fontWeight: FontWeight.w400
   );
 
-  static TextStyle author = TextStyle(
+  static TextStyle primaryText2 = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 20,
+      color: AppColors.textSecondary,
+      fontWeight: FontWeight.w500
+  );
+
+  static TextStyle primarySizedText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 24,
       color: AppColors.textSecondary,
@@ -36,6 +43,13 @@ extension AppTextStyle on ThemeData {
       fontFamily: 'Poppins',
       fontSize: 18,
       color: AppColors.textBlack,
+      fontWeight: FontWeight.w600
+  );
+
+  static TextStyle usernameText = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 28,
+      color: AppColors.textSecondary,
       fontWeight: FontWeight.w600
   );
 
@@ -87,7 +101,6 @@ extension AppTextStyle on ThemeData {
       color: AppColors.textBlack,
       fontWeight: FontWeight.w600
   );
-
 
   static TextStyle signupAlertText = TextStyle(
       fontFamily: 'Poppins',

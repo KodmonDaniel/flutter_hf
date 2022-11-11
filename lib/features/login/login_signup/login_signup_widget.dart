@@ -1,12 +1,10 @@
 import 'dart:ui';
-
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/extensions/extension_textstyle.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../../../extensions/extension_gradient.dart';
 import '../../../extensions/extension_textfield.dart';
@@ -30,8 +28,6 @@ class _LoginSignupState extends State<LoginSignup> {
   final passwordRepeatInputController = TextEditingController();
   final emailInputController = TextEditingController();
 
-  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
-
   @override
   void dispose() {
     nameInputController.dispose();
@@ -47,11 +43,9 @@ class _LoginSignupState extends State<LoginSignup> {
         create: (_) => widget._bloc,
         child: BlocBuilder<LoginSignupBloc, LoginSignupState>(
           builder: (context, state) {
-            if (!state.isLoading) _btnController.reset();
             return Scaffold(
                 body: Stack(
                     children: <Widget>[
-
                       Container(
                         decoration: const BoxDecoration(
                             image: DecorationImage(
@@ -160,14 +154,14 @@ class _LoginSignupState extends State<LoginSignup> {
                                   ToggleSwitch(
                                     minWidth: 100,
                                     cornerRadius: 20,
-                                    activeBgColors: [[AppColors.textPrimary], [AppColors.textPrimary]],
-                                    activeFgColor: AppColors.backgroundDark,
+                                    activeBgColor: [AppColors.tealColor3],
+                                    activeFgColor: AppColors.textWhite,
                                     inactiveBgColor: AppColors.lightGrey,
                                     inactiveFgColor: AppColors.backgroundDark,
                                     fontSize: 16,
                                     initialLabelIndex: state.isAdminSet ? 1 : 0,
                                     totalSwitches: 2,
-                                    labels:  [AppLocalizations.of(context)!.signup_basic, AppLocalizations.of(context)!.signup_admin],
+                                    labels:  [AppLocalizations.of(context)!.basic, AppLocalizations.of(context)!.admin],
                                     radiusStyle: true,
                                     onToggle: (index) {
                                       state.isLoading ? null : widget._bloc.add(LoginSignupRoleSwitchChangeEvent());
@@ -244,13 +238,13 @@ class _LoginSignupState extends State<LoginSignup> {
                                             ),
                                           ),
                                         ),
-                                      )),
+                                      )
+                                  ),
 
-                                  const SizedBox(height: 20,),
-
+                                  const SizedBox(height: 20),
 
                                   IconButton(
-                                    icon: const Icon(Icons.arrow_back_ios_new_outlined),
+                                    icon: Icon(Icons.arrow_back_ios_new_outlined, color: AppColors.backgroundDark),
                                     onPressed: () => Navigator.of(context).pop(),
                                   ),
 

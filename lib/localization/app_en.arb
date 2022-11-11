@@ -18,8 +18,9 @@
     "signup_fill_field" : "Fill in this field",
     "signup_pwd_short" : "Needs to be at least 6 characters long",
 
-    "signup_basic": "Basic",
-    "signup_admin": "Admin",
+    "basic": "Basic",
+    "admin": "Admin",
+    "user": " user",
 
     "login_uname_error": "Username does not exist",
     "login_pwd_error": "Wrong password",

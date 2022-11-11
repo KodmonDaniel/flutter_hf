@@ -103,7 +103,19 @@ class _WeatherDetailsState extends State<WeatherDetails> {
         Column(
           children: [
 
-            Text("${double.parse(((state.cityResponse?.main?.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).toStringAsFixed(1))}°", style: AppTextStyle.mapTemp.copyWith(color: AppColors.textWhite)),
+
+
+            Text(state.isCelsius
+                ? "${((state.cityResponse?.main?.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
+                : "${(((state.cityResponse?.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
+              style: AppTextStyle.mainText,
+            ),
+
+
+
+
+
+           // Text("${double.parse(((state.cityResponse?.main?.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).toStringAsFixed(1))}°", style: AppTextStyle.mapTemp.copyWith(color: AppColors.textWhite)),
            const SizedBox(height: 10),
             Text(state.cityResponse?.name ?? "?", style: AppTextStyle.mainText.copyWith(color: AppColors.textWhite)),
           ],

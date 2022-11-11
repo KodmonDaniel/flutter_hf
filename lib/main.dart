@@ -37,12 +37,8 @@ class _AppState extends State<MyApp> {
           debugShowCheckedModeBanner: true,
           title: "Weather HW",
           theme: AppTheme.primary,
-         // home: const Dashboard(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-
-
-
           home:  StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {

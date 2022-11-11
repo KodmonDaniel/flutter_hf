@@ -10,7 +10,7 @@ class HistoryState extends Equatable {
 
   const HistoryState({
     this.storedWeathers,
-    this.isCelsius = true,    //todo save secur. storage
+    this.isCelsius = true,    // default value, overridden by secure storage at init.
     this.isLoading = true,
     this.sortByTime = true,
     this.sortASC = true

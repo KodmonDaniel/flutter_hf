@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/features/weather/weather_details/weather_details_bloc.dart';
 import 'package:flutter_hf/features/weather/weather_details/weather_details_widget.dart';
-import 'package:flutter_hf/features/weather/weather_event.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ import '../../extensions/extension_textstyle.dart';
 import '../dashboard_page.dart';
 import 'weather_state.dart';
 import 'weather_bloc.dart';
-import 'dart:io' show Platform;
+//import 'dart:io' show Platform;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hf/repository/api/models/city_response.dart' as city_model;
 
@@ -91,7 +90,6 @@ class _WeatherState extends State<Weather> {
           options: MapOptions(
             center: LatLng(47.1, 19.5),
             zoom: kIsWeb ? 10 : 7.2,
-           //zoom: 7.2,
           ),
           children: [
         TileLayer(
@@ -103,7 +101,7 @@ class _WeatherState extends State<Weather> {
             for (var i = 0; i < (state.citiesWeatherList?.length ?? 0); i++)
             Marker(
               point: LatLng(state.citiesWeatherList?[i].coord?.lat ?? 0, state.citiesWeatherList?[i].coord?.lon ?? 0),
-              width: 50,
+              width: state.isCelsius ? 50 : 55,
               height: 70,
               builder: (context) => _cityMarker(state, i)
             ),
@@ -120,7 +118,6 @@ class _WeatherState extends State<Weather> {
       child: Container(
         color: AppColors.cardLight,
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(child: IconButton(icon: Image.asset("assets/images/icons/${state.citiesWeatherList?[i].weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitHeight), onPressed: () {
@@ -132,7 +129,13 @@ class _WeatherState extends State<Weather> {
                   Navigator.of(context).push(route);
               },
             )),
-            Expanded(child: Text("${((state.citiesWeatherList?[i].main?.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).round()}°",/* style: TextStyle(fontWeight: FontWeight.w500)*/style: AppTextStyle.mapTemp))
+            Expanded(
+              child: Text(state.isCelsius
+                ? "${((state.citiesWeatherList?[i].main?.temp ?? 0) - 273.15).toStringAsFixed(0)}°"
+                : "${(((state.citiesWeatherList?[i].main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(0)}°",
+              style: AppTextStyle.mapTemp,
+              )
+            )
           ],
         ),
       ),
@@ -216,7 +219,15 @@ class _WeatherState extends State<Weather> {
           children: [
             Image.asset("assets/images/icons/${cityResponse.weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitWidth, width: 35),
             const SizedBox(width: 15),
-            Text("${double.parse(((cityResponse.main?.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).toStringAsFixed(1))}°", style: AppTextStyle.mapTemp)
+            //Text("${double.parse(((cityResponse.main?.temp ?? 0) - (state.isCelsius ? 273.15 : 457.87) ).toStringAsFixed(1))}°", style: AppTextStyle.mapTemp)
+
+
+            Text(state.isCelsius
+                ? "${((cityResponse.main?.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
+                : "${(((cityResponse.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
+              style: AppTextStyle.mapTemp,
+            ),
+
           ],
         ),
       ),

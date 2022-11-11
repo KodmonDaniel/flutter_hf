@@ -1,10 +1,8 @@
 import 'package:flutter_hf/features/dashboard_bloc.dart';
 import 'package:flutter_hf/features/history/history_bloc.dart';
-import 'package:flutter_hf/features/login/login_state.dart';
 import 'package:flutter_hf/features/weather/weather_bloc.dart';
 import 'package:flutter_hf/repository/api/api_repository.dart';
 import 'package:flutter_hf/repository/firestore/firestore_repository.dart';
-import 'package:flutter_hf/repository/firestore/models/user_details.dart';
 import 'package:provider/provider.dart';
 import 'features/login/login_bloc.dart';
 import 'features/profile/profile_bloc.dart';
@@ -18,17 +16,13 @@ class Injector {
     Provider<WeatherBloc>(create: (_) => blocWeather),
     Provider<HistoryBloc>(create: (_) => blocHistory),
     Provider<ProfileBloc>(create: (_) => blocProfile),
-
-   // Provider<UserDetails>(create: (_) => userDetails),
   ];
 
   static final apiRepository = ApiRepository();
   static final firestoreRepository = FirestoreRepository();
   static final blocLogin = LoginBloc(firestoreRepository);
-  static final blocDashboard = DashboardBloc(firestoreRepository/*, userDetails*/);
+  static final blocDashboard = DashboardBloc(firestoreRepository);
   static final blocWeather = WeatherBloc(apiRepository, firestoreRepository);
   static final blocHistory = HistoryBloc(firestoreRepository);
-  static final blocProfile = ProfileBloc();
-
-  //static final userDetails = UserDetails();
+  static final blocProfile = ProfileBloc(firestoreRepository);
 }

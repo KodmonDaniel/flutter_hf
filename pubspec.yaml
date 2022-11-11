@@ -50,12 +50,16 @@ dependencies:
   json_annotation: ^4.7.0
   package_info_plus: ^3.0.1
   device_info_plus: ^7.0.1
+  flutter_secure_storage: ^6.0.0
   sliding_up_panel: ^2.0.0+1
   grouped_list: ^5.1.2
   toggle_switch: ^2.0.1
   jumping_dot: ^0.0.4
-  rounded_loading_button: ^2.1.0
+  flutter_native_splash: ^2.2.14
 
+
+flutter_native_splash:
+  background_image: assets/images/background/splash_bg.png
 
 
 dev_dependencies:

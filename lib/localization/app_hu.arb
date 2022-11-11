@@ -18,8 +18,9 @@
     "signup_fill_field" : "A mező kitöltése kötelező",
     "signup_pwd_short" : "Legalább 6 karakter hoszúnak kell lennie",
 
-    "signup_basic": "Alap",
-    "signup_admin": "Admin",
+    "basic": "Alap",
+    "admin": "Admin",
+    "user": " felhasználó",
 
     "login_uname_error": "Felhasználónév nem létezik",
     "login_pwd_error": "Hibás jelszó",

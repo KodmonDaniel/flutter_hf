@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/features/history/history_bloc.dart';
 import 'package:flutter_hf/features/history/history_widget.dart';
+import 'package:flutter_hf/features/profile/profile_bloc.dart';
 import 'package:flutter_hf/features/profile/profile_widget.dart';
+import 'package:flutter_hf/features/profile/profile_event.dart';
 import 'package:flutter_hf/features/splash.dart';
 import 'package:flutter_hf/features/weather/weather_bloc.dart';
 import 'package:flutter_hf/features/weather/weather_event.dart';
@@ -88,6 +90,7 @@ class _DashboardState extends State<Dashboard> {
 
     onUserChanged() {
       Provider.of<DashboardBloc>(context).add(DashboardUserDetailsReloadEvent(FirebaseAuth.instance.currentUser!.email!));
+      Provider.of<ProfileBloc>(context).add(ProfileUserDetailsReloadEvent(FirebaseAuth.instance.currentUser!.email!));
       Provider.of<DashboardBloc>(context).add(DashboardTabChangeEvent(0));
       Provider.of<WeatherBloc>(context).add(CitiesWeatherRefreshEvent());
       Provider.of<HistoryBloc>(context).add(HistoryRefreshEvent());

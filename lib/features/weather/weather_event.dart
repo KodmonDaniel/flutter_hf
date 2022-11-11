@@ -16,3 +16,10 @@ class CitiesWeatherSaveEvent extends WeatherEvent {
   @override
   List<Object?> get props => [];
 }
+
+class CitiesWeatherChangeUnitEvent extends WeatherEvent {
+  CitiesWeatherChangeUnitEvent();
+
+  @override
+  List<Object?> get props => [];
+}
