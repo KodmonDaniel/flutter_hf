@@ -109,5 +109,13 @@ extension AppTextStyle on ThemeData {
       fontWeight: FontWeight.w500
   );
 
+  static TextStyle textStyleField = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 16,
+      color: AppColors.textSecondary,
+      fontWeight: FontWeight.w400
+  );
+
+
 
 }

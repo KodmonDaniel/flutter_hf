@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/repository/firestore/models/stored_weather.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -12,7 +13,6 @@ import '../dashboard_page.dart';
 import 'history_event.dart';
 import 'history_state.dart';
 import 'history_bloc.dart';
-import 'dart:io' show Platform;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -29,6 +29,7 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider.value(
     value: Provider.of<HistoryBloc>(context),
       child: BlocBuilder<HistoryBloc, HistoryState>(  // stream builder can be used for firestore but real time updates are not necessary
@@ -64,7 +65,7 @@ class _HistoryState extends State<History> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _title(state),
-                    state.isLoading ? _skeletonList() : _list(state)
+                    state.isLoading ? _skeletonList(screenWidth) : _list(state, screenWidth)
                   ],
                 )
             ),
@@ -80,7 +81,8 @@ class _HistoryState extends State<History> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child:  Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //todo mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(
               children: [
@@ -133,10 +135,10 @@ class _HistoryState extends State<History> {
     );
   }
 
-  _list(HistoryState state) {
+  _list(HistoryState state, double screenWidth) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20,0,20,0),
+        padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: RefreshIndicator(
           onRefresh: refresh,
           child: GroupedListView<dynamic, String>(
@@ -247,10 +249,10 @@ class _HistoryState extends State<History> {
   }
 
   /// Skeleton loading
-  _skeletonList() {
+  _skeletonList(double screenWidth) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+        padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 20,

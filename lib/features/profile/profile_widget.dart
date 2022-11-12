@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/extensions/extension_textstyle.dart';
@@ -17,7 +16,6 @@ import '../history/history_event.dart';
 import '../weather/weather_event.dart';
 import 'profile_state.dart';
 import 'profile_bloc.dart';
-import 'dart:io' show Platform;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Profile extends DashboardPage {
@@ -49,9 +47,9 @@ class _ProfileState extends State<Profile> {
             body: Stack(
               children: <Widget>[
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: Platform.isAndroid ? AssetImage("assets/images/background/profile_bg.png") : AssetImage("assets/images/background/profile_bg.png"),
+                      image: AssetImage("assets/images/background/profile_bg.png"),
                       fit: BoxFit.cover
                     )
                   ),
@@ -64,7 +62,6 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(left: 60, top: 32, right: 60, bottom: 32),
-
                           child: Card(
                             color: AppColors.cardDark,
                             elevation: 3.0,
@@ -78,11 +75,11 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         )
-                        ],
+                      ],
                     ),
-
+                  )
                 )
-                ) ],
+              ],
             )
           );
         }
@@ -113,11 +110,10 @@ class _ProfileState extends State<Profile> {
           const SizedBox(height: 10),
           Text("${(state.userDetails?.admin ?? false)
               ? AppLocalizations.of(context)!.admin
-              : AppLocalizations.of(context)!.basic} user",
+              : AppLocalizations.of(context)!.basic} ${AppLocalizations.of(context)!.user}",
               style: AppTextStyle.primaryText2 ),
-          //const SizedBox(height: 10),
-
-        ]);
+        ]
+    );
   }
 
   _tempSwitch(ProfileState state) {
@@ -157,7 +153,7 @@ class _ProfileState extends State<Profile> {
 
   _logoutButton() {
     return Container(
-        width: 150,
+        width: 160,
         height: 40,
         decoration: BoxDecoration(
             gradient:AppGradient.blueTealGrad,

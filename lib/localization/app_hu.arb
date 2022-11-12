@@ -20,7 +20,7 @@
 
     "basic": "Alap",
     "admin": "Admin",
-    "user": " felhasználó",
+    "user": "felhasználó",
 
     "login_uname_error": "Felhasználónév nem létezik",
     "login_pwd_error": "Hibás jelszó",
@@ -39,7 +39,7 @@
     "history_order": "Sorrend",
 
     "profile_credit1": "Készítette",
-    "profile_credit2": "Ködmön Dániél",
+    "profile_credit2": "Ködmön Dániel",
     "profile_credit3": "BME Flutter házi"
 
 }

@@ -24,7 +24,6 @@ class _WeatherDetailsState extends State<WeatherDetails> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        //value: Provider.of<WeatherDetailsBloc>(context),
       create: (_) => widget._bloc,
         child: BlocBuilder<WeatherDetailsBloc, WeatherDetailsState>(
             builder: (context, state) {
@@ -94,7 +93,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
         _mainCityDetails(state),
         Padding(
           padding: const EdgeInsets.only(top: 0, right: 10),
-          child: Image.asset("assets/images/icons/${state.cityResponse?.weather?[0].icon ?? "unknown_icon"}.png", width: 75)),
+            child: Image.asset("assets/images/icons/${state.cityResponse?.weather?[0].icon ?? "unknown_icon"}.png", width: 75)),
       ],
     );
   }

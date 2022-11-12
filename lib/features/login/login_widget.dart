@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/extensions/extension_gradient.dart';
 import 'package:flutter_hf/extensions/extension_textfield.dart';
@@ -37,17 +38,15 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-
+    var screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider.value(
       value: Provider.of<LoginBloc>(context),
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           return Scaffold(
-            //resizeToAvoidBottomPadding:false,
             body: Stack(
               children: <Widget>[
-
-                Container(
+                Container(  // background
                   decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/images/background/login_bg.png"),
@@ -55,212 +54,136 @@ class _LoginState extends State<Login> {
                       )
                   ),
                 ),
-
-
-
-              /*  Positioned(
-                  bottom: 0,
-                  child: RotatedBox(
-                    quarterTurns: 2,
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 200,
-                        decoration: const BoxDecoration(
-                            image:  DecorationImage(
-                                image: AssetImage("assets/images/background/login_banner.png"),
-                                fit: BoxFit.cover
-                            )
-                        ))
-                    ,
-                  ),
-                ),
-
-
-
-                Positioned(
-                  top: 0,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/background/login_banner.png"),
-                            fit: BoxFit.cover
-                        )
-                    ),
-                  ),
-                ),
-*/
-              Center(
-                child: SingleChildScrollView(
-                child: Padding(
-                    padding: const EdgeInsets.all(50),
+                Center( //content
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: (kIsWeb) ? EdgeInsets.symmetric(horizontal: screenWidth/3)  : const EdgeInsets.symmetric(horizontal: 50),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(AppLocalizations.of(context)!.login, style: AppTextStyle.bigTitle),
-
                           const SizedBox(height: 60,),
-
-                          TextField(
-                            controller: nameInputController,
-                            cursorColor: Colors.white,
-                            textInputAction: TextInputAction.next,
-                            autocorrect: false,
-                            enabled: !state.isLoading,
-                            decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.username,
-                              hintStyle: TextStyle(fontSize: 16),
-                              border: AppTextField.normalBorder,
-                              errorBorder: AppTextField.errorBorder,
-                              disabledBorder: AppTextField.disabledBorder,
-                              errorText: (state.isUsernameError) ? AppLocalizations.of(context)!.login_uname_error : null,
-                              filled: true,
-                              contentPadding: const EdgeInsets.all(16),
-                            ),
-                          ),
-
+                          _uNameInput(state),
                           const SizedBox(height: 15),
-
-                          TextField(
-                            controller: passwordInputController,
-                            cursorColor: Colors.white,
-                            textInputAction: TextInputAction.next,
-                            obscureText: state.isPwdHidden,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            enabled: !state.isLoading,
-                            decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.password,
-                              hintStyle: TextStyle(fontSize: 16),
-                              border: AppTextField.normalBorder,
-                              errorBorder: AppTextField.errorBorder,
-                              disabledBorder: AppTextField.disabledBorder,
-                              filled: true,
-                              errorText: (state.isPwdError) ? AppLocalizations.of(context)!.login_pwd_error : null,
-                              contentPadding: const EdgeInsets.all(16),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    state.isPwdHidden ? Icons.visibility : Icons.visibility_off,
-                                    color: AppColors.backgroundDark,
-                                  ), onPressed: () =>
-                                    Provider.of<LoginBloc>(context, listen: false).add(LoginPwdHiddenEvent())
-                                )
-                            ),
-                          ),
-
+                          _pwdInput(state),
                           const SizedBox(height: 50),
-
-                         /* Container(
-                            width: 150,
-                            height: 40,
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: (state.isLoading) ? AppColors.tealColor4 : AppColors.tealColor3,
-                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18),
-                                            //side: BorderSide(color: Colors.red),
-                                        )
-                                    )
-                                ),
-                             // icon: (state.isLoading) ? Icon(Icons.lock_clock_outlined) : Icon(Icons.local_atm), //TODO STYLE
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                child: (state.isLoading)
-                                  ? JumpingDots(
-                                    color: AppColors.textWhite,
-                                    radius: 5,
-                                    numberOfDots: 3,
-                                    animationDuration: const Duration(milliseconds: 200))
-                                  : Text(AppLocalizations.of(context)!.login, style: AppTextStyle.btnText),
-                              ),
-                              onPressed: () => (state.isLoading) ? null :
-                                Provider.of<LoginBloc>(context, listen: false).add(LoginSubmitEvent(nameInputController.text.trim(), passwordInputController.text.trim()))
-                            ),
-                          ),*/
-
-
-                   Container(
-                       width: 150,
-                       height: 40,
-                       decoration: BoxDecoration(gradient: (state.isLoading) ? AppGradient.blueTealLightGrad : AppGradient.blueTealGrad,
-                           borderRadius: const BorderRadius.all(Radius.circular(30))
-                       ),
-                       child: Material(
-                         color: Colors.transparent,
-                         child: InkWell(
-                           customBorder: RoundedRectangleBorder(
-                             borderRadius: BorderRadius.circular(30),
-                           ),
-                           onTap: () => (state.isLoading) ? null :
-                           Provider.of<LoginBloc>(context, listen: false).add(LoginSubmitEvent(nameInputController.text.trim(), passwordInputController.text.trim())),
-                           child: Center(
-                             child: Padding(
-                               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                               child: (state.isLoading)
-                                   ? JumpingDots(
-                                   color: AppColors.textWhite,
-                                   radius: 8,
-                                   numberOfDots: 3,
-                                   animationDuration: const Duration(milliseconds: 200))
-                                   : Text(AppLocalizations.of(context)!.login, style: AppTextStyle.btnText),
-                             ),
-                           ),
-                         ),
-                       )),
-
-
-
-
-
-
-
-
-
+                          _loginBtn(state),
                           const SizedBox(height: 20),
-                          Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(AppLocalizations.of(context)!.no_account, style: AppTextStyle.miniText),
-                                InkWell(
-                                  onTap: () {
-                                    var loginSignupBloc = LoginSignupBloc(Provider.of<FirestoreRepository>(context, listen: false));
-                                    var loginSignup = LoginSignup(loginSignupBloc);
-                                    var route = AppRoute.createRoute(loginSignup);
-                                    Navigator.of(context).push(route);
-                                  },
-                                  child: Text(AppLocalizations.of(context)!.signup, style: AppTextStyle.miniBtnText,),//todo
-                                ),
-                              ],
-                            ),
-                          ),
+                          _signUpLine(state)
                         ],
                       ),
                     ),
                   ),
-              ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-          ]
+                )
+              ]
             ),
           );
         }
       )
     );
   }
+
+  _uNameInput(LoginState state) {
+    return TextField(
+      controller: nameInputController,
+      cursorColor: Colors.white,
+      textInputAction: TextInputAction.next,
+      autocorrect: false,
+      enabled: !state.isLoading,
+      decoration: InputDecoration(
+        hintText: AppLocalizations.of(context)!.username,
+        hintStyle: AppTextStyle.textStyleField,
+        border: AppTextField.normalBorder,
+        errorBorder: AppTextField.errorBorder,
+        disabledBorder: AppTextField.disabledBorder,
+        errorText: (state.isUsernameError) ? AppLocalizations.of(context)!.login_uname_error : null,
+        filled: true,
+        contentPadding: const EdgeInsets.all(16),
+      ),
+    );
+  }
+
+  _pwdInput(LoginState state) {
+    return TextField(
+      controller: passwordInputController,
+      cursorColor: Colors.white,
+      textInputAction: TextInputAction.next,
+      obscureText: state.isPwdHidden,
+      enableSuggestions: false,
+      autocorrect: false,
+      enabled: !state.isLoading,
+      decoration: InputDecoration(
+          hintText: AppLocalizations.of(context)!.password,
+          hintStyle: AppTextStyle.textStyleField,
+          border: AppTextField.normalBorder,
+          errorBorder: AppTextField.errorBorder,
+          disabledBorder: AppTextField.disabledBorder,
+          filled: true,
+          errorText: (state.isPwdError) ? AppLocalizations.of(context)!.login_pwd_error : null,
+          contentPadding: const EdgeInsets.all(16),
+          suffixIcon: IconButton(
+              icon: Icon(
+                state.isPwdHidden ? Icons.visibility : Icons.visibility_off,
+                color: AppColors.backgroundDark,
+              ), onPressed: () =>
+              Provider.of<LoginBloc>(context, listen: false).add(LoginPwdHiddenEvent())
+          )
+      ),
+    );
+  }
+
+  _loginBtn(LoginState state) {
+    return Container(
+        width: 160,
+        height: 40,
+        decoration: BoxDecoration(gradient: (state.isLoading) ? AppGradient.blueTealLightGrad : AppGradient.blueTealGrad,
+            borderRadius: const BorderRadius.all(Radius.circular(30))
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            customBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            onTap: () => (state.isLoading) ? null :
+            Provider.of<LoginBloc>(context, listen: false).add(LoginSubmitEvent(nameInputController.text.trim(), passwordInputController.text.trim())),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: (state.isLoading)
+                    ? JumpingDots(
+                    color: AppColors.textWhite,
+                    radius: 8,
+                    numberOfDots: 3,
+                    animationDuration: const Duration(milliseconds: 200))
+                    : Text(AppLocalizations.of(context)!.login, style: AppTextStyle.btnText),
+              ),
+            ),
+          ),
+        )
+    );
+  }
+
+  _signUpLine(LoginState state) {
+    return  Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(AppLocalizations.of(context)!.no_account, style: AppTextStyle.miniText),
+          InkWell(
+            onTap: () {
+              var loginSignupBloc = LoginSignupBloc(Provider.of<FirestoreRepository>(context, listen: false));
+              var loginSignup = LoginSignup(loginSignupBloc);
+              var route = AppRoute.createRoute(loginSignup);
+              Navigator.of(context).push(route);
+            },
+            child: Text(AppLocalizations.of(context)!.signup, style: AppTextStyle.miniBtnText,),//todo
+          ),
+        ],
+      ),
+    );
+  }
+
 }
 
 

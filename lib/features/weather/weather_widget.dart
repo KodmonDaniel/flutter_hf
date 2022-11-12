@@ -16,7 +16,6 @@ import '../../extensions/extension_textstyle.dart';
 import '../dashboard_page.dart';
 import 'weather_state.dart';
 import 'weather_bloc.dart';
-//import 'dart:io' show Platform;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hf/repository/api/models/city_response.dart' as city_model;
 
@@ -34,7 +33,7 @@ class _WeatherState extends State<Weather> {
   @override
   Widget build(BuildContext context) {
     panelOpenedHeight = MediaQuery.of(context).size.height * 0.6;
-    
+    var screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider.value(
       value: Provider.of<WeatherBloc>(context),
       child: BlocBuilder<WeatherBloc, WeatherState>(
@@ -43,39 +42,31 @@ class _WeatherState extends State<Weather> {
             body: Stack(
               alignment: Alignment.topCenter,
               children: [
-                ///STACK ELEMENT
                 SlidingUpPanel(
                   maxHeight: panelOpenedHeight,
                   minHeight: panelClosedHeight,
                   parallaxEnabled: true,
                   parallaxOffset: .5,
                   body: _map(state),
-                  panelBuilder: (scrollController) => _panel(state,context, scrollController),
+                  panelBuilder: (scrollController) => _panel(state,context, scrollController, screenWidth),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(18.0),
                       topRight: Radius.circular(18.0)
                   ),
                 ),
-
-                ///------------
                 Positioned(
                   top: 0,
                   child: Container(
-                    height: 200,
+                    height: (kIsWeb) ? screenWidth/15 : 140,
                     width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("assets/images/background/banner.png"),
+                            image: (kIsWeb) ? AssetImage("assets/images/background/banner_web.png") : AssetImage("assets/images/background/banner.png"),
                             fit: BoxFit.cover
                         )
                     ),
                   ),
                 ),
-
-
-                ///------------INFO PANEL TODO dashboardra!!!!!!!!!!!!!
-
-
               ],
             )
           );
@@ -89,7 +80,7 @@ class _WeatherState extends State<Weather> {
     return FlutterMap(
           options: MapOptions(
             center: LatLng(47.1, 19.5),
-            zoom: kIsWeb ? 10 : 7.2,
+            zoom: kIsWeb ? 7.7 : 7.2,
           ),
           children: [
         TileLayer(
@@ -143,15 +134,15 @@ class _WeatherState extends State<Weather> {
   }
 
   /// Returns the list of the cities
-  _actualList(WeatherState state, BuildContext context, ScrollController scrollController) {
+  _actualList(WeatherState state, BuildContext context, ScrollController scrollController, double screenWidth) {
     return Expanded(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        child: Padding(  // website can be resized & different aspect ratio monitor!
+          padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Container(
             decoration: BoxDecoration(
                 color: AppColors.cardLight,
                 borderRadius: const BorderRadius.only(topRight: Radius.circular(12), topLeft: Radius.circular(12))),
-              child: ListView.builder(     //no refresh indicator, manual refresh not allowed, auto refresh every 1min
+              child: ListView.builder(     //no refresh indicator, manual refresh not allowed, auto refresh every 1 min.
                 controller: scrollController,
                 dragStartBehavior: DragStartBehavior.start,
                 scrollDirection: Axis.vertical,
@@ -219,15 +210,11 @@ class _WeatherState extends State<Weather> {
           children: [
             Image.asset("assets/images/icons/${cityResponse.weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitWidth, width: 35),
             const SizedBox(width: 15),
-            //Text("${double.parse(((cityResponse.main?.temp ?? 0) - (state.isCelsius ? 273.15 : 457.87) ).toStringAsFixed(1))}°", style: AppTextStyle.mapTemp)
-
-
             Text(state.isCelsius
                 ? "${((cityResponse.main?.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
                 : "${(((cityResponse.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
               style: AppTextStyle.mapTemp,
             ),
-
           ],
         ),
       ),
@@ -250,25 +237,13 @@ class _WeatherState extends State<Weather> {
     );
   }
 
-
-  //ROUND/*
- /* Expanded(child: Text(double.parse(((state.citiesWeatherList?[i].main?.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).toStringAsFixed(1)).toString() +
-  "°",/* style: TextStyle(fontWeight: FontWeight.w500)*/style: AppTextStyle.mapTemp))
-*/
-
-
-
-
-
-
-  Widget _panel(WeatherState state, BuildContext context, ScrollController scrollController) {
+  Widget _panel(WeatherState state, BuildContext context, ScrollController scrollController, double screenWidth) {
     return MediaQuery.removePadding(
         context: context,
         removeTop: true,
         child: Column(
           children: [
             const SizedBox(height: 20),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -281,19 +256,18 @@ class _WeatherState extends State<Weather> {
                 ),
               ],
             ),
-
             const SizedBox(height: 20),
-
-            state.isLoading ? _skeletonList(state) : _actualList(state, context, scrollController)
+            state.isLoading ? _skeletonList(screenWidth) : _actualList(state, context, scrollController, screenWidth)
           ],
         )
     );
   }
 
-  _skeletonList(WeatherState state) {
+  /// Skeleton loading for list
+  _skeletonList(double screenWidth) {
    return Expanded(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Container(
             decoration: BoxDecoration(
                 color: AppColors.cardLight,
@@ -383,7 +357,8 @@ class _WeatherState extends State<Weather> {
                       alignment: Alignment.center,
                       borderRadius: BorderRadius.circular(10)
                   ),
-                ),              ],
+                ),
+              ],
             ),
         ),
     );

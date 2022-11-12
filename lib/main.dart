@@ -43,9 +43,9 @@ class _AppState extends State<MyApp> {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Dashboard();
+                  return const Dashboard();
                 } else {
-                  return Login();
+                  return const Login();
                 }
               })
 

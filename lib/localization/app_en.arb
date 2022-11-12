@@ -20,7 +20,7 @@
 
     "basic": "Basic",
     "admin": "Admin",
-    "user": " user",
+    "user": "user",
 
     "login_uname_error": "Username does not exist",
     "login_pwd_error": "Wrong password",
