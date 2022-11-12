@@ -54,28 +54,30 @@ class _WeatherDetailsState extends State<WeatherDetails> {
                             )
                         ),
                       ),
-                      Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 60, top: 32, right: 60, bottom: 32),
-                                child: Card(
-                                  color: AppColors.cardDark,
-                                  elevation: 3.0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0)
+                      SingleChildScrollView(
+                        child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 60, top: 32, right: 60, bottom: 32),
+                                  child: Card(
+                                    color: AppColors.cardDark,
+                                    elevation: 3.0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4.0)
+                                    ),
+                                    child: SizedBox(
+                                      width: 300,
+                                      height: 450,
+                                      child: _cityDetails(state),
+                                    ),
                                   ),
-                                  child: SizedBox(
-                                    width: 300,
-                                    height: 450,
-                                    child: _cityDetails(state),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
+                                )
+                              ],
+                            )
+                        ),
                       )
                     ],
                   )
