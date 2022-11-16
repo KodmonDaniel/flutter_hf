@@ -1,4 +1,4 @@
-# flutter_hf
+# WeatherNOW
 
 Homework for Flutter class
 
