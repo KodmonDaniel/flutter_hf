@@ -12,19 +12,19 @@ A few resources to get you started if this is your first Flutter project:
 
 Az alkalmazás használatához felhasználói fiókkal kell bejelentkezni. 
 
-##### Bejelentkezés
+#### Bejelentkezés
 
 A bejelentkezés a felhasználónév jelszó párossal történik.
 Jelenleg az alkalmazásba két használható fiók van regisztrálva amelyek szabadon használhatóak.
 
-| Felhasználónév        | Jelszó           | E-mail  | Szerep  |
-| ------------- |:-------------:| -----:|
-| TestAdminUser      | wasd123 | admin@test.hu | admin |
-| TestSimpleUser      | 555555  |  simple@user.com  |   alap |
+| Felhasználónév        | Jelszó           | E-mail            | Szerep  |
+| -------------         |:----------------:| -----------------:|--------:|
+| TestAdminUser         | wasd123          | admin@test.hu     | admin   |
+| TestSimpleUser        | 555555           |  simple@user.com  |   alap  |
 
 A fenti felhasználókon kívül szabadon regisztrálhatunk új fiókokat is. Ezt a Regisztráció oldalon tehetjük meg.
 
-##### Regisztráció
+#### Regisztráció
 
 A regisztrációhoz a következő feltételeknek kell teljesülnie:
 - Felhasználónév megadása ami még nem foglalt
