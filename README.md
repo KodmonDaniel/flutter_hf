@@ -14,7 +14,7 @@ Az alkalmazás használatához felhasználói fiókkal kell bejelentkezni.
 
 #### Bejelentkezés
 
-A bejelentkezés a felhasználónév jelszó párossal történik.
+A bejelentkezés a [felhasználónév] [jelszó] párossal történik.
 Jelenleg az alkalmazásba két használható fiók van regisztrálva amelyek szabadon használhatóak.
 
 | Felhasználónév        | Jelszó           | E-mail            | Szerep  |
@@ -22,7 +22,7 @@ Jelenleg az alkalmazásba két használható fiók van regisztrálva amelyek sza
 | TestAdminUser         | wasd123          | admin@test.hu     | admin   |
 | TestSimpleUser        | 555555           |  simple@user.com  |   alap  |
 
-A fenti felhasználókon kívül szabadon regisztrálhatunk új fiókokat is. Ezt a Regisztráció oldalon tehetjük meg.
+A fenti felhasználókon kívül szabadon regisztrálhatunk új fiókokat is. Ezt a [Regisztráció] oldalon tehetjük meg.
 
 #### Regisztráció
 
