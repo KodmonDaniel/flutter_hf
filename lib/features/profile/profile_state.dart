@@ -1,17 +1,21 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_hf/repository/firestore/models/user_details.dart';
 
 class ProfileState extends Equatable {
-  final int currentTab;
+  final bool isCelsius;
+  final UserDetails? userDetails;
 
   const ProfileState({
-    this.currentTab = 0
+    this.isCelsius = true,  // default value, overridden by secure storage at init.
+    this.userDetails
   });
 
   @override
-  List<Object?> get props => [currentTab];
+  List<Object?> get props => [isCelsius, userDetails];
 
-  ProfileState copyWith({int? currentTab})
+  ProfileState copyWith({bool? isCelsius, UserDetails? userDetails})
   => ProfileState(
-      currentTab: currentTab ?? this.currentTab
+      isCelsius: isCelsius ?? this.isCelsius,
+      userDetails: userDetails ?? this.userDetails
   );
 }

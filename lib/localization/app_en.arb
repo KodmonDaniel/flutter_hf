@@ -2,9 +2,31 @@
     "app_name": "WeatherHW",
 
     "login": "Login",
-    "login_email": "E-mail",
-    "login_pwd": "Password",
+    "username": "Username",
+    "password": "Password",
+    "password_again": "Password again",
+    "signup": "Sign up",
+    "email": "E-mail",
+    "permission": "Permission",
+    "back": "Back",
+    "no_account": "No account yet? ",
     "logout": "Logout",
+
+    "signup_username_not_available" : "Username is not available",
+    "signup_pwd_mismatch" : "Passwords do not match",
+    "signup_wrong_email" : "Enter valid e-mail",
+    "signup_fill_field" : "Fill in this field",
+    "signup_pwd_short" : "Needs to be at least 6 characters long",
+
+    "basic": "Basic",
+    "admin": "Admin",
+    "user": "user",
+
+    "login_uname_error": "Username does not exist",
+    "login_pwd_error": "Wrong password",
+
+    "signup_success": "Successfully signed up!",
+    "signup_failed": "Signup failed!",
 
     "tab_weather": "Weather",
     "tab_profile": "Profile",
@@ -15,8 +37,8 @@
     "history": "History",
     "history_sort": "Sort by",
     "history_order": "Order",
-    "sort_city": "City",
-    "sort_time": "Date",
-    "sort_asc": "ASC",
-    "sort_desc": "DESC"
+
+    "profile_credit1": "App by",
+    "profile_credit2": "Ködmön Dániel",
+    "profile_credit3": "BME Flutter homework"
 }

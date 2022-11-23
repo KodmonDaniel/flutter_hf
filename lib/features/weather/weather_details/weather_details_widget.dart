@@ -24,7 +24,6 @@ class _WeatherDetailsState extends State<WeatherDetails> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        //value: Provider.of<WeatherDetailsBloc>(context),
       create: (_) => widget._bloc,
         child: BlocBuilder<WeatherDetailsBloc, WeatherDetailsState>(
             builder: (context, state) {
@@ -54,28 +53,30 @@ class _WeatherDetailsState extends State<WeatherDetails> {
                             )
                         ),
                       ),
-                      Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 60, top: 32, right: 60, bottom: 32),
-                                child: Card(
-                                  color: AppColors.cardLight,
-                                  elevation: 3.0,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0)
+                      SingleChildScrollView(
+                        child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 60, top: 32, right: 60, bottom: 32),
+                                  child: Card(
+                                    color: AppColors.cardDark,
+                                    elevation: 3.0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4.0)
+                                    ),
+                                    child: SizedBox(
+                                      width: 300,
+                                      height: 450,
+                                      child: _cityDetails(state),
+                                    ),
                                   ),
-                                  child: SizedBox(
-                                    width: 300,
-                                    height: 450,
-                                    child: _cityDetails(state),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
+                                )
+                              ],
+                            )
+                        ),
                       )
                     ],
                   )
@@ -92,7 +93,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
         _mainCityDetails(state),
         Padding(
           padding: const EdgeInsets.only(top: 0, right: 10),
-          child: Image.asset("assets/images/icons/${state.cityResponse?.weather?[0].icon ?? "unknown_icon"}.png", width: 75)),
+            child: Image.asset("assets/images/icons/${state.cityResponse?.weather?[0].icon ?? "unknown_icon"}.png", width: 75)),
       ],
     );
   }
@@ -103,9 +104,21 @@ class _WeatherDetailsState extends State<WeatherDetails> {
         Column(
           children: [
 
-            Text("${double.parse(((state.cityResponse?.main?.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).toStringAsFixed(1))}°", style: AppTextStyle.mapTemp.copyWith(color: AppColors.textWhite)),
+
+
+            Text(state.isCelsius
+                ? "${((state.cityResponse?.main?.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
+                : "${(((state.cityResponse?.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
+              style: AppTextStyle.mainText,
+            ),
+
+
+
+
+
+           // Text("${double.parse(((state.cityResponse?.main?.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).toStringAsFixed(1))}°", style: AppTextStyle.mapTemp.copyWith(color: AppColors.textWhite)),
            const SizedBox(height: 10),
-            Text(state.cityResponse?.name ?? "?", style: AppTextStyle.cityText.copyWith(color: AppColors.textWhite)),
+            Text(state.cityResponse?.name ?? "?", style: AppTextStyle.mainText.copyWith(color: AppColors.textWhite)),
           ],
         )
       ],

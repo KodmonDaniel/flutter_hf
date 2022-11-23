@@ -2,9 +2,31 @@
     "app_name": "WeatherHW",
 
     "login": "Bejelentkezés",
-    "login_email": "E-mail",
-    "login_pwd": "Jelszó",
+    "username": "Felhasználónév",
+    "password": "Jelszó",
+    "password_again": "Jelszó újra",
+    "signup": "Regisztráció",
+    "email": "E-mail",
+    "permission": "Jogosultság",
+    "back": "Vissza",
+    "no_account": "Még nincs fiókja? ",
     "logout": "Kijelentkezés",
+
+    "signup_username_not_available" : "Felhasználónév foglalt",
+    "signup_pwd_mismatch" : "Nem egyeznek a jelszavak",
+    "signup_wrong_email" : "Érvénytelen e-mail",
+    "signup_fill_field" : "A mező kitöltése kötelező",
+    "signup_pwd_short" : "Legalább 6 karakter hoszúnak kell lennie",
+
+    "basic": "Alap",
+    "admin": "Admin",
+    "user": "felhasználó",
+
+    "login_uname_error": "Felhasználónév nem létezik",
+    "login_pwd_error": "Hibás jelszó",
+
+    "signup_success": "Sikeres regisztráció!",
+    "signup_failed": "Sikertelen regisztráció!",
 
     "tab_weather": "Időjárás",
     "tab_profile": "Profil",
@@ -15,9 +37,9 @@
     "history": "Előzmények",
     "history_sort": "Rendezés",
     "history_order": "Sorrend",
-    "sort_city": "Város",
-    "sort_time": "Dátum",
-    "sort_asc": "Növ.",
-    "sort_desc": "Csökk."
+
+    "profile_credit1": "Készítette",
+    "profile_credit2": "Ködmön Dániel",
+    "profile_credit3": "BME Flutter házi"
 
 }

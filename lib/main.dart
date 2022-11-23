@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,9 +8,9 @@ import 'package:flutter_hf/injector.dart';
 import 'package:flutter_hf/observer.dart';
 import 'package:provider/provider.dart';
 import 'features/dashboard_widget.dart';
+import 'features/login/login_widget.dart';
 import 'firebase_options.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,6 @@ class MyApp extends StatefulWidget {
   State<StatefulWidget> createState() => _AppState();
 }
 
-
 class _AppState extends State<MyApp> {
 
   @override
@@ -37,10 +37,25 @@ class _AppState extends State<MyApp> {
           debugShowCheckedModeBanner: true,
           title: "Weather HW",
           theme: AppTheme.primary,
-          home: Dashboard(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-        )
+          home:  StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return const Dashboard();
+                } else {
+                  return const Login();
+                }
+              })
+
+
+
+
+
+
+
+    )
     );
   }
 }

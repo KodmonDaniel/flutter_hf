@@ -3,11 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/features/history/history_bloc.dart';
 import 'package:flutter_hf/features/history/history_widget.dart';
+import 'package:flutter_hf/features/profile/profile_bloc.dart';
 import 'package:flutter_hf/features/profile/profile_widget.dart';
+import 'package:flutter_hf/features/profile/profile_event.dart';
 import 'package:flutter_hf/features/splash.dart';
 import 'package:flutter_hf/features/weather/weather_bloc.dart';
 import 'package:flutter_hf/features/weather/weather_event.dart';
 import 'package:flutter_hf/features/weather/weather_widget.dart';
+import 'package:flutter_hf/repository/firestore/models/user_details.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +35,6 @@ class _DashboardState extends State<Dashboard> {
 
   /// First screens to display
   var login = const Login();
-  var splash = Splash();
 
   /// The actual widget with switcher
   late Widget screen;
@@ -42,19 +44,23 @@ class _DashboardState extends State<Dashboard> {
   late History history;
   late Profile profile;
 
-  int numOfTabs = 3;
-
   Timer? timer;
 
   @override
   void initState() {
     super.initState();
+
+    //refresh userdetails
+
     timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
+      print("tick");
       Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherRefreshEvent());    //todo role
         if (false) {
-          Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherSaveEvent());
+          print("ADMIN WRITE-----------------------------------------------------------");
+          //Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherSaveEvent());
         }
     });
+
   }
 
   @override
@@ -65,8 +71,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    screen = splash;
-
     Tab getTabFromIndex(int index){
       switch (index) {
         case 1:
@@ -85,27 +89,25 @@ class _DashboardState extends State<Dashboard> {
     }
 
     onUserChanged() {
+      Provider.of<DashboardBloc>(context).add(DashboardUserDetailsReloadEvent(FirebaseAuth.instance.currentUser!.email!));
+      Provider.of<ProfileBloc>(context).add(ProfileUserDetailsReloadEvent(FirebaseAuth.instance.currentUser!.email!));
       Provider.of<DashboardBloc>(context).add(DashboardTabChangeEvent(0));
       Provider.of<WeatherBloc>(context).add(CitiesWeatherRefreshEvent());
       Provider.of<HistoryBloc>(context).add(HistoryRefreshEvent());
     }
 
-    getDashboard(int currentTab, BuildContext context) {//todo roles
-      if (true) {
-        numOfTabs = 3;
-      } else {
-        numOfTabs = 2;
-      }
+    getDashboard(int currentTab, BuildContext context, DashboardState state) {
+      var numOfTabs = (state.userDetails?.admin ?? false) ? 2 : 3;
       return CustomScaffold(
         scaffold: Scaffold(
           bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: AppColors.textPrimary,  //TODO EXTENSION
+            selectedItemColor: AppColors.textPrimary,
             unselectedItemColor: AppColors.textSecondary,
             elevation: 3,
             currentIndex: currentTab,
             backgroundColor: AppColors.backgroundDark,
             items: [
-              for (var i = 0; i < numOfTabs ; i++) BottomNavigationBarItem(
+              for (var i = 0; i < numOfTabs; i++) BottomNavigationBarItem(
                   icon: getTabFromIndex(i).icon,
                   label: getTabFromIndex(i).name
               )
@@ -119,49 +121,19 @@ class _DashboardState extends State<Dashboard> {
               Provider.of<DashboardBloc>(context, listen: false).add(DashboardTabChangeEvent(index)),
       );
     }
-
-  /*  return BlocProvider.value(
+    //todo showDialog az első indításra
+    onUserChanged();
+    return BlocProvider.value(
       value: Provider.of<DashboardBloc>(context),
       child: BlocBuilder<DashboardBloc, DashboardState>(
         builder: (context, state) {
-
-        },
-      ),
-    );*/
-
-    //TODO PELDA: http://api.openweathermap.org/data/2.5/group?id=722437,3054643&appid=522e009a484c7953360917c5a4ec1428
-
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          print("LOGIN SUCCESS---------------");
-          onUserChanged();
-          return BlocProvider.value(
-            value: Provider.of<DashboardBloc>(context),
-            child: BlocBuilder<DashboardBloc, DashboardState>(
-              builder: (context, state) {
-                screen = getDashboard(state.currentTab, context);
-                return screen;
-              },
-            ),
-          );
-
-
-        } else {
-          Future.delayed(const Duration(seconds: 1));
-          screen = login;
+          screen = getDashboard(state.currentTab, context, state);
           return screen;
-        }
-        //todo anim
-        return screen;
-      }
+          },
+      ),
     );
-
   }
 }
-
-
 
 class Tab {
   DashboardPage widget;

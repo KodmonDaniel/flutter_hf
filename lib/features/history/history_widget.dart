@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/repository/firestore/models/stored_weather.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -12,7 +13,6 @@ import '../dashboard_page.dart';
 import 'history_event.dart';
 import 'history_state.dart';
 import 'history_bloc.dart';
-import 'dart:io' show Platform;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -25,8 +25,11 @@ class History extends DashboardPage {
 
 class _HistoryState extends State<History> {
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider.value(
     value: Provider.of<HistoryBloc>(context),
       child: BlocBuilder<HistoryBloc, HistoryState>(  // stream builder can be used for firestore but real time updates are not necessary
@@ -47,8 +50,6 @@ class _HistoryState extends State<History> {
                 ],
               ),
             ),
-
-
             body: Container(
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -60,139 +61,137 @@ class _HistoryState extends State<History> {
                       ],
                     )
                 ),
-
-                child:
-                Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
-                    _title(),
-
-                    state.isLoading ? _skeletonList() : Expanded(
-                      child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20,0,20,0),
-                      child: RefreshIndicator(
-                        onRefresh: refresh,
-                        child: GroupedListView<dynamic, String>(
-                          elements: state.storedWeathers!,
-                          groupBy: (element) => element.time.toString().substring(0, 10),
-                          order: GroupedListOrder.ASC,
-                          useStickyGroupSeparators: false,
-                            shrinkWrap: true,//todo
-                          groupComparator: (value1, value2) => value2.compareTo(value1),
-                          itemComparator: (item1, item2) =>
-                          item1.time.toString().substring(0, 10).compareTo(item2.time.toString().substring(0, 10)),
-
-                          groupSeparatorBuilder: (String value) => _separator(value),
-
-                          itemBuilder: (c, element) => _row(element, state)
-              ),
-                      ),
-            ),
-                    ),
+                    _title(state),
+                    state.isLoading ? _skeletonList(screenWidth) : _list(state, screenWidth)
                   ],
-                )),
+                )
+            ),
           );
         }
       )
     );
   }
 
-
-  _title() {
+  _title(HistoryState state) {
     return Container(
-       // width: MediaQuery.of(context).size.width,
-       //height: 50,
       color: AppColors.textWhite,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child:  Row(
-          //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-
-                    Text(AppLocalizations.of(context)!.history_sort),
-
-                    const SizedBox(width: 10),
-
-
-                        ToggleSwitch(
-                          minWidth: 50,
-                          cornerRadius: 20,
-                          activeBgColors: [[AppColors.textPrimary], [AppColors.textPrimary]],
-                          activeFgColor: AppColors.backgroundDark,
-                          inactiveBgColor: AppColors.lightGrey,
-                          inactiveFgColor: AppColors.backgroundDark,
-                          fontSize: 16,
-                          initialLabelIndex: 0,
-                          totalSwitches: 2,
-                         // labels: [AppLocalizations.of(context)!.sort_time, AppLocalizations.of(context)!.sort_city],
-                          icons: const [Icons.pin_drop, Icons.calendar_month],
-                          radiusStyle: true,
-                          onToggle: (index) {
-                            print('switched to: $index');
-                            Provider.of<HistoryBloc>(context, listen: false).add(HistoryChangeSortCategoryEvent(index == 0 ? false : true));
-                          },
-                        ),
-
-
-                    const SizedBox(width: 30),
-
-                    Text(AppLocalizations.of(context)!.history_order),
-
-                    const SizedBox(width: 10),
-
-                    ToggleSwitch(
-                      minWidth: 50,
-                      cornerRadius: 20,
-                      activeBgColors: [[AppColors.textPrimary], [AppColors.textPrimary]],
-                      activeFgColor: AppColors.backgroundDark,
-                      inactiveBgColor: AppColors.lightGrey,
-                      inactiveFgColor: AppColors.backgroundDark,
-                      fontSize: 16,
-                      initialLabelIndex: 0,
-                      totalSwitches: 2,
-                    // iconSize: 50,
-                     // labels: [AppLocalizations.of(context)!.sort_asc, AppLocalizations.of(context)!.sort_desc],
-                      icons: const [Icons.arrow_upward_outlined, Icons.arrow_downward_outlined],
-                      radiusStyle: true,
-                      onToggle: (index) {
-                        print('switched to: $index');
-                      },
-                    ),
-                  ],
-              ),
-
-
+          //todo mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Row(
+              children: [
+                Text(AppLocalizations.of(context)!.history_sort),
+                const SizedBox(width: 5),
+                ToggleSwitch(
+                  minWidth: 50,
+                  cornerRadius: 20,
+                  activeBgColors: [[AppColors.textPrimary], [AppColors.textPrimary]],
+                  activeFgColor: AppColors.backgroundDark,
+                  inactiveBgColor: AppColors.lightGrey,
+                  inactiveFgColor: AppColors.backgroundDark,
+                  fontSize: 16,
+                  initialLabelIndex: state.sortByTime ? 0 : 1,
+                  totalSwitches: 2,
+                  icons: const [Icons.calendar_month, Icons.pin_drop],
+                  radiusStyle: true,
+                  onToggle: (index) {
+                    Provider.of<HistoryBloc>(context, listen: false).add(HistoryChangeSortCategoryEvent());
+                    },
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(AppLocalizations.of(context)!.history_order),
+                const SizedBox(width: 5),
+                ToggleSwitch(
+                  minWidth: 50,
+                  cornerRadius: 20,
+                  activeBgColors: [[AppColors.textPrimary], [AppColors.textPrimary]],
+                  activeFgColor: AppColors.backgroundDark,
+                  inactiveBgColor: AppColors.lightGrey,
+                  inactiveFgColor: AppColors.backgroundDark,
+                  fontSize: 16,
+                  initialLabelIndex: state.sortASC ? 0 : 1,
+                  totalSwitches: 2,
+                  icons: const [Icons.arrow_upward_outlined, Icons.arrow_downward_outlined],
+                  radiusStyle: true,
+                  onToggle: (index) {
+                    state.isLoading ? null : (Provider.of<HistoryBloc>(context, listen: false).add(HistoryChangeOrderCategoryEvent()));
+                    },
+                ),
+              ],
+            ),
+            IconButton(onPressed: () => scrollTop(), icon: const Icon(Icons.keyboard_double_arrow_up))
+          ],
+        ),
       ),
     );
   }
 
+  _list(HistoryState state, double screenWidth) {
+    return Expanded(
+      child: Padding(
+        padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        child: RefreshIndicator(
+          onRefresh: refresh,
+          child: GroupedListView<dynamic, String>(
+              elements: state.storedWeathers!,
+              groupBy: (element) => state.sortByTime ? (element.time.toString().substring(0, 10)) : element.city.toString(),
+              order: state.sortASC ? GroupedListOrder.ASC : GroupedListOrder.DESC,
+              useStickyGroupSeparators: false,
+              shrinkWrap: true,
+              controller: _scrollController,
+              groupComparator: (value1, value2) => value2.compareTo(value1),
+              itemComparator: (item1, item2) =>
+                  state.sortByTime ? (item1.time.toString().substring(0, 10).compareTo(item2.time.toString().substring(0, 10)))
+                    : (item1.city.toString().compareTo(item2.city.toString())),
+              groupSeparatorBuilder: (String value) => _separator(value),
+              itemBuilder: (c, element) => _row(element, state)
+          ),
+        ),
+      ),
+    );
+  }
 
+    scrollTop() {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+        0.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+      }
+    }
 
-
-  Future<void> refresh() async {//todo LISTEN FALSE!!!!!!!!!!!!!!!!!!!!!!
+  Future<void> refresh() async {
     Provider.of<HistoryBloc>(context, listen: false).add(HistoryRefreshEvent());
   }
 
   _separator(String value) {
     return  Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          child: Container(
-              decoration: BoxDecoration(
-                  color: AppColors.backgroundDark,
-                  border: Border.all(),
-                  borderRadius: const BorderRadius.all(Radius.circular(20))
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-              child: Text(value, textAlign: TextAlign.center, style: AppTextStyle.separator,
-              )
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: Container(
+          decoration: BoxDecoration(
+              color: AppColors.backgroundDark,
+              border: Border.all(),
+              borderRadius: const BorderRadius.all(Radius.circular(20))
           ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          child: Text(value, textAlign: TextAlign.center, style: AppTextStyle.separator)
+      ),
     );
   }
 
   _row(StoredWeather element, HistoryState state) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+      padding: const EdgeInsets.only(bottom: 5),
       child: Card(
         elevation: 3,
         color: AppColors.textWhite,
@@ -222,7 +221,11 @@ class _HistoryState extends State<History> {
             const SizedBox(width: 10),
             Image.asset("assets/images/icons/${element.icon ?? "unknown_icon"}.png", fit: BoxFit.fitWidth, width: 45),
             const SizedBox(width: 20),
-            Text("${double.parse(((element.temp ?? 0) - (state.isCelsius ? 272.15 : 457.87) ).toStringAsFixed(1))}°", style: AppTextStyle.mapTemp)
+            Text(state.isCelsius
+                ? "${((element.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
+                : "${(((element.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
+              style: AppTextStyle.mapTemp,
+            ),
           ],
         ),
       ),
@@ -236,7 +239,7 @@ class _HistoryState extends State<History> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(element.city ?? "", style: AppTextStyle.cityText),
+                Text(element.city ?? "", style: AppTextStyle.mainText),
                 Text(DateFormat('yyyy-MMM-dd').format(element.time!).toString(), style: AppTextStyle.descText),
                 Text(DateFormat('kk:mm').format(element.time!).toString(), style: AppTextStyle.descText.copyWith(fontSize: 16)),
               ],
@@ -245,18 +248,13 @@ class _HistoryState extends State<History> {
     );
   }
 
-
-
-
-
   /// Skeleton loading
-  _skeletonList() {
+  _skeletonList(double screenWidth) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+        padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-           // padding: const EdgeInsets.fromLTRB(30, 20, 30, 16),
             itemCount: 20,
             itemBuilder: (context, index) {
               return _skeletonRow();
@@ -268,7 +266,7 @@ class _HistoryState extends State<History> {
 
   _skeletonRow() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+      padding: const EdgeInsets.only(bottom: 5),
       child: Card(
         elevation: 3,
         color: AppColors.textWhite,
@@ -352,11 +350,6 @@ class _HistoryState extends State<History> {
       ),
     );
   }
-
-
-
-
-
 }
 
 
