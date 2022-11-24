@@ -1,12 +1,7 @@
 # WeatherNOW
 
-Homework for Flutter class
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
+Flutter verseny házi feladat.
+Az alkalmazás fő fejlesztési platformja az `Android` (min. lvl 30 API) volt de az alkalmazás fut `iOS` platformon is. Ezen kívül az alkalmazás `webes` (böngésző) platformon is használható. (tartalmaz a használhatósághoz szükséges reszponzivitást de a design alapvetően mobilra készült). Az alkalmazás magyar és angol nyelvre lett lokalizálva.
 
 ## Bejelentkezés és regisztráció
 
@@ -36,11 +31,35 @@ Ezután (a könnyű tesztelés érdekében) lehetőség van megadni, hogy a felh
 Amennyiben a feltételek teljesültek visszajelzést kapunk arról, hogy sikeres volt-e a regisztráció. Sikeres regisztráció esetén egyből be is léptet az alkalmazás.
 A megadott e-mail címnek csak formátum követelménye van nem kell hogy valós legyen mivel az e-mail hitelesítés és jelszó visszaállítás a levélszemetelés megelőzése érdekében ki van kapcsolva. :)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Fő funkciók
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-=======
+
+#### Weather
+
+A `Weather` tabon látható egy térkép amely szabadon mozgatható nagyítható. A térképen a beállított városok (jelen esetben megyeszékhelyek) helye meg van jelölve, és a város aktuális hőmérséklete, valamint az aktuális időjárást szimbolizáló ikon látható. A térkép alján (alsó tabbar felett) egy felnyitható listában is megtekinthetjük a városok aktuális időjárásait. A listából vagy a térképről egy várost kiválasztva megnyílik az adott város részletes időjárás adatait tartalmató oldal. Ez az oldal tartalmazza a következőket:
+- Városnév
+- Aktuális hőmérséklet
+- Időjárás típusa és ikonja (esős, viharos stb.)
+- Napi maximális hőmérséklet
+- Napi minimális hőmérséklet
+- Légköri nyomás
+- Páratartalom
+- Szél sebessége
+- Felhőborítottság
+
+Az időjárásadatok percenként frissülnek automatikusan.
+
+## Profil
+
+A profil oldalon látható az aktuálisan bejelentkezett felhasználói fiók adatai:
+- Felhasználónév
+- E-mail cím
+- Fiók típus (alap, admin)
+
+A fentieken kívül ezen az oldalon van lehetőség a hőmérséklet mértékegységének váltására `C` és `F` között (alapértelmezetten C). A beállított érték az alkalmazáson bellül mindenhova érvényes és mentésre kerül, következő alkalmazás indításnán az értéket megőrzi.
+A profil oldalon van lehetőség a fiókból való `kijelentkezésre` is. Kijelentkezés esetén visszakerülünk a bejelentkező oldalra.
+
+## Előzmények 
+
+Ez az oldal csak alap felhasználók számára érhető el. Itt az előzetesen elmentett időjárások megtekinthetőek lista formájában. A listát rendezhetjük dátum vagy város szerint, illetve csökkenő vagy növekvő sorrendben. Az admin felhasználóknál nem leátható ez az oldal viszont az alkalmazásban töltött idejük alatt percenként feltöltésre kerülnek a városok aktuális időjárás adatai.
 
