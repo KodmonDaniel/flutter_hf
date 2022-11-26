@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_hf/repository/firestore/models/user_details.dart';
+import 'package:flutter_hf/repository/firestore/models/user_details_response.dart';
 
 class LoginState extends Equatable {
-  final UserDetails? userDetails;
+  final UserDetailsResponse? userDetails;
   final bool isLoading;
   final bool isUsernameError;
   final bool isPwdError;
@@ -19,7 +19,7 @@ class LoginState extends Equatable {
   @override
   List<Object?> get props => [userDetails, isLoading, isUsernameError, isPwdError, isPwdHidden];
 
-  LoginState copyWith({UserDetails? userDetails, bool? isLoading, bool? isUsernameError, bool? isPwdError, bool? isPwdHidden})
+  LoginState copyWith({UserDetailsResponse? userDetails, bool? isLoading, bool? isUsernameError, bool? isPwdError, bool? isPwdHidden})
   => LoginState(
       userDetails: userDetails ?? this.userDetails,
       isLoading: isLoading ?? this.isLoading,

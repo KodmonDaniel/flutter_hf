@@ -3,17 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/extensions/extension_textstyle.dart';
 import 'package:flutter_hf/features/dashboard_page.dart';
-import 'package:flutter_hf/features/history/history_bloc.dart';
 import 'package:flutter_hf/features/profile/profile_event.dart';
-import 'package:flutter_hf/features/weather/weather_bloc.dart';
+import 'package:flutter_hf/repository/firestore/models/user_details_response.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../../extensions/extension_gradient.dart';
-import '../history/history_event.dart';
-import '../weather/weather_event.dart';
+import '../../preferences/common_objects.dart';
 import 'profile_state.dart';
 import 'profile_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -100,15 +98,16 @@ class _ProfileState extends State<Profile> {
   }
 
   _userDetails(ProfileState state) {
+    UserDetailsResponse? userDetails = Provider.of<CommonObjects>(context, listen: false).userDetails;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(state.userDetails?.username ?? "N/A",style: AppTextStyle.usernameText ),
+          Text(userDetails?.username ?? "N/A",style: AppTextStyle.usernameText ),
           const SizedBox(height: 10),
-          Text(state.userDetails?.email ?? "N/A",style: AppTextStyle.primaryText ),
+          Text(userDetails?.email ?? "N/A",style: AppTextStyle.primaryText ),
           const SizedBox(height: 10),
-          Text("${(state.userDetails?.admin ?? false)
+          Text("${(userDetails?.admin ?? false)
               ? AppLocalizations.of(context)!.admin
               : AppLocalizations.of(context)!.basic} ${AppLocalizations.of(context)!.user}",
               style: AppTextStyle.primaryText2 ),
@@ -125,14 +124,16 @@ class _ProfileState extends State<Profile> {
       inactiveBgColor: AppColors.lightGrey,
       inactiveFgColor: AppColors.backgroundDark,
       fontSize: 18,
-      initialLabelIndex: state.isCelsius ? 0 : 1,
+      initialLabelIndex: /*state.isCelsius ?*/(Provider.of<CommonObjects>(context, listen: false).isCelsius) ? 0 : 1,
       totalSwitches: 2,
       labels:  const ["°C", "°F"],
       radiusStyle: true,
       onToggle: (index) {
-        Provider.of<ProfileBloc>(context, listen: false).add(ProfileChangeUnitEvent());
-        Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherChangeUnitEvent());
-        Provider.of<HistoryBloc>(context, listen: false).add(HistoryChangeUnitEvent());
+        bool newValue = !Provider.of<CommonObjects>(context, listen: false).isCelsius;
+        Provider.of<ProfileBloc>(context, listen: false).add(ProfileChangeUnitEvent(newValue));
+        //Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherChangeUnitEvent(!state.isCelsius));
+        //Provider.of<HistoryBloc>(context, listen: false).add(HistoryChangeUnitEvent(!state.isCelsius));
+        Provider.of<CommonObjects>(context, listen: false).isCelsius = newValue;
       },
     );
   }

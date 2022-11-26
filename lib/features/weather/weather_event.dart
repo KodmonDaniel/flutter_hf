@@ -17,8 +17,17 @@ class CitiesWeatherSaveEvent extends WeatherEvent {
 }
 
 class CitiesWeatherChangeUnitEvent extends WeatherEvent {
-  CitiesWeatherChangeUnitEvent();
+  final bool isCelsius;
+  CitiesWeatherChangeUnitEvent(this.isCelsius);
 
   @override
   List<Object?> get props => [];
 }
+/*
+class CitiesWeatherUserDetailsChangeEvent extends WeatherEvent {
+  final String email;
+  CitiesWeatherUserDetailsChangeEvent(this.email);
+
+  @override
+  List<Object?> get props => [];
+}*/

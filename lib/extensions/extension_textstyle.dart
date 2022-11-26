@@ -116,6 +116,29 @@ extension AppTextStyle on ThemeData {
       fontWeight: FontWeight.w400
   );
 
+  static TextStyle weatherDetailsValue = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 24,
+      color: AppColors.textPrimary,
+      fontWeight: FontWeight.w600
+  );
+
+  static TextStyle weatherDetailsTypes = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 18,
+      color: AppColors.textSecondary,
+      fontWeight: FontWeight.w400
+  );
+
+  static TextStyle secondaryLightText = TextStyle(
+      fontFamily: 'Poppins',
+      fontSize: 18,
+      color: AppColors.lightGrey,
+      fontWeight: FontWeight.w400
+  );
+
+
+
 
 
 }

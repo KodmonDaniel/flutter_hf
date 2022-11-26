@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
+import 'package:flutter_hf/extensions/extension_nameconversion.dart';
+import 'package:flutter_hf/preferences/common_objects.dart';
 import 'package:flutter_hf/repository/firestore/models/stored_weather.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:provider/provider.dart';
@@ -81,7 +83,6 @@ class _HistoryState extends State<History> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child:  Row(
-          //todo mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Row(
@@ -136,14 +137,17 @@ class _HistoryState extends State<History> {
   }
 
   _list(HistoryState state, double screenWidth) {
+    var length = state.storedWeathers?.length;
     return Expanded(
-      child: Padding(
-        padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
-        child: RefreshIndicator(
-          onRefresh: refresh,
+      child: RefreshIndicator(
+        onRefresh: refresh,
+        child: (state.storedWeathers == null || length == 0)
+        ? _emptyList()
+        : Padding(
+          padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: GroupedListView<dynamic, String>(
               elements: state.storedWeathers!,
-              groupBy: (element) => state.sortByTime ? (element.time.toString().substring(0, 10)) : element.city.toString(),
+              groupBy: (element) => state.sortByTime ? (element.time.toString().substring(0, 10)) : AppNameConversion.cityName(element.id), /*element.city.toString(),*/
               order: state.sortASC ? GroupedListOrder.ASC : GroupedListOrder.DESC,
               useStickyGroupSeparators: false,
               shrinkWrap: true,
@@ -157,6 +161,26 @@ class _HistoryState extends State<History> {
           ),
         ),
       ),
+    );
+  }
+
+  _emptyList() {
+    return CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          child: Container(
+            color: AppColors.textWhite,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("assets/images/background/no_element.png", scale: 3,),
+                const SizedBox(height: 25),
+                Text(AppLocalizations.of(context)!.list_no_element, style: AppTextStyle.secondaryLightText,)
+              ],
+            ),
+          ),
+        )
+      ],
     );
   }
 
@@ -221,7 +245,7 @@ class _HistoryState extends State<History> {
             const SizedBox(width: 10),
             Image.asset("assets/images/icons/${element.icon ?? "unknown_icon"}.png", fit: BoxFit.fitWidth, width: 45),
             const SizedBox(width: 20),
-            Text(state.isCelsius
+            Text(Provider.of<CommonObjects>(context, listen: false).isCelsius
                 ? "${((element.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
                 : "${(((element.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
               style: AppTextStyle.mapTemp,
@@ -239,7 +263,7 @@ class _HistoryState extends State<History> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(element.city ?? "", style: AppTextStyle.mainText),
+                Text(AppNameConversion.cityName(element.id ?? 0), style: AppTextStyle.mainText),
                 Text(DateFormat('yyyy-MMM-dd').format(element.time!).toString(), style: AppTextStyle.descText),
                 Text(DateFormat('kk:mm').format(element.time!).toString(), style: AppTextStyle.descText.copyWith(fontSize: 16)),
               ],

@@ -22,10 +22,3 @@ class HistoryChangeOrderCategoryEvent extends HistoryEvent {
   @override
   List<Object?> get props => [];
 }
-
-class HistoryChangeUnitEvent extends HistoryEvent {
-  HistoryChangeUnitEvent();
-
-  @override
-  List<Object?> get props => [];
-}

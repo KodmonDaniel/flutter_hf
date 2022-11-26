@@ -34,6 +34,23 @@
 
     "list_no_element" : "Nincs elérhető elem",
 
+    "weather_thunderstorm": "Viharos",
+    "weather_drizzle": "Záporos",
+    "weather_rain": "Esős",
+    "weather_snow": "Havas",
+    "weather_fog": "Ködös",
+    "weather_clear": "Derült",
+    "weather_cloudy": "Felhős",
+
+    "weather_details": "részletek",
+    "weather_details_weather": "időjárás",
+    "weather_details_min_tmp": "Minimum hőm.",
+    "weather_details_max_tmp": "Maximum höm.",
+    "weather_details_pressure": "Légköri nyomás",
+    "weather_details_humidity": "Páratartalom",
+    "weather_details_wind_speed": "Szél sebessége",
+    "weather_details_clouds": "Felhőborítottság",
+
     "history": "Előzmények",
     "history_sort": "Rendezés",
     "history_order": "Sorrend",

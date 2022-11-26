@@ -23,6 +23,7 @@ CityResponse _$CityResponseFromJson(Map<String, dynamic> json) => CityResponse(
           ? null
           : CityClouds.fromJson(json['clouds'] as Map<String, dynamic>),
       name: json['name'] as String?,
+      id: json['id'] as int?,
     );
 
 Map<String, dynamic> _$CityResponseToJson(CityResponse instance) =>
@@ -33,4 +34,5 @@ Map<String, dynamic> _$CityResponseToJson(CityResponse instance) =>
       'wind': instance.wind,
       'clouds': instance.clouds,
       'name': instance.name,
+      'id': instance.id,
     };

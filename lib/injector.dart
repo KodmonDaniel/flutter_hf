@@ -3,6 +3,7 @@ import 'package:flutter_hf/features/history/history_bloc.dart';
 import 'package:flutter_hf/features/weather/weather_bloc.dart';
 import 'package:flutter_hf/repository/api/api_repository.dart';
 import 'package:flutter_hf/repository/firestore/firestore_repository.dart';
+import 'package:flutter_hf/preferences/common_objects.dart';
 import 'package:provider/provider.dart';
 import 'features/login/login_bloc.dart';
 import 'features/profile/profile_bloc.dart';
@@ -16,8 +17,10 @@ class Injector {
     Provider<WeatherBloc>(create: (_) => blocWeather),
     Provider<HistoryBloc>(create: (_) => blocHistory),
     Provider<ProfileBloc>(create: (_) => blocProfile),
+    Provider<CommonObjects>(create: (_) => commonObjects),
   ];
 
+  static final commonObjects = CommonObjects();
   static final apiRepository = ApiRepository();
   static final firestoreRepository = FirestoreRepository();
   static final blocLogin = LoginBloc(firestoreRepository);
