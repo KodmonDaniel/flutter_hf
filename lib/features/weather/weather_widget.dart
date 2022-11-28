@@ -187,7 +187,7 @@ class _WeatherState extends State<Weather> {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Card(
         elevation: 3,
-        color: AppColors.textWhite,
+        color: AppColors.white,
         child: InkWell(
           onTap: () {
              var weatherDetailsBloc = WeatherDetailsBloc(cityResponse: cityResponse, isCelsius: state.isCelsius);
@@ -302,7 +302,7 @@ class _WeatherState extends State<Weather> {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Card(
         elevation: 3,
-        color: AppColors.textWhite,
+        color: AppColors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

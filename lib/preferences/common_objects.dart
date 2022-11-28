@@ -4,6 +4,7 @@ import 'package:flutter_hf/repository/firestore/models/user_details_response.dar
 class CommonObjects {
   UserDetailsResponse? userDetails;
   late bool isCelsius;
+  late bool firstLaunch;
 
-  CommonObjects({this.userDetails/*, this.isCelsius*/});
+  CommonObjects({this.userDetails});
 }

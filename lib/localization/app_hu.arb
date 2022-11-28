@@ -1,6 +1,8 @@
 {
     "app_name": "WeatherHW",
 
+    "main_loading": "Egy pillanat",
+
     "login": "Bejelentkezés",
     "username": "Felhasználónév",
     "password": "Jelszó",
@@ -27,6 +29,10 @@
 
     "signup_success": "Sikeres regisztráció!",
     "signup_failed": "Sikertelen regisztráció!",
+
+    "welcome_title": "ÜDV!",
+    "welcome_text": "Köszönöm a letöltést!\nTovábbi részleteket az alkalmazásról és annak használatáról a következő címen találhat",
+    "welcome_btn": "Értem",
 
     "tab_weather": "Időjárás",
     "tab_profile": "Profil",

@@ -28,21 +28,21 @@ extension AppTextStyle on ThemeData {
   static TextStyle mapTemp = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 24,
-      color: AppColors.textBlack,
+      color: AppColors.black,
       fontWeight: FontWeight.w600
   );
 
   static TextStyle planeText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 16,
-      color: AppColors.textBlack,
+      color: AppColors.black,
       fontWeight: FontWeight.w400
   );
 
   static TextStyle mainText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 18,
-      color: AppColors.textBlack,
+      color: AppColors.black,
       fontWeight: FontWeight.w600
   );
 
@@ -56,7 +56,7 @@ extension AppTextStyle on ThemeData {
   static TextStyle descText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 18,
-      color: AppColors.textBlack,
+      color: AppColors.black,
       fontWeight: FontWeight.w400
   );
 
@@ -77,7 +77,7 @@ extension AppTextStyle on ThemeData {
   static TextStyle btnText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 18,
-      color: AppColors.textWhite,
+      color: AppColors.white,
       fontWeight: FontWeight.w500
   );
 
@@ -91,21 +91,21 @@ extension AppTextStyle on ThemeData {
   static TextStyle miniText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 16,
-      color: AppColors.textBlack,
+      color: AppColors.black,
       fontWeight: FontWeight.w400
   );
 
   static TextStyle bigTitle = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 48,
-      color: AppColors.textBlack,
+      color: AppColors.black,
       fontWeight: FontWeight.w600
   );
 
   static TextStyle signupAlertText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 28,
-      color: AppColors.textWhite,
+      color: AppColors.white,
       fontWeight: FontWeight.w500
   );
 

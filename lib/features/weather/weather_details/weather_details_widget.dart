@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/extensions/extension_nameconversion.dart';
 import 'package:flutter_hf/extensions/extension_textstyle.dart';
@@ -21,6 +22,8 @@ class _WeatherDetailsState extends State<WeatherDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var orientationLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    var screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider(
       create: (_) => widget._bloc,
         child: BlocBuilder<WeatherDetailsBloc, WeatherDetailsState>(
@@ -28,7 +31,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
               return Scaffold(
                 appBar: AppBar(
                   iconTheme: IconThemeData(
-                    color: AppColors.textWhite
+                    color: AppColors.white
                   ),
                   title:  Text("${AppNameConversion.cityName(state.cityResponse?.id ?? 0)} ${AppLocalizations.of(context)!.weather_details}", style: AppTextStyle.tabTitle,),
                  backgroundColor: AppColors.backgroundDark,
@@ -50,7 +53,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 20, top: 60, right: 20, bottom: 0),
+                                  padding: (kIsWeb || orientationLandscape) ? EdgeInsets.only(left: (screenWidth/5), top: 60, right: (screenWidth/5), bottom: 0) : const EdgeInsets.only(left: 20, top: 60, right: 20, bottom: 0),
                                   child: Card(
                                     color: AppColors.cardDark,
                                     elevation: 3.0,
@@ -76,7 +79,6 @@ class _WeatherDetailsState extends State<WeatherDetails> {
         )
     );
   }
-
 
   _cityDetails(WeatherDetailsState state) {
     return Padding(

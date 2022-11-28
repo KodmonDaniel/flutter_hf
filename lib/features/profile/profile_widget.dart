@@ -61,18 +61,18 @@ class _ProfileState extends State<Profile> {
                         Padding(
                           padding: const EdgeInsets.only(left: 60, top: 32, right: 60, bottom: 32),
                           child: Card(
-                            color: AppColors.cardDark,
-                            elevation: 3.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0)
+                                color: AppColors.cardDark,
+                                elevation: 3.0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.0)
+                                ),
+                                child: SizedBox(
+                                  width: 300,
+                                  height: 450,
+                                  child: _cardContent(state),
+                                ),
+                              ),
                             ),
-                            child: SizedBox(
-                              width: 300,
-                              height: 450,
-                              child: _cardContent(state),
-                            ),
-                          ),
-                        )
                       ],
                     ),
                   )
@@ -120,19 +120,17 @@ class _ProfileState extends State<Profile> {
       minWidth: 50,
       cornerRadius: 20,
       activeBgColor: [AppColors.tealColor3],
-      activeFgColor: AppColors.textWhite,
+      activeFgColor: AppColors.white,
       inactiveBgColor: AppColors.lightGrey,
       inactiveFgColor: AppColors.backgroundDark,
       fontSize: 18,
-      initialLabelIndex: /*state.isCelsius ?*/(Provider.of<CommonObjects>(context, listen: false).isCelsius) ? 0 : 1,
+      initialLabelIndex: (Provider.of<CommonObjects>(context, listen: false).isCelsius) ? 0 : 1,
       totalSwitches: 2,
       labels:  const ["°C", "°F"],
       radiusStyle: true,
       onToggle: (index) {
         bool newValue = !Provider.of<CommonObjects>(context, listen: false).isCelsius;
         Provider.of<ProfileBloc>(context, listen: false).add(ProfileChangeUnitEvent(newValue));
-        //Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherChangeUnitEvent(!state.isCelsius));
-        //Provider.of<HistoryBloc>(context, listen: false).add(HistoryChangeUnitEvent(!state.isCelsius));
         Provider.of<CommonObjects>(context, listen: false).isCelsius = newValue;
       },
     );

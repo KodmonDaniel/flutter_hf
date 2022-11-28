@@ -6,14 +6,6 @@ class DashboardState extends Equatable {
   const DashboardState({
     this.currentTab = 0,
   });
-/*
-  static getUserDetails() {
-    return userDetails;
-  }
-
-  static setUserDetails(UserDetails? userDetails){
-    userDetails = userDetails;
-  }*/
 
   @override
   List<Object?> get props => [currentTab];

@@ -1,6 +1,8 @@
 {
     "app_name": "WeatherHW",
 
+    "main_loading": "Just a moment",
+
     "login": "Login",
     "username": "Username",
     "password": "Password",
@@ -27,6 +29,10 @@
 
     "signup_success": "Successfully signed up!",
     "signup_failed": "Signup failed!",
+
+    "welcome_title": "WELCOME",
+    "welcome_text": "Thanks for downloading!\nMore details about the app and how to use it can be found at\n",
+    "welcome_btn": "Got it",
 
     "tab_weather": "Weather",
     "tab_profile": "Profile",

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter_hf/extensions/extension_colors.dart';
+import 'package:flutter_hf/extensions/extension_gradient.dart';
 import 'package:flutter_hf/features/history/history_bloc.dart';
 import 'package:flutter_hf/features/history/history_widget.dart';
 import 'package:flutter_hf/features/profile/profile_widget.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../extensions/extension_textstyle.dart';
 import 'dashboard_page.dart';
 import 'dashboard_event.dart';
 import 'dashboard_state.dart';
@@ -18,6 +20,7 @@ import 'dashboard_bloc.dart';
 import 'package:custom_top_navigator/custom_scaffold.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'history/history_event.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard ({Key? key});
@@ -41,7 +44,30 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+  /*  Provider.of<DashboardBloc>(context, listen: false).getUserDetails().then((value) => Provider.of<CommonObjects>(context, listen: false).userDetails = value);
+    Provider.of<DashboardBloc>(context, listen: false).getStoredTempUnit().then((value) => Provider.of<CommonObjects>(context, listen: false).isCelsius = value);
+    Provider.of<DashboardBloc>(context, listen: false).isFirstLaunch().then((value) {
+      if (value) {
+        print("ELSŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐŐ");
+      }
+    });*/
 
+
+
+    if (Provider.of<CommonObjects>(context, listen: false).firstLaunch) {
+      Future.delayed(Duration.zero,() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              content: _welcomeAlert(context),
+            );
+          },
+        );
+      });
+      Provider.of<DashboardBloc>(context, listen: false).add(DashboardFirstLaunchedEvent());
+    }
     timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
       //Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherRefreshEvent());
         if (Provider.of<CommonObjects>(context, listen: false).userDetails?.admin ?? false) {
@@ -127,3 +153,64 @@ class Tab {
 
   Tab(this.widget, this.name, this.icon);
 }
+
+_welcomeAlert(BuildContext context) {
+  return SizedBox(
+    width: 400,
+    height: 400,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          height: 150,
+          width: 400,
+          decoration: BoxDecoration(
+              gradient: AppGradient.blueTealGrad,
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(3), topRight: Radius.circular(3)),
+          ),
+          child: Center(
+              child: Text(AppLocalizations.of(context)!.welcome_title, style: AppTextStyle.bigTitle.copyWith(color: AppColors.white),)
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+           // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(AppLocalizations.of(context)!.welcome_text, style: AppTextStyle.descText, textAlign: TextAlign.center,),
+              InkWell(
+                onTap: () async {
+                  _launchUrl();
+                },
+                child: Text("https://github.com/KodmonDaniel/flutter_hf", style: AppTextStyle.miniBtnText, textAlign: TextAlign.center,),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 150,
+          height: 40,
+          child: OutlinedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: AppColors.backgroundDark, width: 3),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            child: Text(AppLocalizations.of(context)!.welcome_btn, style: AppTextStyle.btnText.copyWith(color: AppColors.backgroundDark)),
+          ),
+        ),
+        const SizedBox(height: 10)
+      ],
+    ),
+  );
+}
+
+Future<void> _launchUrl() async {
+  final Uri url = Uri.parse('https://github.com/KodmonDaniel/flutter_hf');
+  if (!await launchUrl(url)) {
+    throw 'Could not launch $url';
+  }
+}
+

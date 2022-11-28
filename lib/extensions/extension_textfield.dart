@@ -17,7 +17,7 @@ extension AppTextField on TextField {
     borderRadius: BorderRadius.circular(30),
     borderSide: BorderSide(
       width: 2,
-      color: AppColors.textBlack
+      color: AppColors.black
     ),
   );
 

@@ -79,7 +79,7 @@ class _HistoryState extends State<History> {
 
   _title(HistoryState state) {
     return Container(
-      color: AppColors.textWhite,
+      color: AppColors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child:  Row(
@@ -169,7 +169,7 @@ class _HistoryState extends State<History> {
       slivers: [
         SliverFillRemaining(
           child: Container(
-            color: AppColors.textWhite,
+            color: AppColors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -218,7 +218,7 @@ class _HistoryState extends State<History> {
       padding: const EdgeInsets.only(bottom: 5),
       child: Card(
         elevation: 3,
-        color: AppColors.textWhite,
+        color: AppColors.white,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -293,7 +293,7 @@ class _HistoryState extends State<History> {
       padding: const EdgeInsets.only(bottom: 5),
       child: Card(
         elevation: 3,
-        color: AppColors.textWhite,
+        color: AppColors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
