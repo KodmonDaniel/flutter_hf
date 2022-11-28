@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
+import 'package:flutter_hf/extensions/extension_nameconversion.dart';
 import 'package:flutter_hf/features/weather/weather_details/weather_details_bloc.dart';
 import 'package:flutter_hf/features/weather/weather_details/weather_details_widget.dart';
+import 'package:flutter_hf/features/weather/weather_event.dart';
+import 'package:flutter_hf/preferences/common_objects.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +23,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hf/repository/api/models/city_response.dart' as city_model;
 
 class Weather extends DashboardPage {
-  const Weather ({Key? key});
+  const Weather ({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _WeatherState();
 }
@@ -32,8 +35,11 @@ class _WeatherState extends State<Weather> {
 
   @override
   Widget build(BuildContext context) {
+    // ChangeNotifier not necessary, must change tab from profile => rebuild!
+    Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherChangeUnitEvent(Provider.of<CommonObjects>(context, listen: false).isCelsius));
     panelOpenedHeight = MediaQuery.of(context).size.height * 0.6;
     var screenWidth = MediaQuery.of(context).size.width;
+    var orientationLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     return BlocProvider.value(
       value: Provider.of<WeatherBloc>(context),
       child: BlocBuilder<WeatherBloc, WeatherState>(
@@ -48,20 +54,21 @@ class _WeatherState extends State<Weather> {
                   parallaxEnabled: true,
                   parallaxOffset: .5,
                   body: _map(state),
-                  panelBuilder: (scrollController) => _panel(state,context, scrollController, screenWidth),
+                  panelBuilder: (scrollController) => (_panel(state,context, scrollController, screenWidth)),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(18.0),
                       topRight: Radius.circular(18.0)
                   ),
                 ),
+
                 Positioned(
                   top: 0,
                   child: Container(
-                    height: (kIsWeb) ? screenWidth/15 : 140,
+                    height: (kIsWeb || orientationLandscape) ? screenWidth / 15 : 140,
                     width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: (kIsWeb) ? AssetImage("assets/images/background/banner_web.png") : AssetImage("assets/images/background/banner.png"),
+                            image: (kIsWeb || orientationLandscape) ? AssetImage("assets/images/background/banner_web.png") : AssetImage("assets/images/background/banner.png"),
                             fit: BoxFit.cover
                         )
                     ),
@@ -92,7 +99,7 @@ class _WeatherState extends State<Weather> {
             for (var i = 0; i < (state.citiesWeatherList?.length ?? 0); i++)
             Marker(
               point: LatLng(state.citiesWeatherList?[i].coord?.lat ?? 0, state.citiesWeatherList?[i].coord?.lon ?? 0),
-              width: state.isCelsius ? 50 : 55,
+              width: state.isCelsius /* isCelsius*/ ? 50 : 55,
               height: 70,
               builder: (context) => _cityMarker(state, i)
             ),
@@ -104,39 +111,43 @@ class _WeatherState extends State<Weather> {
 
   /// Returns one city weather marker for a given city
   _cityMarker(WeatherState state, int i) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.all(Radius.circular(15)),
-      child: Container(
-        color: AppColors.cardLight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(child: IconButton(icon: Image.asset("assets/images/icons/${state.citiesWeatherList?[i].weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitHeight), onPressed: () {
-                  var weatherDetailsBloc = WeatherDetailsBloc(
-                      cityResponse: state.citiesWeatherList![i],
-                      isCelsius: state.isCelsius);
-                  var weatherDetails = WeatherDetails(weatherDetailsBloc);
-                  var route = AppRoute.createRoute(weatherDetails);
-                  Navigator.of(context).push(route);
-              },
-            )),
-            Expanded(
-              child: Text(state.isCelsius
-                ? "${((state.citiesWeatherList?[i].main?.temp ?? 0) - 273.15).toStringAsFixed(0)}°"
-                : "${(((state.citiesWeatherList?[i].main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(0)}°",
-              style: AppTextStyle.mapTemp,
+    return GestureDetector(
+      onTap: () => _openDetails(state, i),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        child: Container(
+          color: AppColors.cardLight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(child: IconButton(icon: Image.asset("assets/images/icons/${state.citiesWeatherList?[i].weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitHeight), onPressed: () => _openDetails(state, i))),
+              Expanded(
+                child: Text(state.isCelsius/*isCelsius*/
+                  ? "${((state.citiesWeatherList?[i].main?.temp ?? 0) - 273.15).toStringAsFixed(0)}°"
+                  : "${(((state.citiesWeatherList?[i].main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(0)}°",
+                style: AppTextStyle.mapTemp,
+                )
               )
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
+  _openDetails(WeatherState state, int i) {
+    var weatherDetailsBloc = WeatherDetailsBloc(
+        cityResponse: state.citiesWeatherList![i],
+        isCelsius: state.isCelsius);
+    var weatherDetails = WeatherDetails(weatherDetailsBloc);
+    var route = AppRoute.createRoute(weatherDetails);
+    Navigator.of(context).push(route);
+  }
+
   /// Returns the list of the cities
   _actualList(WeatherState state, BuildContext context, ScrollController scrollController, double screenWidth) {
     return Expanded(
-        child: Padding(  // website can be resized & different aspect ratio monitor!
+        child: Padding(  // website can be resized & different aspect ratio display!
           padding: (kIsWeb) ? EdgeInsets.fromLTRB((screenWidth/3.5), 0, (screenWidth/3.5), 0)  : const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Container(
             decoration: BoxDecoration(
@@ -176,7 +187,7 @@ class _WeatherState extends State<Weather> {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Card(
         elevation: 3,
-        color: AppColors.textWhite,
+        color: AppColors.white,
         child: InkWell(
           onTap: () {
              var weatherDetailsBloc = WeatherDetailsBloc(cityResponse: cityResponse, isCelsius: state.isCelsius);
@@ -210,7 +221,7 @@ class _WeatherState extends State<Weather> {
           children: [
             Image.asset("assets/images/icons/${cityResponse.weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitWidth, width: 35),
             const SizedBox(width: 15),
-            Text(state.isCelsius
+            Text(state.isCelsius/* isCelsius*/
                 ? "${((cityResponse.main?.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
                 : "${(((cityResponse.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
               style: AppTextStyle.mapTemp,
@@ -228,8 +239,8 @@ class _WeatherState extends State<Weather> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(cityResponse.name ?? "", style: AppTextStyle.mainText),
-                Text(cityResponse.weather?[0].main ?? "", style: AppTextStyle.descText),
+                Text(AppNameConversion.cityName(cityResponse.id ?? 0), style: AppTextStyle.mainText),
+                Text(AppNameConversion.weatherName(cityResponse.weather?[0].id ?? 0, context), style: AppTextStyle.descText),
               ],
             )
 
@@ -291,7 +302,7 @@ class _WeatherState extends State<Weather> {
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Card(
         elevation: 3,
-        color: AppColors.textWhite,
+        color: AppColors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

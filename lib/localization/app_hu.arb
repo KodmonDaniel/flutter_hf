@@ -1,6 +1,8 @@
 {
     "app_name": "WeatherHW",
 
+    "main_loading": "Egy pillanat",
+
     "login": "Bejelentkezés",
     "username": "Felhasználónév",
     "password": "Jelszó",
@@ -28,11 +30,32 @@
     "signup_success": "Sikeres regisztráció!",
     "signup_failed": "Sikertelen regisztráció!",
 
+    "welcome_title": "ÜDV!",
+    "welcome_text": "Köszönöm a letöltést!\nTovábbi részleteket az alkalmazásról és annak használatáról a következő címen találhat",
+    "welcome_btn": "Értem",
+
     "tab_weather": "Időjárás",
     "tab_profile": "Profil",
     "tab_history": "Előzmény",
 
     "list_no_element" : "Nincs elérhető elem",
+
+    "weather_thunderstorm": "Viharos",
+    "weather_drizzle": "Záporos",
+    "weather_rain": "Esős",
+    "weather_snow": "Havas",
+    "weather_fog": "Ködös",
+    "weather_clear": "Derült",
+    "weather_cloudy": "Felhős",
+
+    "weather_details": "részletek",
+    "weather_details_weather": "időjárás",
+    "weather_details_min_tmp": "Minimum hőm.",
+    "weather_details_max_tmp": "Maximum höm.",
+    "weather_details_pressure": "Légköri nyomás",
+    "weather_details_humidity": "Páratartalom",
+    "weather_details_wind_speed": "Szél sebessége",
+    "weather_details_clouds": "Felhőborítottság",
 
     "history": "Előzmények",
     "history_sort": "Rendezés",

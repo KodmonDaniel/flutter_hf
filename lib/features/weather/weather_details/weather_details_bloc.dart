@@ -10,6 +10,7 @@ class WeatherDetailsBloc extends Bloc<WeatherDetailsEvent, WeatherDetailsState> 
 
   WeatherDetailsBloc({required model.CityResponse cityResponse, required bool isCelsius, Key? key}) : super(WeatherDetailsState(cityResponse: cityResponse, isCelsius: isCelsius, background: getBackgroundFromWeather(cityResponse)));}
 
+  /// Background for specific weather type. Not extension, used only here.
   AssetImage getBackgroundFromWeather(CityResponse cityResponse) {
     late String weather;
     var id = cityResponse.weather?[0].id;

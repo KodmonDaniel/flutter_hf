@@ -2,10 +2,10 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/extensions/extension_textstyle.dart';
-import 'package:jumping_dot/jumping_dot.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../../../extensions/extension_gradient.dart';
 import '../../../extensions/extension_textfield.dart';
@@ -191,7 +191,7 @@ class _LoginSignupState extends State<LoginSignup> {
       minWidth: 100,
       cornerRadius: 20,
       activeBgColor: [AppColors.tealColor3],
-      activeFgColor: AppColors.textWhite,
+      activeFgColor: AppColors.white,
       inactiveBgColor: AppColors.lightGrey,
       inactiveFgColor: AppColors.backgroundDark,
       fontSize: 16,
@@ -233,11 +233,9 @@ class _LoginSignupState extends State<LoginSignup> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: (state.isLoading)
-                    ? JumpingDots(
-                    color: AppColors.textWhite,
-                    radius: 8,
-                    numberOfDots: 3,
-                    animationDuration: const Duration(milliseconds: 200))
+                    ? LoadingAnimationWidget.staggeredDotsWave(
+                    color: AppColors.white,
+                    size: 40)
                     : Text(AppLocalizations.of(context)!.signup, style: AppTextStyle.btnText),
               ),
             ),
@@ -275,8 +273,8 @@ class _LoginSignupState extends State<LoginSignup> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           (state.successSignup ?? false)
-                              ? Icon(Icons.check_circle_outline, size: 150, color: AppColors.textWhite,)
-                              : Icon(Icons.error_outline, size: 150, color: AppColors.textWhite,),
+                              ? Icon(Icons.check_circle_outline, size: 150, color: AppColors.white,)
+                              : Icon(Icons.error_outline, size: 150, color: AppColors.white,),
 
                           (state.successSignup ?? false)
                               ? Text(AppLocalizations.of(context)!.signup_success, style: AppTextStyle.signupAlertText, textAlign: TextAlign.center)
@@ -288,12 +286,12 @@ class _LoginSignupState extends State<LoginSignup> {
                             child: OutlinedButton(
                               onPressed: () => Navigator.of(context).pop(),
                               style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: AppColors.textWhite, width: 5),
+                                side: BorderSide(color: AppColors.white, width: 5),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              child: Text(AppLocalizations.of(context)!.back, style: AppTextStyle.btnText),//todo
+                              child: Text(AppLocalizations.of(context)!.back, style: AppTextStyle.btnText),
                             ),
                           )
                         ],

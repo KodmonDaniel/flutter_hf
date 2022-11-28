@@ -16,13 +16,14 @@ class CityResponse extends Equatable {
   @JsonKey(name: "wind") final CityWind? wind;
   @JsonKey(name: "clouds") final CityClouds? clouds;
   @JsonKey(name: "name") final String? name;
+  @JsonKey(name: "id") final int? id;
 
 
-  const CityResponse({this.coord, this.weather, this.main, this.wind, this.clouds, this.name});
+  const CityResponse({this.coord, this.weather, this.main, this.wind, this.clouds, this.name, this.id});
 
   factory CityResponse.fromJson(Map<String, dynamic> json) => _$CityResponseFromJson(json);
   Map<String, dynamic> toJson() => _$CityResponseToJson(this);
 
   @override
-  List<Object?> get props => [coord, weather, main, wind, clouds, name];
+  List<Object?> get props => [coord, weather, main, wind, clouds, name, id];
 }

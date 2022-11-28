@@ -9,7 +9,7 @@ class SecureStorage {
   final _aOptions = const AndroidOptions(encryptedSharedPreferences: true);
 
   Future<void> set(String key, String value) async {
-    await _storage.write(key: key, value: value, /*iOptions: _*/ aOptions: _aOptions);
+    await _storage.write(key: key, value: value,/* iOptions: _iOptions,*/ aOptions: _aOptions);
   }
 
   Future<String?> get(String key) async {

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_hf/repository/firestore/models/stored_weather.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../api/models/city_response.dart';
-import 'models/user_details.dart';
+import 'models/user_details_response.dart';
 
 class FirestoreRepository {
   FirestoreRepository();
@@ -12,8 +12,8 @@ class FirestoreRepository {
   final citiesResponseController = StreamController<List<StoredWeather>?>.broadcast();
   Stream<List<StoredWeather>?> get cityResponse => citiesResponseController.stream;
 
-  final userDetailsController = StreamController<UserDetails?>.broadcast();
-  Stream<UserDetails?> get userDetails => userDetailsController.stream;
+  final userDetailsController = StreamController<UserDetailsResponse?>.broadcast();
+  Stream<UserDetailsResponse?> get userDetails => userDetailsController.stream;
 
   final userRoleController = StreamController<bool?>.broadcast();
   Stream<bool?> get userRole => userRoleController.stream;
@@ -50,8 +50,8 @@ class FirestoreRepository {
  }
 
   /// Get the user details from a username or an email
-   Future<UserDetails?> getUserDetails(String? name, String? email) async {
-     var completer = Completer<UserDetails?>();
+   Future<UserDetailsResponse?> getUserDetails(String? name, String? email) async {
+     var completer = Completer<UserDetailsResponse?>();
      try {
        FirebaseFirestore firestore = FirebaseFirestore.instance;
       late dynamic querySnapshot;
@@ -59,7 +59,7 @@ class FirestoreRepository {
       else if (email != null) { querySnapshot = await firestore.collection('users').where('email', isEqualTo: email).get();}
       else {return null;} // error catch in blocs
 
-       var details = UserDetails.fromJson(querySnapshot.docs.first.data());
+       var details = UserDetailsResponse.fromJson(querySnapshot.docs.first.data());
 
        userDetailsController.sink.add(details);
        completer.complete(details);

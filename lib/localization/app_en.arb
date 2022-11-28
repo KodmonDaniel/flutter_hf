@@ -1,6 +1,8 @@
 {
     "app_name": "WeatherHW",
 
+    "main_loading": "Just a moment",
+
     "login": "Login",
     "username": "Username",
     "password": "Password",
@@ -28,11 +30,32 @@
     "signup_success": "Successfully signed up!",
     "signup_failed": "Signup failed!",
 
+    "welcome_title": "WELCOME",
+    "welcome_text": "Thanks for downloading!\nMore details about the app and how to use it can be found at\n",
+    "welcome_btn": "Got it",
+
     "tab_weather": "Weather",
     "tab_profile": "Profile",
     "tab_history": "History",
 
     "list_no_element" : "No available elements",
+
+    "weather_thunderstorm": "Thunderstorms",
+    "weather_drizzle": "Drizzling",
+    "weather_rain": "Rainy",
+    "weather_snow": "Snowy",
+    "weather_fog": "Foggy",
+    "weather_clear": "Clear",
+    "weather_cloudy": "Cloudy",
+
+    "weather_details": "details",
+    "weather_details_weather": "weather",
+    "weather_details_min_tmp": "MIN temperature",
+    "weather_details_max_tmp": "MAX temperature",
+    "weather_details_pressure": "Atmosph. pressure",
+    "weather_details_humidity": "Humidity",
+    "weather_details_wind_speed": "Wind speed",
+    "weather_details_clouds": "Cloud coverage",
 
     "history": "History",
     "history_sort": "Sort by",

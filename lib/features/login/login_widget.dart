@@ -4,7 +4,7 @@ import 'package:flutter_hf/extensions/extension_gradient.dart';
 import 'package:flutter_hf/extensions/extension_textfield.dart';
 import 'package:flutter_hf/extensions/extension_textstyle.dart';
 import 'package:flutter_hf/repository/firestore/firestore_repository.dart';
-import 'package:jumping_dot/jumping_dot.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -151,11 +151,9 @@ class _LoginState extends State<Login> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: (state.isLoading)
-                    ? JumpingDots(
-                    color: AppColors.textWhite,
-                    radius: 8,
-                    numberOfDots: 3,
-                    animationDuration: const Duration(milliseconds: 200))
+                    ? LoadingAnimationWidget.staggeredDotsWave(
+                    color: AppColors.white,
+                    size: 40)
                     : Text(AppLocalizations.of(context)!.login, style: AppTextStyle.btnText),
               ),
             ),
@@ -177,7 +175,7 @@ class _LoginState extends State<Login> {
               var route = AppRoute.createRoute(loginSignup);
               Navigator.of(context).push(route);
             },
-            child: Text(AppLocalizations.of(context)!.signup, style: AppTextStyle.miniBtnText,),//todo
+            child: Text(AppLocalizations.of(context)!.signup, style: AppTextStyle.miniBtnText,),
           ),
         ],
       ),

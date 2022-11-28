@@ -19,24 +19,27 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
               citiesWeatherList: value,
               isLoading: false,
               isCelsius: tempUnit
-      ))
+          ))
       ).catchError((error) {});
     });
 
     /// Saves to firestore
     on<CitiesWeatherSaveEvent>((event, emit) async {
       await firestoreRepository.saveWeather(state.citiesWeatherList ?? [])
-      .catchError((error) {});
+          .catchError((error) {});
     });
 
     /// Refresh the temp unit from secure storage
     on<CitiesWeatherChangeUnitEvent>((event, emit) {
       emit(state.copyWith(
-          isCelsius: !(state.isCelsius)
+          isCelsius: event.isCelsius
       ));
     });
 
+
   }
+
+
 
   /// Gets the temp unit from secure storage
   Future<bool> getStoredTempUnit() async {
