@@ -99,7 +99,7 @@ class _WeatherState extends State<Weather> {
             for (var i = 0; i < (state.citiesWeatherList?.length ?? 0); i++)
             Marker(
               point: LatLng(state.citiesWeatherList?[i].coord?.lat ?? 0, state.citiesWeatherList?[i].coord?.lon ?? 0),
-              width: state.isCelsius /* isCelsius*/ ? 50 : 55,
+              width: state.isCelsius ? 50 : 55,
               height: 70,
               builder: (context) => _cityMarker(state, i)
             ),
@@ -221,7 +221,7 @@ class _WeatherState extends State<Weather> {
           children: [
             Image.asset("assets/images/icons/${cityResponse.weather?[0].icon ?? "unknown_icon"}.png", fit: BoxFit.fitWidth, width: 35),
             const SizedBox(width: 15),
-            Text(state.isCelsius/* isCelsius*/
+            Text(state.isCelsius
                 ? "${((cityResponse.main?.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
                 : "${(((cityResponse.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
               style: AppTextStyle.mapTemp,

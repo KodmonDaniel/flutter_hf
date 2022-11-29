@@ -78,6 +78,7 @@ class _HistoryState extends State<History> {
   }
 
   _title(HistoryState state) {
+    var orientationLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     return Container(
       color: AppColors.white,
       child: Padding(
@@ -87,7 +88,10 @@ class _HistoryState extends State<History> {
           children: [
             Row(
               children: [
-                Text(AppLocalizations.of(context)!.history_sort),
+                Text((kIsWeb || orientationLandscape)
+                    ? AppLocalizations.of(context)!.history_sort_long
+                    : AppLocalizations.of(context)!.history_sort,
+                    textScaleFactor: 1.0),
                 const SizedBox(width: 5),
                 ToggleSwitch(
                   minWidth: 50,
@@ -109,7 +113,10 @@ class _HistoryState extends State<History> {
             ),
             Row(
               children: [
-                Text(AppLocalizations.of(context)!.history_order),
+                Text((kIsWeb || orientationLandscape)
+                    ? AppLocalizations.of(context)!.history_order_long
+                    : AppLocalizations.of(context)!.history_order
+                    , textScaleFactor: 1.0),
                 const SizedBox(width: 5),
                 ToggleSwitch(
                   minWidth: 50,
