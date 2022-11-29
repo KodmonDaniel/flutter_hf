@@ -3,6 +3,7 @@ import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/extensions/extension_gradient.dart';
 import 'package:flutter_hf/extensions/extension_textfield.dart';
 import 'package:flutter_hf/extensions/extension_textstyle.dart';
+import 'package:flutter_hf/preferences/common_objects.dart';
 import 'package:flutter_hf/repository/firestore/firestore_repository.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ import 'login_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login extends StatefulWidget {
-  const Login ({Key? key});
+  const Login ({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _LoginState();
 }
@@ -43,6 +44,7 @@ class _LoginState extends State<Login> {
       value: Provider.of<LoginBloc>(context),
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
+          if (state.userDetailsLoaded) Provider.of<CommonObjects>(context).userDetails = state.userDetails;
           return Scaffold(
             body: Stack(
               children: <Widget>[

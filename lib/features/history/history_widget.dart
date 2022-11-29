@@ -92,7 +92,7 @@ class _HistoryState extends State<History> {
                 ToggleSwitch(
                   minWidth: 50,
                   cornerRadius: 20,
-                  activeBgColors: [[AppColors.textPrimary], [AppColors.textPrimary]],
+                  activeBgColors: [[AppColors.tealColor1], [AppColors.tealColor1]],
                   activeFgColor: AppColors.backgroundDark,
                   inactiveBgColor: AppColors.lightGrey,
                   inactiveFgColor: AppColors.backgroundDark,
@@ -114,7 +114,7 @@ class _HistoryState extends State<History> {
                 ToggleSwitch(
                   minWidth: 50,
                   cornerRadius: 20,
-                  activeBgColors: [[AppColors.textPrimary], [AppColors.textPrimary]],
+                  activeBgColors: [[AppColors.tealColor1], [AppColors.tealColor1]],
                   activeFgColor: AppColors.backgroundDark,
                   inactiveBgColor: AppColors.lightGrey,
                   inactiveFgColor: AppColors.backgroundDark,
@@ -245,7 +245,7 @@ class _HistoryState extends State<History> {
             const SizedBox(width: 10),
             Image.asset("assets/images/icons/${element.icon ?? "unknown_icon"}.png", fit: BoxFit.fitWidth, width: 45),
             const SizedBox(width: 20),
-            Text(Provider.of<CommonObjects>(context, listen: false).isCelsius
+            Text(Provider.of<CommonObjects>(context, listen: false).isCelsius!
                 ? "${((element.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
                 : "${(((element.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
               style: AppTextStyle.mapTemp,

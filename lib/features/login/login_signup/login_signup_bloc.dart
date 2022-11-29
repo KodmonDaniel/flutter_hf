@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../repository/firestore/models/user_details_response.dart';
 import 'login_signup_state.dart';
 import 'login_signup_event.dart';
 import 'package:flutter_hf/repository/firestore/firestore_repository.dart';
@@ -32,14 +33,22 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
           if (event.pwd == event.pwdAgain) { // PWD mismatch
             if (event.pwd.length > 5) {
               if (_validEmail(event.email)) { // email syntax
+                var userDetails = {
+                  'username': event.name,
+                  'email': event.email,
+                  'admin': event.isAdmin,
+                };
+                emit(state.copyWith(
+                    userDetailsResponse: UserDetailsResponse.fromJson(userDetails)
+                ));
                 await firestoreRepository.signUp(
                     event.name, event.pwd, event.email, event.isAdmin).then((
-                    value) =>
-                    emit(state.copyWith(
-                        successSignup: value,
-                        isLoading: false
-                    ))
-                ).catchError((error) {});
+                    value) {
+                      emit(state.copyWith(
+                          successSignup: value,
+                          isLoading: false,
+                      ));
+                        }).catchError((error) {});
               } else {
                 emit(state.copyWith(
                   isEmailSyntaxError: true,

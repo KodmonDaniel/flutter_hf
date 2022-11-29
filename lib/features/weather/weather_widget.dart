@@ -36,7 +36,7 @@ class _WeatherState extends State<Weather> {
   @override
   Widget build(BuildContext context) {
     // ChangeNotifier not necessary, must change tab from profile => rebuild!
-    Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherChangeUnitEvent(Provider.of<CommonObjects>(context, listen: false).isCelsius));
+    Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherChangeUnitEvent(Provider.of<CommonObjects>(context, listen: false).isCelsius!));
     panelOpenedHeight = MediaQuery.of(context).size.height * 0.6;
     var screenWidth = MediaQuery.of(context).size.width;
     var orientationLandscape = MediaQuery.of(context).orientation == Orientation.landscape;

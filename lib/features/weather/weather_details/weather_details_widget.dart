@@ -55,7 +55,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
                                 Padding(
                                   padding: (kIsWeb || orientationLandscape) ? EdgeInsets.only(left: (screenWidth/5), top: 60, right: (screenWidth/5), bottom: 0) : const EdgeInsets.only(left: 20, top: 60, right: 20, bottom: 0),
                                   child: Card(
-                                    color: AppColors.cardDark,
+                                    color: AppColors.lightGrey.withOpacity(0.7),
                                     elevation: 3.0,
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(4.0)
@@ -103,7 +103,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
             Text(state.isCelsius
                 ? "${((state.cityResponse?.main?.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
                 : "${(((state.cityResponse?.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
-              style: AppTextStyle.mainText.copyWith(fontSize: 40, color: AppColors.textPrimary),
+              style: AppTextStyle.mainText.copyWith(fontSize: 40, color: AppColors.tealColor3),
             ),
           ],
         ),
@@ -139,7 +139,7 @@ class _WeatherDetailsState extends State<WeatherDetails> {
     return  Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Container(
-          color: AppColors.textPrimary.withOpacity(0.8),
+          color: AppColors.tealColor3.withOpacity(0.8),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
             child: Text("$string ${AppLocalizations.of(context)!.weather_details_weather}", style: AppTextStyle.mainText,),
@@ -165,7 +165,8 @@ class _WeatherDetailsState extends State<WeatherDetails> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
       child: Divider(
-        color: AppColors.lightGrey,
+        color: AppColors.backgroundDark,
+        thickness: 2,
       ),
     );
   }

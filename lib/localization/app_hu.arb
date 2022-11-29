@@ -1,8 +1,6 @@
 {
     "app_name": "WeatherHW",
 
-    "main_loading": "Egy pillanat",
-
     "login": "Bejelentkezés",
     "username": "Felhasználónév",
     "password": "Jelszó",

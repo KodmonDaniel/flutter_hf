@@ -16,10 +16,3 @@ class DashboardFirstLaunchedEvent extends DashboardEvent {
   @override
   List<Object?> get props => [];
 }
-
-class DashboardInitEvent extends DashboardEvent {
-  DashboardInitEvent();
-
-  @override
-  List<Object?> get props => [];
-}

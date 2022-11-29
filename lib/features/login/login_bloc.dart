@@ -16,37 +16,32 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           isLoading: true
       ));
       await firestoreRepository.getUserDetails(event.name, null).then((value) =>
-
-
-
-
           emit(state.copyWith(
-          userDetails: value
-      ))
-
-
+              userDetails: value
+          ))
       ).catchError((error) {});
-      if (state.userDetails != null) {
+      if (state.userDetails != null) {// set userDetails BEFORE Firebase signIn
+        emit(state.copyWith(
+            userDetailsLoaded: true
+        ));
         await firestoreRepository.signIn(state.userDetails?.email ?? "", event.pwd).then((_) async {
-          //await _saveUserData(state.userDetails!);
-          emit(state.copyWith(
-            isLoading: false,
-          ));
-        }).catchError((error) {
-          print("PWD SZAR");
+          // successful popup to myapp
           emit(state.copyWith(
               isLoading: false,
-            // isUsernameError: false,
+          ));
+        }).catchError((error) {
+          // bad pwd
+          emit(state.copyWith(
+              isLoading: false,
               isPwdError: true
-      ));
-      });
+          ));
+        });
       } else {
-      print("UNAME ROSSZ");
-      emit(state.copyWith(
-      isLoading: false,
-      isUsernameError: true,
-      // isPwdError: false
-      ));
+        // bad uname
+        emit(state.copyWith(
+          isLoading: false,
+          isUsernameError: true,
+        ));
       }
     });
 
@@ -56,4 +51,5 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       ));
     });
   }
+
 }

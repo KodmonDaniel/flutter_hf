@@ -8,13 +8,10 @@ import 'profile_event.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final FirestoreRepository firestoreRepository;
 
-  ProfileBloc(this.firestoreRepository) : super(const ProfileState()){
+  ProfileBloc(this.firestoreRepository) : super(ProfileState()){
 
     on<ProfileChangeUnitEvent>((event, emit) async {
       await SecureStorage.instance.set("tempUnit", (event.isCelsius).toString());
-          emit(state.copyWith(
-              isCelsius: event.isCelsius
-          ));
     });
   }
 }

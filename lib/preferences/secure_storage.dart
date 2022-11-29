@@ -16,4 +16,23 @@ class SecureStorage {
     return await _storage.read(key: key,  aOptions: _aOptions);
   }
 
+  /// Helpers
+  Future<bool> getStoredTempUnit() async {
+    var value = await SecureStorage.instance.get("tempUnit");
+    if (value == "false") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Future<bool> isFirstLaunch() async {
+    var value = await SecureStorage.instance.get("firstLaunch");
+    if (value == null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

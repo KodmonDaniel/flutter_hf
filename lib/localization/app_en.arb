@@ -1,8 +1,6 @@
 {
     "app_name": "WeatherHW",
 
-    "main_loading": "Just a moment",
-
     "login": "Login",
     "username": "Username",
     "password": "Password",
