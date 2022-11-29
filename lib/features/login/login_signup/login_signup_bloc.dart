@@ -95,7 +95,7 @@ class LoginSignupBloc extends Bloc<LoginSignupEvent, LoginSignupState> {
   }
 
   bool _validEmail(String email) {
-    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}")
         .hasMatch(email);
   }
 }

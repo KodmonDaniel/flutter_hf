@@ -45,6 +45,22 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
 
+    if (Provider.of<CommonObjects>(context, listen: false).firstLaunch!) {
+      Future.delayed(Duration.zero,() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              content: _welcomeAlert(context),
+            );
+          },
+        );
+      });
+      Provider.of<DashboardBloc>(context, listen: false).add(DashboardFirstLaunchedEvent());
+      Provider.of<CommonObjects>(context, listen: false).firstLaunch = false;
+    }
+
     timer = Timer.periodic(const Duration(minutes: 1), (Timer t) {
       Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherRefreshEvent());
         if (Provider.of<CommonObjects>(context, listen: false).userDetails?.admin ?? false) {
@@ -116,21 +132,7 @@ class _DashboardState extends State<Dashboard> {
       child: BlocBuilder<DashboardBloc, DashboardState>(
         builder: (context, state) {
 
-          if (Provider.of<CommonObjects>(context, listen: false).firstLaunch!) {
-            Future.delayed(Duration.zero,() {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    contentPadding: EdgeInsets.zero,
-                    content: _welcomeAlert(context),
-                  );
-                },
-              );
-            });
-            Provider.of<DashboardBloc>(context, listen: false).add(DashboardFirstLaunchedEvent());
-            Provider.of<CommonObjects>(context, listen: false).firstLaunch = false;
-          }
+
 
           screen = getDashboard(state.currentTab, context, state);
           return screen;
