@@ -63,14 +63,14 @@ extension AppTextStyle on ThemeData {
   static TextStyle separator = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 20,
-      color: AppColors.textPrimary,
+      color: AppColors.tealColor1,
       fontWeight: FontWeight.w500
   );
 
   static TextStyle tabTitle = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 22,
-      color: AppColors.textPrimary,
+      color: AppColors.tealColor1,
       fontWeight: FontWeight.w500
   );
 
@@ -84,7 +84,7 @@ extension AppTextStyle on ThemeData {
   static TextStyle miniBtnText = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 18,
-      color: AppColors.textPrimaryDarker,
+      color: AppColors.tealColor2,
       fontWeight: FontWeight.w600
   );
 
@@ -119,14 +119,14 @@ extension AppTextStyle on ThemeData {
   static TextStyle weatherDetailsValue = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 24,
-      color: AppColors.textPrimary,
+      color: AppColors.tealColor3,
       fontWeight: FontWeight.w600
   );
 
   static TextStyle weatherDetailsTypes = TextStyle(
       fontFamily: 'Poppins',
       fontSize: 18,
-      color: AppColors.textSecondary,
+      color: AppColors.backgroundDark,
       fontWeight: FontWeight.w400
   );
 

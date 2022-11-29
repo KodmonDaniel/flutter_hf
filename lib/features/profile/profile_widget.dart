@@ -17,7 +17,7 @@ import 'profile_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Profile extends DashboardPage {
-  const Profile ({Key? key});
+  const Profile ({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _ProfileState();
 }
@@ -69,7 +69,7 @@ class _ProfileState extends State<Profile> {
                                 child: SizedBox(
                                   width: 300,
                                   height: 450,
-                                  child: _cardContent(state),
+                                  child: _cardContent(),
                                 ),
                               ),
                             ),
@@ -85,19 +85,19 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  _cardContent(ProfileState state) {
+  _cardContent() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        _userDetails(state),
-        _tempSwitch(state),
+        _userDetails(),
+        _tempSwitch(),
         _credits()
       ],
     );
   }
 
-  _userDetails(ProfileState state) {
+  _userDetails() {
     UserDetailsResponse? userDetails = Provider.of<CommonObjects>(context, listen: false).userDetails;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +115,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  _tempSwitch(ProfileState state) {
+  _tempSwitch() {
     return ToggleSwitch(
       minWidth: 50,
       cornerRadius: 20,
@@ -124,12 +124,12 @@ class _ProfileState extends State<Profile> {
       inactiveBgColor: AppColors.lightGrey,
       inactiveFgColor: AppColors.backgroundDark,
       fontSize: 18,
-      initialLabelIndex: (Provider.of<CommonObjects>(context, listen: false).isCelsius) ? 0 : 1,
+      initialLabelIndex: (Provider.of<CommonObjects>(context, listen: false).isCelsius!) ? 0 : 1,
       totalSwitches: 2,
       labels:  const ["°C", "°F"],
       radiusStyle: true,
       onToggle: (index) {
-        bool newValue = !Provider.of<CommonObjects>(context, listen: false).isCelsius;
+        bool newValue = !Provider.of<CommonObjects>(context, listen: false).isCelsius!;
         Provider.of<ProfileBloc>(context, listen: false).add(ProfileChangeUnitEvent(newValue));
         Provider.of<CommonObjects>(context, listen: false).isCelsius = newValue;
       },

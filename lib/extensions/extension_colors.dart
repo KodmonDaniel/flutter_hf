@@ -9,8 +9,8 @@ extension AppColors on ThemeData {
   static Color blue2 = const Color(0xff34a0fa);
   static Color backgroundDark2 = const Color(0xFF58585A);
 
-  static Color textPrimary = const Color(0xFF69CCAE);
-  static Color textPrimaryDarker = const Color(0xFF227964);
+  static Color tealColor1 = const Color(0xFF69CCAE);
+  static Color tealColor2 = const Color(0xFF227964);
   static Color tealColor3 = const Color(0xFF009688);
   static Color tealColor4 = const Color(0xFF62B8AA);
   static Color textSecondary = const Color(0xFFA0A0A3);

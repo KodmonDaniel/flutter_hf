@@ -9,10 +9,12 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../../../extensions/extension_gradient.dart';
 import '../../../extensions/extension_textfield.dart';
+import '../../../preferences/common_objects.dart';
 import 'login_signup_bloc.dart';
 import 'login_signup_event.dart';
 import 'login_signup_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class LoginSignup extends StatefulWidget {
   const LoginSignup (this._bloc, {Key? key}) : super(key: key);
@@ -45,6 +47,7 @@ class _LoginSignupState extends State<LoginSignup> {
         create: (_) => widget._bloc,
         child: BlocBuilder<LoginSignupBloc, LoginSignupState>(
           builder: (context, state) {
+            if (state.userDetailsResponse != null) Provider.of<CommonObjects>(context, listen: false).userDetails = state.userDetailsResponse;
             return Scaffold(
                 body: Stack(
                     children: <Widget>[
@@ -284,7 +287,9 @@ class _LoginSignupState extends State<LoginSignup> {
                             width: 150,
                             height: 40,
                             child: OutlinedButton(
-                              onPressed: () => Navigator.of(context).pop(),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
                               style: OutlinedButton.styleFrom(
                                 side: BorderSide(color: AppColors.white, width: 5),
                                 shape: RoundedRectangleBorder(
