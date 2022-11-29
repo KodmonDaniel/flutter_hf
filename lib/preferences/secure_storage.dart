@@ -5,11 +5,11 @@ class SecureStorage {
   static final SecureStorage instance = SecureStorage._internal();
 
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
-  //final _iOptions = const IOSOptions(accessibility: IOSAccessibility.first_unlock);
+  //final _iOptions = IOSOptions(accessibility: IOSAccessibility.first_unlock);
   final _aOptions = const AndroidOptions(encryptedSharedPreferences: true);
 
   Future<void> set(String key, String value) async {
-    await _storage.write(key: key, value: value,/* iOptions: _iOptions,*/ aOptions: _aOptions);
+    await _storage.write(key: key, value: value, /*iOptions: _iOptions, */aOptions: _aOptions);
   }
 
   Future<String?> get(String key) async {
