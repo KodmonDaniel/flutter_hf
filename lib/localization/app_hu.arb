@@ -1,7 +1,7 @@
 {
     "app_name": "WeatherHW",
 
-    "login": "Bejelentkezés",
+    "login": "Belépés",
     "username": "Felhasználónév",
     "password": "Jelszó",
     "password_again": "Jelszó újra",
@@ -56,8 +56,10 @@
     "weather_details_clouds": "Felhőborítottság",
 
     "history": "Előzmények",
-    "history_sort": "Rendezés",
-    "history_order": "Sorrend",
+    "history_sort": "Rendez.",
+    "history_order": "Sorr.",
+    "history_sort_long": "Rendezés",
+    "history_order_long": "Sorrend",
 
     "profile_credit1": "Készítette",
     "profile_credit2": "Ködmön Dániel",

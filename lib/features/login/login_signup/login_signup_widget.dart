@@ -67,7 +67,7 @@ class _LoginSignupState extends State<LoginSignup> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(AppLocalizations.of(context)!.signup, style: AppTextStyle.bigTitle),
+                                  Text(AppLocalizations.of(context)!.signup, style: AppTextStyle.bigTitle.copyWith(fontSize: 40)),
                                   const SizedBox(height: 50,),
                                   _uNameInput(state),
                                   const SizedBox(height: 10),

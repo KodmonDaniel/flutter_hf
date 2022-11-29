@@ -41,7 +41,7 @@ extension AppTextStyle on ThemeData {
 
   static TextStyle mainText = TextStyle(
       fontFamily: 'Poppins',
-      fontSize: 18,
+      fontSize: 16,
       color: AppColors.black,
       fontWeight: FontWeight.w600
   );

@@ -58,6 +58,8 @@
     "history": "History",
     "history_sort": "Sort by",
     "history_order": "Order",
+    "history_sort_long": "Sort by",
+    "history_order_long": "Order",
 
     "profile_credit1": "App by",
     "profile_credit2": "Ködmön Dániel",
