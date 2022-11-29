@@ -57,12 +57,20 @@ dependencies:
   flutter_native_splash: ^2.2.14
   url_launcher: ^6.1.7
   loading_animation_widget: ^1.2.0+3
+  flutter_launcher_icons: ^0.11.0
 
 
 flutter_native_splash:
   image: assets/images/launch/logo.png
   background_image: assets/images/launch/main_bg.png
 
+flutter_icons:
+  image_path: "assets/images/launch/logo.png"
+  android: true
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/images/launch/logo.png"
 
 
 dev_dependencies:
