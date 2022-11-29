@@ -3,13 +3,19 @@
 Flutter verseny házi feladat.
 Az alkalmazás fő fejlesztési platformja az `Android` (min. lvl 30 API) volt de az alkalmazás fut `iOS` platformon is. Ezen kívül az alkalmazás `webes` (böngésző) platformon is használható. (tartalmaz a használhatósághoz szükséges reszponzivitást de a design alapvetően mobilra készült). Az alkalmazás magyar és angol nyelvre lett lokalizálva.
 
+Az alkalmazást kipróbáltam a következő platformokon:
+- Pixel 4 XL emulátor (android 10, LVL 30 API, fejlesztés alatt használt fő platform)
+- Samsung Galaxy S20 FE (android 12, LVL)
+- iPhone X szimulátor (iOS 15.5, Apple ezközök hiányában VM macOS)
+- Chrome böngésző
+
 ## Bejelentkezés és regisztráció
 
 Az alkalmazás használatához felhasználói fiókkal kell bejelentkezni. 
 
-#### Bejelentkezés
+#### Belépés
 
-A bejelentkezés a `felhasználónév` `jelszó` párossal történik.
+A belépés az alkalmazásba a `felhasználónév` `jelszó` párossal történik.
 Jelenleg az alkalmazásba két használható fiók van regisztrálva amelyek szabadon használhatóak.
 
 | Felhasználónév        | Jelszó           | E-mail            | Szerep  |
@@ -34,9 +40,9 @@ A megadott e-mail címnek csak formátum követelménye van nem kell hogy valós
 ## Fő funkciók
 
 
-#### Weather
+#### Időjárás
 
-A `Weather` tabon látható egy térkép amely szabadon mozgatható nagyítható. A térképen a beállított városok (jelen esetben megyeszékhelyek) helye meg van jelölve, és a város aktuális hőmérséklete, valamint az aktuális időjárást szimbolizáló ikon látható. A térkép alján (alsó tabbar felett) egy felnyitható listában is megtekinthetjük a városok aktuális időjárásait. A listából vagy a térképről egy várost kiválasztva megnyílik az adott város részletes időjárás adatait tartalmató oldal. Ez az oldal tartalmazza a következőket:
+Az időjárás tabon látható egy térkép amely szabadon mozgatható nagyítható. A térképen a beállított városok (jelen esetben megyeszékhelyek) helye meg van jelölve, és a város aktuális hőmérséklete, valamint az aktuális időjárást szimbolizáló ikon látható. A térkép alján (alsó tabbar felett) egy felnyitható listában is megtekinthetjük a városok aktuális időjárásait. A listából vagy a térképről egy várost kiválasztva megnyílik az adott város részletes időjárás adatait tartalmató oldal. Ez az oldal tartalmazza a következőket:
 - Városnév
 - Aktuális hőmérséklet
 - Időjárás típusa és ikonja (esős, viharos stb.)
@@ -56,7 +62,7 @@ A profil oldalon látható az aktuálisan bejelentkezett felhasználói fiók ad
 - E-mail cím
 - Fiók típus (alap, admin)
 
-A fentieken kívül ezen az oldalon van lehetőség a hőmérséklet mértékegységének váltására `C` és `F` között (alapértelmezetten C). A beállított érték az alkalmazáson bellül mindenhova érvényes és mentésre kerül, következő alkalmazás indításnán az értéket megőrzi.
+A fentieken kívül ezen az oldalon van lehetőség a hőmérséklet mértékegységének váltására `°C` és `°F` között (alapértelmezetten °C). A beállított érték az alkalmazáson bellül mindenhova érvényes és mentésre kerül, következő alkalmazás indításnán az értéket megőrzi.
 A profil oldalon van lehetőség a fiókból való `kijelentkezésre` is. Kijelentkezés esetén visszakerülünk a bejelentkező oldalra.
 
 ## Előzmények 
