@@ -254,7 +254,7 @@ class _HistoryState extends State<History> {
             const SizedBox(width: 20),
             Text(Provider.of<CommonObjects>(context, listen: false).isCelsius!
                 ? "${((element.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
-                : "${(((element.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
+                : "${(((element.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(0)}°",
               style: AppTextStyle.mapTemp,
             ),
           ],

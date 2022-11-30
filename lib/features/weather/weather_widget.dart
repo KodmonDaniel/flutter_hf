@@ -35,7 +35,6 @@ class _WeatherState extends State<Weather> {
 
   @override
   Widget build(BuildContext context) {
-    // ChangeNotifier not necessary, must change tab from profile => rebuild!
     Provider.of<WeatherBloc>(context, listen: false).add(CitiesWeatherChangeUnitEvent(Provider.of<CommonObjects>(context, listen: false).isCelsius!));
     panelOpenedHeight = MediaQuery.of(context).size.height * 0.6;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -223,7 +222,7 @@ class _WeatherState extends State<Weather> {
             const SizedBox(width: 15),
             Text(state.isCelsius
                 ? "${((cityResponse.main?.temp ?? 0) - 273.15).toStringAsFixed(1)}°"
-                : "${(((cityResponse.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(1)}°",
+                : "${(((cityResponse.main?.temp ?? 0) - 273.15) * 1.8 + 32).toStringAsFixed(0)}°",
               style: AppTextStyle.mapTemp,
             ),
           ],
