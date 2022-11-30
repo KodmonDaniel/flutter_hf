@@ -57,7 +57,7 @@ Az időjárás tabon látható egy térkép amely szabadon mozgatható nagyítha
 
 Az időjárásadatok percenként frissülnek automatikusan.
 
-<img src="git_images/weather_a.png" width="200">        <img src="git_images/weather.png" width="200">
+<img src="git_images/map_a.png" width="200">        <img src="git_images/map.png" width="200">
 
 ## Profil
 
