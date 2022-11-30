@@ -55,6 +55,8 @@ Az időjárás tabon látható egy térkép amely szabadon mozgatható nagyítha
 
 Az időjárásadatok percenként frissülnek automatikusan.
 
+<img src="git_images/login_a.png" width="250">        <img src="git_images/signup_a.png" width="250">
+
 ## Profil
 
 A profil oldalon látható az aktuálisan bejelentkezett felhasználói fiók adatai:
