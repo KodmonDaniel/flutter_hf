@@ -37,6 +37,8 @@ Ezután (a könnyű tesztelés érdekében) lehetőség van megadni, hogy a felh
 Amennyiben a feltételek teljesültek visszajelzést kapunk arról, hogy sikeres volt-e a regisztráció. Sikeres regisztráció esetén egyből be is léptet az alkalmazás.
 A megadott e-mail címnek csak formátum követelménye van nem kell hogy valós legyen mivel az e-mail hitelesítés és jelszó visszaállítás a levélszemetelés megelőzése érdekében ki van kapcsolva. :)
 
+<img src="git_images/login_a.png" width="200">        <img src="git_images/signup_a.png" width="200">
+
 ## Fő funkciók
 
 
@@ -55,7 +57,7 @@ Az időjárás tabon látható egy térkép amely szabadon mozgatható nagyítha
 
 Az időjárásadatok percenként frissülnek automatikusan.
 
-<img src="git_images/login_a.png" width="250">        <img src="git_images/signup_a.png" width="250">
+<img src="git_images/weather_a.png" width="200">        <img src="git_images/weather.png" width="200">
 
 ## Profil
 
@@ -67,7 +69,11 @@ A profil oldalon látható az aktuálisan bejelentkezett felhasználói fiók ad
 A fentieken kívül ezen az oldalon van lehetőség a hőmérséklet mértékegységének váltására `°C` és `°F` között (alapértelmezetten °C). A beállított érték az alkalmazáson bellül mindenhova érvényes és mentésre kerül, következő alkalmazás indításnán az értéket megőrzi.
 A profil oldalon van lehetőség a fiókból való `kijelentkezésre` is. Kijelentkezés esetén visszakerülünk a bejelentkező oldalra.
 
+<img src="git_images/profile_a.png" width="200">        <img src="git_images/profile.png" width="200">
+
 ## Előzmények 
 
 Ez az oldal csak alap felhasználók számára érhető el. Itt az előzetesen elmentett időjárások megtekinthetőek lista formájában. A listát rendezhetjük dátum vagy város szerint, illetve csökkenő vagy növekvő sorrendben. Az admin felhasználóknál nem leátható ez az oldal viszont az alkalmazásban töltött idejük alatt percenként feltöltésre kerülnek a városok aktuális időjárás adatai.
+
+<img src="git_images/history_a.png" width="200">        <img src="git_images/history.png" width="200">
 
