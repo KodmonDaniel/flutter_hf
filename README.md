@@ -5,8 +5,8 @@ Az alkalmazás fő fejlesztési platformja az `Android` (min. lvl 30 API) volt d
 
 Az alkalmazást kipróbáltam a következő platformokon:
 - Pixel 4 XL emulátor (android 10, LVL 30 API, fejlesztés alatt használt fő platform)
-- Samsung Galaxy S20 FE (android 12, LVL)
-- iPhone X szimulátor (iOS 15.5, Apple ezközök hiányában VM macOS)
+- Samsung Galaxy S20 FE (android 12)
+- iPhone X szimulátor (iOS 15.5, Apple eszközök hiányában VM macOS)
 - Chrome böngésző
 
 ## Bejelentkezés és regisztráció
