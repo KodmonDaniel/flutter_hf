@@ -23,6 +23,7 @@ extension AppColors on ThemeData {
   static Color cardDark = const Color(0xBF323232);
   static Color cardGrey = const Color(0xBF4C4C4C);
   static Color cardLight = const Color(0xB28Ec6FF);
+  static Color sysNavBar = const Color(0xEE101010);
 
   static Color lightGrey = const Color(0xFFD4D4D4);
 

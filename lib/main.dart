@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_hf/extensions/extension_colors.dart';
 import 'package:flutter_hf/extensions/extension_theme.dart';
 import 'package:flutter_hf/injector.dart';
 import 'package:flutter_hf/observer.dart';
@@ -16,6 +18,9 @@ import 'firebase_options.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: AppColors.sysNavBar
+  ));
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
